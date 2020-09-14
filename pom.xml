@@ -24,7 +24,7 @@
         <poi-ooxml>4.1.1</poi-ooxml>
         <druid>1.1.21</druid>
         <easyexcel>2.1.6</easyexcel>
-        <ant>1.10.7</ant>
+        <ant>1.10.8</ant>
         <commons-compress>1.19</commons-compress>
         <activiti>7.1.0.M6</activiti>
         <hadoop-client>3.2.1</hadoop-client>
