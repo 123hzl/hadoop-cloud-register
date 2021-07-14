@@ -18,7 +18,7 @@
     <properties>
         <itextpdf>5.5.13.1</itextpdf>
         <google.zxing>3.3.3</google.zxing>
-        <httpclient>4.5.9</httpclient>
+        <httpclient>4.5.13</httpclient>
         <freemarker>2.2.2.RELEASE</freemarker>
         <apache.poi>5.0.0</apache.poi>
         <poi-ooxml>5.0.0</poi-ooxml>
