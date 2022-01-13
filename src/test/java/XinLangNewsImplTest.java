@@ -1,3 +1,4 @@
+import com.hzl.hadoop.gp.constant.GpCodeEnum;
 import com.hzl.hadoop.gp.convert.NewsConvert;
 import com.hzl.hadoop.gp.service.impl.XinLangNewsImpl;
 import com.hzl.hadoop.gp.vo.XlNewsVO;
@@ -16,16 +17,18 @@ public class XinLangNewsImplTest {
 	@Test
 	public void parse() throws IOException {
 
-		NewsConvert xinLangNews = new NewsConvert();
+//		NewsConvert xinLangNews = new NewsConvert();
+//
+//		List<XlNewsVO> xlNewsVOS= xinLangNews.getXlNews("sz000333");
 
-		List<XlNewsVO> xlNewsVOS= xinLangNews.getXlNews("sz000651");
+		System.out.println(GpCodeEnum.valueOf("sz000063").getCode());
 
 	}
 
 	@Test
 	public void getTodayNews() throws IOException {
 		XinLangNewsImpl xinLangNews = new XinLangNewsImpl();
-		xinLangNews.getTodayNews("sz000651");
+		xinLangNews.getTodayNews(GpCodeEnum.sz000333);
 	}
 
 }

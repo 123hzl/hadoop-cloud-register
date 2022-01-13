@@ -9,6 +9,7 @@ import com.hzl.hadoop.gp.vo.VolumeVO;
 import com.hzl.hadoop.gp.vo.YlVO;
 import com.hzl.hadoop.gp.vo.ZXVO;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ public interface GpRepository  {
 	 * @return
 	 * @author hzl 2020-11-04 9:45 AM
 	 */
-	List<GpVO> selectMaxPriceVolatility(String gpCode);
+	List<GpVO> selectMaxPriceVolatility(String gpCode,LocalDate date);
 
 	/**
 	 * 获取今日最小价格波动
@@ -35,7 +36,7 @@ public interface GpRepository  {
 	 * @return
 	 * @author hzl 2020-11-04 9:45 AM
 	 */
-	List<GpVO> selectMinPriceVolatility(String gpCode);
+	List<GpVO> selectMinPriceVolatility(String gpCode,LocalDate date);
 
 	/**
 	 * 获取当前股票价格
@@ -53,6 +54,25 @@ public interface GpRepository  {
 	 */
 	List<VolumeVO> queryVolume(VolumeVO volumeVO);
 
+	/**
+	 * 当日成交价波动
+	 *
+	 * @return
+	 * @author hzl 2020-11-04 9:45 AM
+	 */
+	List<VolumeVO> queryVolumeByDate(VolumeVO volumeVO);
+
+
 	PageInfo<VolumeVO> queryVolumePage(VolumeVO volumeVO);
+
+
+
+	/**
+	 * 查询指定日期的收盘价
+	 *
+	 * @return
+	 * @author hzl 2020-11-04 9:45 AM
+	 */
+	GpVO selectEndPriceByDate(String gpCode,LocalDate localDate);
 
 }

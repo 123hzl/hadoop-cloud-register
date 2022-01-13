@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.time.LocalDate;
 
 /**
  * description
@@ -39,8 +42,8 @@ public class GpMaxMinController {
 	 * @author hzl 2020/01/08 12:41 PM
 	 */
 	@GetMapping(value = "/gp/max/min/{code}")
-	public String getMinMaxInfo(@PathVariable String code, Model model) {
-		MaxMinHtmlVO maxMinHtmlVO = gpNoticeService.volatilityPrice(code);
+	public String getMinMaxInfo(@PathVariable String code, Model model,@RequestParam(name = "date" ,required = false) LocalDate date) {
+		MaxMinHtmlVO maxMinHtmlVO = gpNoticeService.volatilityPrice(code,date);
 		model.addAttribute(maxMinHtmlVO);
 		return "maxMinCurrent";
 	}

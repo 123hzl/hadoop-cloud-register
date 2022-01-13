@@ -22,4 +22,9 @@ public interface GpVolumeMapper extends BaseMapperUtil<VolumeVO> {
 
 	Page<VolumeVO> queryVolumeYlPage(VolumeVO volumeVO);
 
+	List<VolumeVO> queryVolumeByDate(VolumeVO volumeVO);
+
+	List<VolumeVO> queryVolumeByDateYl(VolumeVO volumeVO);
+
+
 }

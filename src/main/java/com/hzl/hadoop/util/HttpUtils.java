@@ -367,8 +367,7 @@ public class HttpUtils {
 			connection.setReadTimeout(DEFAULT_READ_TIME_OUT);
 			connection.setRequestProperty("accept", "*/*");
 			connection.setRequestProperty("connection", "Keep-Alive");
-			connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-
+			connection.setRequestProperty("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36");
 			// 添加头部参数
 			if (Objects.nonNull(headerParam) && !headerParam.isEmpty()) {
 				for (String key : headerParam.keySet()) {
@@ -394,7 +393,7 @@ public class HttpUtils {
 				}
 			}
 
-			log.info("======== 返回信息 ======== ：" + result);
+			//log.info("======== 返回信息 ======== ：" + result);
 
 		} catch (Exception var18) {
 			throw new HttpResponseException(

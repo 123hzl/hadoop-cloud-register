@@ -20,6 +20,7 @@ import javax.mail.MessagingException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -84,17 +85,24 @@ public class GpNoticeServiceImpl implements GpNoticeService {
 	}
 
 	@Override
-	public MaxMinHtmlVO volatilityPrice(String gpCode) {
-		List<GpVO> gpVOMax = gpRepository.selectMaxPriceVolatility(gpCode);
-		List<GpVO> gpVOMin = gpRepository.selectMinPriceVolatility(gpCode);
+	public MaxMinHtmlVO volatilityPrice(String gpCode, LocalDate date) {
+		List<GpVO> gpVOMax = gpRepository.selectMaxPriceVolatility(gpCode,date);
+		List<GpVO> gpVOMin = gpRepository.selectMinPriceVolatility(gpCode,date);
 		//List<GpVO> gpVOCurrent = gpRepository.selectCurrentPriceAll(gpCode);
 
 		//获取当前股票价格
 		GpConvert gpConvert = new GpConvert();
-		Map<String, String> date = gpConvert.getGpInfo(GpUrlConstant.GP_BASE_URL.concat(gpCode), null);
+		Map<String, String> data1 = gpConvert.getGpInfo(GpUrlConstant.GP_BASE_URL.concat(gpCode), null);
 		GpVO gpVO = new GpVO();
-		gpVO.init(date);
+
+		if(date!=null){
+			gpVO=gpRepository.selectEndPriceByDate(gpCode,date);
+		}else{
+			gpVO.init(data1);
+		}
 		gpVO.setGpCode(gpCode);
+
+
 
 		NumberFormat percent = NumberFormat.getPercentInstance();
 		percent.setMaximumFractionDigits(2);
@@ -147,7 +155,7 @@ public class GpNoticeServiceImpl implements GpNoticeService {
 
 	@Override
 	public void volatilityPriceSendMail(String gpCode) {
-		MaxMinHtmlVO maxMinHtmlVO = volatilityPrice(gpCode);
+		MaxMinHtmlVO maxMinHtmlVO = volatilityPrice(gpCode,null);
 		//     后面暂时处理，当当前价格低于开盘价的1%的时候发送邮件提醒
 		if ((maxMinHtmlVO.getCurrentPrice().subtract(maxMinHtmlVO.getYesterdayEndPrice())).divide(maxMinHtmlVO.getYesterdayEndPrice(), 5, BigDecimal.ROUND_DOWN).longValue()<-0.1) {
 			try {

@@ -1,6 +1,7 @@
 package com.hzl.hadoop.gp.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hzl.hadoop.gp.constant.GpCodeEnum;
 
 import java.io.IOException;
 
@@ -12,7 +13,7 @@ import java.io.IOException;
  */
 public interface XinLangNews {
 
-	boolean getTodayNews(String gpCode) throws IOException;
+	boolean getTodayNews(GpCodeEnum gpCodeEnum) throws IOException;
 
 
 }

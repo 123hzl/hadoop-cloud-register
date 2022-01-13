@@ -2,12 +2,14 @@ package com.hzl.hadoop.gp.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.hzl.hadoop.gp.constant.GpCodeEnum;
 import com.hzl.hadoop.gp.convert.NewsConvert;
 import com.hzl.hadoop.gp.entity.GpNewsEntity;
 import com.hzl.hadoop.gp.service.GpNewsService;
 import com.hzl.hadoop.gp.service.XinLangNews;
 import com.hzl.hadoop.gp.vo.XlNewsVO;
 import com.hzl.hadoop.util.LocalDateFormate;
+import com.hzl.hadoop.util.email.service.MailService;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -38,10 +40,14 @@ public class XinLangNewsImpl implements XinLangNews {
 	@Autowired
 	private GpNewsService gpNewsService;
 
+	@Autowired
+	private MailService mailService;
+
 	@Override
-	public boolean getTodayNews(String gpCode) throws IOException {
+	public boolean getTodayNews(GpCodeEnum gpCodeEnum) throws IOException {
+
 		NewsConvert xinLangNews = new NewsConvert();
-		List<XlNewsVO> xlNewsVOS= xinLangNews.getXlNews(gpCode);
+		List<XlNewsVO> xlNewsVOS= xinLangNews.getXlNews(gpCodeEnum.getCode());
 
 		//过滤今天的新闻
 		List<GpNewsEntity> entities=xlNewsVOS.stream()
@@ -51,13 +57,16 @@ public class XinLangNewsImpl implements XinLangNews {
 						.releaseTime(x.getReleaseTime())
 						.url(x.getUrl())
 						.source(x.getSource())
-						.gpCode(gpCode)
+						.gpCode(gpCodeEnum.getCode())
 						.build()).collect(Collectors.toList());
 
 		entities.forEach(a->{
 			Wrapper<GpNewsEntity> queryWrapper=new QueryWrapper<>(a);
 			if(gpNewsService.getOne(queryWrapper)==null){
+				//去重保存 TODO 优化查询将url生成短链接
 				gpNewsService.save(a);
+				//发送邮件消息
+				mailService.sendSimpleMail(gpCodeEnum.getName()+"股票："+"有新动态发布", a.getReleaseTime()+"\n"+a.getTitle()+"\n"+a.getUrl()+"\n");
 			}
 
 		});

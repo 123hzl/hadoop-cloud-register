@@ -45,19 +45,19 @@ public class GpVO {
 	//股票编号
 	private String gpCode;
 
-	public void init(Map<String, String> date){
+	public void init(Map<String, String> data){
 		//准备对象参数
-		String gpName = date.get("股票名字");
-		BigDecimal currentPrice = new BigDecimal(date.get("当前价格"));
-		BigDecimal initPrice = new BigDecimal(date.get("今日开盘价"));
-		BigDecimal maxPrice = new BigDecimal(date.get("今日最高价"));
-		BigDecimal minPirce = new BigDecimal(date.get("今日最低价"));
-		BigDecimal turnover = new BigDecimal(date.get("成交金额/元"));
-		BigDecimal yesterdayEndPrice = new BigDecimal(date.get("昨日收盘价"));
-		Long number = Long.valueOf(date.get("成交的股票数"));
+		String gpName = data.get("股票名字");
+		BigDecimal currentPrice = new BigDecimal(data.get("当前价格"));
+		BigDecimal initPrice = new BigDecimal(data.get("今日开盘价"));
+		BigDecimal maxPrice = new BigDecimal(data.get("今日最高价"));
+		BigDecimal minPirce = new BigDecimal(data.get("今日最低价"));
+		BigDecimal turnover = new BigDecimal(data.get("成交金额/元"));
+		BigDecimal yesterdayEndPrice = new BigDecimal(data.get("昨日收盘价"));
+		Long number = Long.valueOf(data.get("成交的股票数"));
 		BigDecimal num = new BigDecimal("100000000");
-		BigDecimal auction =  new BigDecimal(date.get("竞卖价，即卖一报价"));
-		BigDecimal biddingPrice =  new BigDecimal(date.get("竞买价，即买一报价"));
+		BigDecimal auction =  new BigDecimal(data.get("竞卖价，即卖一报价"));
+		BigDecimal biddingPrice =  new BigDecimal(data.get("竞买价，即买一报价"));
 		//生成对象
 		this.gpName=gpName;
 		this.currentPrice= currentPrice;

@@ -55,7 +55,7 @@ public class NewsConvert {
 			}
 		}
 
-		log.info("新闻转换结果{}",xlNewsVOS);
+		//log.info("新闻转换结果{}",xlNewsVOS);
 
 		return xlNewsVOS;
 	}

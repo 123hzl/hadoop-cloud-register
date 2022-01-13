@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 
+import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,7 +29,7 @@ public interface GpZxMapper extends BaseMapperUtil<ZXVO> {
 	 * @return
 	 * @author hzl 2020-11-04 9:45 AM
 	 */
-	List<ZXVO> selectMaxPriceVolatility(@Param("gpCode")String gpCode);
+	List<ZXVO> selectMaxPriceVolatility(@Param("gpCode")String gpCode,@Param("date")LocalDate date);
 
 	/**
 	 * 获取今日最小价格波动
@@ -36,7 +37,7 @@ public interface GpZxMapper extends BaseMapperUtil<ZXVO> {
 	 * @return
 	 * @author hzl 2020-11-04 9:45 AM
 	 */
-	List<ZXVO> selectMinPriceVolatility(@Param("gpCode")String gpCode);
+	List<ZXVO> selectMinPriceVolatility(@Param("gpCode")String gpCode,@Param("date") LocalDate date);
 
 	List<LinkedHashMap<String,Object>> executeSql(String sql);
 
@@ -57,4 +58,13 @@ public interface GpZxMapper extends BaseMapperUtil<ZXVO> {
 	 */
 	@Select("select * from  gp_yl gy where gy.created_date>CURRENT_DATE order by id asc")
 	List<GpVO> selectCurrentPriceAll();
+
+
+	/**
+	 * 获取指定日期的收盘价格
+	 *
+	 * @author hzl 2022-01-13 10:25 AM
+	 * @return
+	 */
+	GpVO selectEndPriceByDate(@Param("gpCode") String gpCode, @Param("date") LocalDate date);
 }
