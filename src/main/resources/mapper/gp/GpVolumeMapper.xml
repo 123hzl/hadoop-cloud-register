@@ -6,7 +6,7 @@
             gz.id,
             gz.turnover,
             gz.gp_code,
-            gz.number/10000 as number,
+            gz.number as number,
             DATE_FORMAT(gz.created_date,'%y-%m-%d' ) as date,
             gz.current_price
         FROM
@@ -22,13 +22,18 @@
              </where>
             GROUP BY DATE_FORMAT( gz.created_date, '%Y-%m-%d' )
              )
+        <if test="startDate!=null and endDate!=null">
+            and gz.created_date BETWEEN #{startDate} and #{endDate}
+        </if>
+
+
     </select>
     <select id="queryVolumeYl" resultType="com.hzl.hadoop.gp.vo.VolumeVO">
         SELECT
         gz.id,
         gz.turnover,
         gz.gp_code,
-        gz.number/10000 as number,
+        gz.number as number,
         DATE_FORMAT(gz.created_date,'%y-%m-%d' ) as date,
         gz.current_price
         FROM
@@ -44,6 +49,9 @@
         </where>
         GROUP BY DATE_FORMAT( gz.created_date, '%Y-%m-%d' )
         )
+        <if test="startDate!=null and endDate!=null">
+            and gz.created_date BETWEEN #{startDate} and #{endDate}
+        </if>
     </select>
 
     <select id="queryVolumeYlPage" resultType="com.hzl.hadoop.gp.vo.VolumeVO">
@@ -67,5 +75,45 @@
         </where>
         GROUP BY DATE_FORMAT( gz.created_date, '%Y-%m-%d' )
         )
+    </select>
+    <select id="queryVolumeByDate" resultType="com.hzl.hadoop.gp.vo.VolumeVO">
+        SELECT
+        gz.id,
+        gz.turnover,
+        gz.gp_code,
+        gz.number as number,
+        DATE_FORMAT(gz.created_date,'%H:%i:%s') as date,
+        gz.current_price
+        FROM
+        gp_zx gz
+        <where>
+            <if test="gpCode!=null and gpCode!=''">
+                and gz.gp_code=#{gpCode}
+            </if>
+            <if test="startDate!=null and endDate!=null">
+                and gz.created_date BETWEEN #{startDate} and #{endDate}
+            </if>
+        </where>
+       order by gz.id asc
+    </select>
+    <select id="queryVolumeByDateYl" resultType="com.hzl.hadoop.gp.vo.VolumeVO">
+        SELECT
+        gz.id,
+        gz.turnover,
+        gz.gp_code,
+        gz.number as number,
+        DATE_FORMAT(gz.created_date,'%H:%i:%s') as date,
+        gz.current_price
+        FROM
+        gp_yl gz
+        <where>
+            <if test="gpCode!=null and gpCode!=''">
+                and gz.gp_code=#{gpCode}
+            </if>
+            <if test="startDate!=null and endDate!=null">
+                and gz.created_date BETWEEN #{startDate} and #{endDate}
+            </if>
+        </where>
+        order by gz.id asc
     </select>
 </mapper>

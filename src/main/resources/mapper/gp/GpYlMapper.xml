@@ -11,8 +11,14 @@
             gz.created_date
         FROM
             gp_yl gz
-        WHERE
-            gz.created_date > CURRENT_DATE
+        <where>
+            <if test="date==null">
+                and gz.created_date > CURRENT_DATE
+            </if>
+            <if test="date!=null">
+                and gz.created_date BETWEEN #{date} and date_add(#{date},interval 16 HOUR)
+            </if>
+        </where>
         GROUP BY
             gz.max_price
     </select>
@@ -25,9 +31,40 @@
             gz.created_date
         FROM
             gp_yl gz
-        WHERE
-            gz.created_date > CURRENT_DATE
+        <where>
+            <if test="date==null">
+                and gz.created_date > CURRENT_DATE
+            </if>
+            <if test="date!=null">
+                and gz.created_date BETWEEN #{date} and date_add(#{date},interval 16 HOUR)
+            </if>
+      </where>
         GROUP BY
             gz.min_pirce
+    </select>
+    <select id="selectEndPriceByDate" resultType="com.hzl.hadoop.gp.vo.GpVO">
+         SELECT
+            id,
+            gp_name,
+            gp_code,
+            init_price,
+            yesterday_end_price,
+            current_price,
+            max_price,
+            min_pirce,
+            turnover,
+            number,
+            bidding_price,
+            auction,
+            created_date
+        FROM
+            gp_yl gz
+        WHERE
+            gz.gp_code=#{gpCode}
+            and gz.created_date BETWEEN #{date} and date_add(#{date},interval 16 HOUR)
+
+        ORDER BY
+            gz.created_date DESC
+            LIMIT 1
     </select>
 </mapper>

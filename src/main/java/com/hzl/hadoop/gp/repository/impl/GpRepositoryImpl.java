@@ -16,6 +16,7 @@ import com.hzl.hadoop.gp.vo.ZXVO;
 import com.hzl.hadoop.util.JsonUtils;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,29 +57,29 @@ public class GpRepositoryImpl implements GpRepository  {
 	}
 
 	@Override
-	public List<GpVO> selectMaxPriceVolatility(String gpCode) {
+	public List<GpVO> selectMaxPriceVolatility(String gpCode,LocalDate date) {
 		List<GpVO> gpVOS = new ArrayList<>();
 		if (GpUrlConstant.GP_CODE_YL.equals(gpCode)) {
-			gpVOS = JsonUtils.cloneObjectList(gpYlMapper.selectMaxPriceVolatility(), GpVO.class);
+			gpVOS = JsonUtils.cloneObjectList(gpYlMapper.selectMaxPriceVolatility(date), GpVO.class);
 		} else if (GpUrlConstant.GP_CODE_ZX.equals(gpCode)) {
-			gpVOS = JsonUtils.cloneObjectList(gpZxMapper.selectMaxPriceVolatility(gpCode), GpVO.class);
+			gpVOS = JsonUtils.cloneObjectList(gpZxMapper.selectMaxPriceVolatility(gpCode,date), GpVO.class);
 		} else {
-			gpVOS = JsonUtils.cloneObjectList(gpZxMapper.selectMaxPriceVolatility(gpCode), GpVO.class);
+			gpVOS = JsonUtils.cloneObjectList(gpZxMapper.selectMaxPriceVolatility(gpCode,date), GpVO.class);
 		}
 
 		return gpVOS;
 	}
 
 	@Override
-	public List<GpVO> selectMinPriceVolatility(String gpCode) {
+	public List<GpVO> selectMinPriceVolatility(String gpCode,LocalDate date) {
 		List<GpVO> gpVOS = new ArrayList<>();
 		if (GpUrlConstant.GP_CODE_YL.equals(gpCode)) {
-			gpVOS = JsonUtils.cloneObjectList((gpYlMapper.selectMinPriceVolatility()), GpVO.class);
+			gpVOS = JsonUtils.cloneObjectList((gpYlMapper.selectMinPriceVolatility(date)), GpVO.class);
 		} else if (GpUrlConstant.GP_CODE_ZX.equals(gpCode)) {
-			gpVOS = JsonUtils.cloneObjectList((gpZxMapper.selectMinPriceVolatility(gpCode)), GpVO.class);
+			gpVOS = JsonUtils.cloneObjectList((gpZxMapper.selectMinPriceVolatility(gpCode,date)), GpVO.class);
 
 		} else {
-			gpVOS = JsonUtils.cloneObjectList((gpZxMapper.selectMinPriceVolatility(gpCode)), GpVO.class);
+			gpVOS = JsonUtils.cloneObjectList((gpZxMapper.selectMinPriceVolatility(gpCode,date)), GpVO.class);
 		}
 		return gpVOS;
 	}
@@ -105,10 +106,26 @@ public class GpRepositoryImpl implements GpRepository  {
 	}
 
 	@Override
+	public List<VolumeVO> queryVolumeByDate(VolumeVO volumeVO) {
+		if (GpUrlConstant.GP_CODE_YL.equals(volumeVO.getGpCode())) {
+			return gpVolumeMapper.queryVolumeByDateYl(volumeVO);
+		}
+		return gpVolumeMapper.queryVolumeByDate(volumeVO);
+	}
+
+	@Override
 	public PageInfo<VolumeVO> queryVolumePage(VolumeVO volumeVO) {
 		PageInfo<VolumeVO> pageResult = PageHelper.startPage(1, 10).doSelectPageInfo(() -> gpVolumeMapper.select(volumeVO));
 
 		return pageResult;
+	}
+
+	@Override
+	public GpVO selectEndPriceByDate(String gpCode, LocalDate localDate) {
+		if (GpUrlConstant.GP_CODE_YL.equals(gpCode)) {
+			return gpYlMapper.selectEndPriceByDate(gpCode,localDate);
+		}
+		return gpZxMapper.selectEndPriceByDate(gpCode,localDate);
 	}
 
 

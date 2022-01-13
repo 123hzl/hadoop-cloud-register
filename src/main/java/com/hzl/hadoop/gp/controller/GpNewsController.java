@@ -1,6 +1,7 @@
 package com.hzl.hadoop.gp.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.hzl.hadoop.gp.constant.GpCodeEnum;
 import com.hzl.hadoop.gp.entity.GpNewsEntity;
 import com.hzl.hadoop.gp.service.GpNewsService;
 import com.hzl.hadoop.gp.service.XinLangNews;
@@ -48,7 +49,7 @@ public class GpNewsController {
 	public ResponseEntity<Boolean> insertTodayNews(@PathVariable("gpCode") String gpCode) throws IOException {
 
 
-		return new ResponseEntity(xinLangNews.getTodayNews(gpCode), HttpStatus.OK);
+		return new ResponseEntity(xinLangNews.getTodayNews(GpCodeEnum.valueOf(gpCode)), HttpStatus.OK);
 	}
 
 	/**

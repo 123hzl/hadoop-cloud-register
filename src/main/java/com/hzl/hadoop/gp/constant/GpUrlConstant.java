@@ -23,6 +23,9 @@ public interface GpUrlConstant {
 	String GP_CODE_GL="sz000651";
 	//美的
 	String GP_CODE_MD="sz000333";
+	//今世缘
+	String GP_CODE_JSY="sh603369";
+
 
 	//竞价开始时间
 	String BADDING_START="2020-11-04 09:15:00";
@@ -35,4 +38,10 @@ public interface GpUrlConstant {
 
 	//新闻来源-新浪
 	String NEWS_SOURCE="xl";
+
+	//新浪微博cookie
+	String XLWB_COOKIE="SUBP=0433WrSXqPxfM72-Ws9jqgMF55529P9D9WWFYaWppWh_QjS26UF5HwhD;SUB=_2AkMW4JB4f8NxqwJRmP4Wz2Lga45wwwnEieKgvGGjJRMyHRl-yD92qnFTtRB6PWC-l6ipPGOHs3cPr1vmoF0OrWiYBnbb";
+
+
+
 }

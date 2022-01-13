@@ -29,7 +29,11 @@ spring:
     properties:
       mail:
         smtp:
+          port: 465
           auth: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
           starttls:
             enable: true
             required: true
@@ -163,7 +167,7 @@ spring:
 
 # 包扫描或者在启动类上添加@MapperScan或者在每个mapper接口上添加@Mapper注解
 mybatis-plus:
-  mapperLocations: classpath:mapper/**/*.xml
+  mapperLocations: classpath*:mapper/**/*.xml
   configuration: # 数据库下划线转驼峰配置
     mapUnderscoreToCamelCase: true
     cache-enabled: false #关闭二级缓存

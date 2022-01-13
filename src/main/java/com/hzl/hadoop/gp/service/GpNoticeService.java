@@ -2,6 +2,8 @@ package com.hzl.hadoop.gp.service;
 
 import com.hzl.hadoop.gp.vo.MaxMinHtmlVO;
 
+import java.time.LocalDate;
+
 /**
  * description
  *
@@ -24,7 +26,7 @@ public interface GpNoticeService {
 	 *
 	 * @author hzl 2020/11/03 6:49 PM
 	 */
-	MaxMinHtmlVO volatilityPrice(String gpCode);
+	MaxMinHtmlVO volatilityPrice(String gpCode, LocalDate time);
 
 
 

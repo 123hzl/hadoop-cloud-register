@@ -29,4 +29,12 @@ public class VolumeVO {
 	//收盘价
 	private BigDecimal currentPrice;
 
+	//开始时间
+	private LocalDate startDate;
+
+	//结束时间
+	private LocalDate endDate;
+
+	//查询指定日期的的波动情况
+	private Boolean isSureDate;
 }
