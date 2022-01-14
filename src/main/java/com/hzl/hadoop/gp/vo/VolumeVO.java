@@ -18,6 +18,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VolumeVO {
+	//股票名称：
+	private String gpName;
 	//股票编号
 	private String gpCode;
 	//日期
@@ -37,4 +39,6 @@ public class VolumeVO {
 
 	//查询指定日期的的波动情况
 	private Boolean isSureDate;
+
+	private Double percent;
 }

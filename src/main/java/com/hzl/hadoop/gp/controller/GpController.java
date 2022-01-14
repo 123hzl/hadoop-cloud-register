@@ -4,9 +4,11 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.hzl.hadoop.gp.repository.GpRepository;
 import com.hzl.hadoop.gp.service.GpService;
+import com.hzl.hadoop.gp.service.GpStareService;
 import com.hzl.hadoop.gp.vo.GpVO;
 import com.hzl.hadoop.gp.vo.VolumeVO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,9 @@ public class GpController {
 	private GpService gpService;
 
 	private GpRepository gpRepository;
+
+	@Autowired
+	private  GpStareService gpStareService;
 
 	public GpController(GpService gpService, GpRepository gpRepository) {
 		this.gpService = gpService;
@@ -51,6 +56,12 @@ public class GpController {
 		PageInfo page1 = gpRepository.queryVolumePage(volumeVO);
 		log.info("返回结果-------"+page1.toString());
 		return new ResponseEntity(page1, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/gp/yl/query/volume/test/{code}")
+	public ResponseEntity queryVolumetest(@PathVariable String code) {
+		gpStareService.notifyBuyAndSale(code);
+		return new ResponseEntity(HttpStatus.OK);
 	}
 
 

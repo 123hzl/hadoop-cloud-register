@@ -18,15 +18,15 @@
     <properties>
         <itextpdf>5.5.13.1</itextpdf>
         <google.zxing>3.3.3</google.zxing>
-        <httpclient>4.5.9</httpclient>
+        <httpclient>5.2-alpha1</httpclient>
         <freemarker>2.2.2.RELEASE</freemarker>
         <apache.poi>5.0.0</apache.poi>
         <poi-ooxml>5.0.0</poi-ooxml>
         <poi-scratchpad>5.0.0</poi-scratchpad>
         <druid>1.1.22</druid>
         <easyexcel>2.1.6</easyexcel>
-        <ant>1.10.7</ant>
-        <commons-compress>1.19</commons-compress>
+        <ant>1.10.12</ant>
+        <commons-compress>1.21</commons-compress>
         <activiti>7.1.0.M6</activiti>
         <hadoop-client>3.2.1</hadoop-client>
         <hzl.mybatis.plug>0.0.1-SNAPSHOT</hzl.mybatis.plug>
@@ -48,6 +48,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
         </dependency>
 
         <!--开启springmvc-->
@@ -75,9 +76,9 @@
         </dependency>
         <!--&lt;!&ndash;http工具&ndash;&gt;-->
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>${httpclient}</version>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>5.2-alpha1</version>
         </dependency>
         <!--模版引擎-->
         <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
