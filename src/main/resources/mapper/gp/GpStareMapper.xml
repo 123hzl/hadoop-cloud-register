@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hzl.hadoop.gp.mapper.GpStareMapper">
+
+
+    <select id="queryPercent" resultType="com.hzl.hadoop.gp.vo.VolumeVO">
+        SELECT
+        tt.*
+        FROM
+        (
+        SELECT
+        gz.gp_name,
+        gz.id,
+        gz.turnover,
+        gz.gp_code,
+        gz.number / 10000 AS number,
+        DATE_FORMAT( gz.created_date, '%y-%m-%d' ) AS date,
+        gz.current_price,
+        ((( gz.turnover * 1000000 )/( gz.number )- gz.current_price )/ gz.current_price )* 10000 AS percent
+        FROM
+        gp_zx gz
+        WHERE
+        gz.id IN ( SELECT max( gz.id ) FROM gp_zx gz WHERE gz.gp_code = #{gpCode} GROUP BY DATE_FORMAT( gz.created_date, '%Y-%m-%d' ) )
+        AND DATE_SUB( CURDATE(), INTERVAL 30 DAY ) &lt;= date( gz.created_date ) ) tt
+        WHERE
+        <if test="isPositive!=null and isPositive==true">
+            tt.percent >=0
+        </if>
+        <if test="isPositive!=null and isPositive==false">
+            tt.percent &lt;=0
+        </if>
+        ORDER BY
+        tt.percent DESC
+    </select>
+    <select id="queryCurrentPercent" resultType="com.hzl.hadoop.gp.vo.VolumeVO">
+        SELECT
+            gz.gp_name,
+            gz.id,
+            gz.turnover,
+            gz.gp_code,
+            gz.number / 10000 AS number,
+            DATE_FORMAT( gz.created_date, '%y-%m-%d' ) AS date,
+            gz.current_price,
+            ((( gz.turnover * 1000000 )/( gz.number )- gz.current_price )/ gz.current_price )* 10000 AS percent
+        FROM
+            gp_zx gz
+        WHERE
+            gz.id IN ( SELECT max( gz.id ) FROM gp_zx gz WHERE gz.gp_code = #{gpCode})
+
+    </select>
+</mapper>

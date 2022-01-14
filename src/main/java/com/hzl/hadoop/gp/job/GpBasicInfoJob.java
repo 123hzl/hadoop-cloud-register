@@ -1,16 +1,17 @@
 package com.hzl.hadoop.gp.job;
 
-import com.hzl.hadoop.gp.constant.GpUrlConstant;
-import com.hzl.hadoop.gp.service.GpNoticeService;
-import com.hzl.hadoop.gp.service.GpService;
-import com.hzl.hadoop.gp.service.XinLangNews;
+import com.hzl.hadoop.gp.entity.GpInfoEntity;
+import com.hzl.hadoop.gp.service.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 
 /**
@@ -31,6 +32,12 @@ public class GpBasicInfoJob {
 	@Autowired
 	private XinLangNews xinLangNews;
 
+	@Autowired
+	private GpStareService gpStareService;
+
+	@Autowired
+	private GpInfoService gpInfoService;
+
 	/**
 	 * 设置定时器的线程池
 	 *
@@ -44,6 +51,28 @@ public class GpBasicInfoJob {
 		return taskScheduler;
 	}
 
+	public Boolean creep() {
+
+		List<GpInfoEntity> list = gpInfoService.list();
+		if (CollectionUtils.isNotEmpty(list)) {
+			list.forEach(gpInfoEntity -> {
+				//是否爬取
+				if (gpInfoEntity.getIsCreep()) {
+					log.info("定时器爬取股票数据----------------------------------------------------" + Thread.currentThread());
+					gpService.insert(gpInfoEntity.getGpCode());
+				}
+				//是否买入卖出通知
+				if (gpInfoEntity.getIsNotify()) {
+					log.info("定时器买入卖出提醒----------------------------------------------------" + Thread.currentThread());
+					gpStareService.notifyBuyAndSale(gpInfoEntity.getGpCode());
+				}
+			});
+
+
+		}
+
+		return true;
+	}
 
 	/**
 	 * fixedDelay 上传方法执行完成后开始计算
@@ -53,105 +82,34 @@ public class GpBasicInfoJob {
 	 * @author hzl 2020-11-03 2:27 PM
 	 * @}eturn
 	 */
-//	@Scheduled(cron = "0 30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59 9 ? * MON-FRI")
-//	public void getBasicInfoYl() {
-//		log.info("定时器获取中兴时时基础数据d----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_MD);
-//		gpService.insert(GpUrlConstant.GP_CODE_GM);
-//		gpService.insert(GpUrlConstant.GP_CODE_GL);
-//
-//		log.info("定时器获取伊利时时基础数据----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_YL);
-//
-//		log.info("定时器获取海尔时时基础数据----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_HE);
-//
-//
-//		log.info("定时器获取海尔时时基础数据----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_HE);
-//
-//		log.info("定时器获取今世缘时时基础数据----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_JSY);
-//
-//	}
-//
-//	@Scheduled(cron = "0 0/1 10 ? * MON-FRI")
-//	public void getBasicInfoYl1() {
-//		log.info("定时器获取中兴时时基础数据d----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_MD);
-//		gpService.insert(GpUrlConstant.GP_CODE_GM);
-//		gpService.insert(GpUrlConstant.GP_CODE_GL);
-//
-//		log.info("定时器获取伊利时时基础数据----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_YL);
-//
-//		log.info("定时器获取海尔时时基础数据----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_HE);
-//
-//
-//		log.info("定时器获取今世缘时时基础数据----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_JSY);
-//
-//	}
-//
-//	@Scheduled(cron = "0 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31 11 ? * MON-FRI")
-//	public void getBasicInfoYl2() {
-//		log.info("定时器获取中兴时时基础数据d----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_MD);
-//		gpService.insert(GpUrlConstant.GP_CODE_GM);
-//		gpService.insert(GpUrlConstant.GP_CODE_GL);
-//
-//		log.info("定时器获取伊利时时基础数据----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_YL);
-//
-//		log.info("定时器获取海尔时时基础数据----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_HE);
-//
-//
-//		log.info("定时器获取今世缘时时基础数据----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_JSY);
-//
-//	}
-//
-//
-//	@Scheduled(cron = "0 0/1 13-14 ? * MON-FRI")
-//	public void getBasicInfoYlT() {
-//		log.info("定时器获取中兴时时基础数据d----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_MD);
-//		gpService.insert(GpUrlConstant.GP_CODE_GM);
-//		gpService.insert(GpUrlConstant.GP_CODE_GL);
-//
-//		log.info("定时器获取伊利时时基础数据----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_YL);
-//
-//		log.info("定时器获取海尔时时基础数据----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_HE);
-//
-//
-//		log.info("定时器获取今世缘时时基础数据----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_JSY);
-//
-//	}
-//
-//
-//	@Scheduled(cron = "0 1 15 ? * MON-FRI")
-//	public void getBasicInfoYlTL() {
-//		log.info("定时器获取中兴时时基础数据d----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_MD);
-//		gpService.insert(GpUrlConstant.GP_CODE_GM);
-//		gpService.insert(GpUrlConstant.GP_CODE_GL);
-//
-//		log.info("定时器获取伊利时时基础数据----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_YL);
-//
-//		log.info("定时器获取海尔时时基础数据----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_HE);
-//
-//
-//		log.info("定时器获取今世缘时时基础数据----------------------------------------------------" + Thread.currentThread());
-//		gpService.insert(GpUrlConstant.GP_CODE_JSY);
-//
-//	}
+	@Scheduled(cron = "0 30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59 9 ? * MON-FRI")
+	public Boolean getBasicInfoYl() {
+		return creep();
+	}
+
+	@Scheduled(cron = "0 0/1 10 ? * MON-FRI")
+	public Boolean getBasicInfoYl1() {
+		return creep();
+	}
+
+	@Scheduled(cron = "0 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31 11 ? * MON-FRI")
+	public Boolean getBasicInfoYl2() {
+		return creep();
+
+	}
+
+
+	@Scheduled(cron = "0 0/1 13-14 ? * MON-FRI")
+	public Boolean getBasicInfoYlT() {
+		return creep();
+
+	}
+
+	@Scheduled(cron = "0 1 15 ? * MON-FRI")
+	public Boolean getBasicInfoYlTL() {
+		return creep();
+
+	}
 
 //	/**
 //	 * 半小时执行一次，用于获取个股新闻数据，暂时只爬去新浪网

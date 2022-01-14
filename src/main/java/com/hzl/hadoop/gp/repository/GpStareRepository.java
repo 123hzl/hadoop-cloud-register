@@ -1,5 +1,9 @@
 package com.hzl.hadoop.gp.repository;
 
+import com.hzl.hadoop.gp.vo.VolumeVO;
+
+import java.util.List;
+
 /**
  * description
  *
@@ -8,13 +12,23 @@ package com.hzl.hadoop.gp.repository;
 public interface GpStareRepository {
 
 	/**
-	 * 获取均价亏损最高的数据
+	 * 获取历史均价信息,30天内的数据
 	 *
-	 * @param null
-	 * @author hzl 2022-01-13 11:07 AM
+	 * @param gpCode     股票编号
+	 * @param isPositive 是否取正数
 	 * @return
+	 * @author hzl 2022-01-13 11:07 AM
 	 */
+	List<VolumeVO> getHistoryAverage(String gpCode, Boolean isPositive);
 
+	/**
+	 * 查询时时均价
+	 *
+	 * @param gpCode
+	 * @return
+	 * @author hzl 2022-01-13 11:07 AM
+	 */
+	VolumeVO queryCurrentPercent(String gpCode);
 
 
 	/**
