@@ -60,7 +60,8 @@ public class GpController {
 
 	@GetMapping(value = "/gp/yl/query/volume/test/{code}")
 	public ResponseEntity queryVolumetest(@PathVariable String code) {
-		gpStareService.notifyBuyAndSale(code);
+		//gpStareService.notifyBuyAndSale(code);
+		gpStareService.notifyBuePrice(code);
 		return new ResponseEntity(HttpStatus.OK);
 	}
 

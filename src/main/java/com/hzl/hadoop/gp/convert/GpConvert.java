@@ -4,8 +4,10 @@ import com.hzl.hadoop.util.HttpResponseException;
 import com.hzl.hadoop.util.HttpUtils;
 import com.hzl.hadoop.util.ListUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,7 +32,19 @@ public class GpConvert {
 		//String data=HttpUtil.get(url);
 		String data = null;
 		try {
-			data = HttpUtils.sendGet(url, "GB18030", null, null);
+			Map<String, String> headerParam = new HashMap<>();
+			headerParam.put("Accept-Language", "zh-CN,zh;q=0.9,en;q=0.8,de;q=0.7");
+			headerParam.put("Host", "hq.sinajs.cn");
+			headerParam.put("Referer", "https://vip.stock.finance.sina.com.cn/");
+			headerParam.put("Sec-Fetch-Site", "cross-site");
+			headerParam.put("Sec-Fetch-Mode", "no-cors");
+			headerParam.put("Sec-Fetch-Dest", "script");
+			headerParam.put("Cache-Control", "no-cache");
+			headerParam.put("Pragma", "no-cache");
+			headerParam.put("sec-ch-ua", "Not;A Brand\";v=\"99\", \"Google Chrome\";v=\"97\", \"Chromium\";v=\"97");
+			headerParam.put("sec-ch-ua-mobile", " ?0");
+			headerParam.put("sec-ch-ua-platform", "centOS");
+			data = HttpUtils.sendGet(url, "GB18030", null, headerParam);
 		} catch (HttpResponseException e) {
 			e.printStackTrace();
 		}
@@ -40,7 +54,8 @@ public class GpConvert {
 	//截取字符串
 	private String[] subString(String data) {
 		String first[] = data.split("\"", -1);
-		//log.info("第一次截取" + first[1]);
+
+		//log.info("截取结果{}", StringUtils.join(first,"-"));
 		String dataArry[] = first[1].split(",");
 		//log.info("第二次截取" + Arrays.toString(dataArry));
 
@@ -76,6 +91,7 @@ public class GpConvert {
 	public Map<String, String> getGpInfo(String url, String[] keys) {
 		//获取数据
 		String data = httpGet(url);
+		log.info("响应结果{}", data);
 		//解析数据
 		String[] dataSubString = subString(data);
 		//转化数据

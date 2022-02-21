@@ -1,7 +1,9 @@
 package com.hzl.hadoop.gp.repository;
 
 import com.hzl.hadoop.gp.vo.VolumeVO;
+import org.apache.ibatis.annotations.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -73,6 +75,18 @@ public interface GpStareRepository {
 	 * @author hzl 2022-01-13 11:07 AM
 	 * @return
 	 */
+
+	/**
+	 * 股价买入量计算-通过该数据计算出建议买入价格
+	 *
+	 * @param gpCode 股票编号
+	 * @author hzl 2022-01-19 1:33 PM
+	 * @return
+	 */
+
+	 List<VolumeVO> gpPriceCount(String gpCode);
+
+	 List<VolumeVO> gpPriceCountByPrice(String gpCode, BigDecimal currentPrice);
 
 
 }

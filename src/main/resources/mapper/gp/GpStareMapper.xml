@@ -49,4 +49,44 @@
             gz.id IN ( SELECT max( gz.id ) FROM gp_zx gz WHERE gz.gp_code = #{gpCode})
 
     </select>
+    <select id="gpPriceCount" resultType="com.hzl.hadoop.gp.vo.VolumeVO">
+        SELECT
+            sum( volume ) as turnover,
+            price as current_price
+        FROM
+            gp_xl_percent
+        where symbol=#{gpCode}
+
+        GROUP BY
+            price
+        order by
+        turnover desc,current_price desc
+    </select>
+
+    <select id="gpPriceCountByPrice" resultType="com.hzl.hadoop.gp.vo.VolumeVO">
+        SELECT
+        sum( turnover ) AS turnover,
+        avg( tt.current_price ) AS current_price
+        FROM
+        ( SELECT sum( volume ) AS turnover, price AS current_price FROM gp_xl_percent where symbol=#{gpCode} GROUP BY price ) tt
+        WHERE
+        tt.current_price &lt; #{currentPrice} UNION ALL
+        SELECT
+        turnover,
+        tt.current_price
+        FROM
+        ( SELECT sum( volume ) AS turnover, price AS current_price FROM gp_xl_percent  where symbol=#{gpCode} GROUP BY price ) tt
+        WHERE
+        tt.current_price = #{currentPrice} UNION ALL
+        SELECT
+        turnover,
+        tt.current_price
+        FROM
+        ( SELECT sum( volume ) AS turnover, price AS current_price FROM gp_xl_percent  where symbol=#{gpCode} GROUP BY price ) tt
+        WHERE
+        tt.current_price > #{currentPrice}
+        order by
+        current_price desc
+    </select>
+
 </mapper>

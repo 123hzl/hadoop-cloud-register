@@ -239,7 +239,7 @@ public class SealUtil {
 	 * @param fullPath 文件全路径
 	 * @throws IOException 异常
 	 */
-	private static void storeBytes(byte[] buf, String fullPath) throws IOException {
+	public static void storeBytes(byte[] buf, String fullPath) throws IOException {
 
 		File file = new File(fullPath);
 		try (FileOutputStream fos = new FileOutputStream(file);

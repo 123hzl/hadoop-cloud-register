@@ -1,10 +1,8 @@
 package com.hzl.hadoop.gp.service;
 
-import com.hzl.hadoop.gp.vo.EndPriceVO;
-import com.hzl.hadoop.gp.vo.GpVO;
-import com.hzl.hadoop.gp.vo.MaxMinHtmlVO;
-import com.hzl.hadoop.gp.vo.VolumeVO;
+import com.hzl.hadoop.gp.vo.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -28,4 +26,13 @@ public interface GpService {
 	 * @author hzl 2020-11-04 9:45 AM
 	 */
 	MaxMinHtmlVO queryVolume(VolumeVO volumeVO);
+
+	/**
+	 * <p>
+	 * 各价格买入量占比
+	 * </p>
+	 *
+	 * @author hzl 2022/01/20 11:23 AM
+	 */
+	List<PercentVO> gpPriceCount(String gpCode,BigDecimal currentPrice);
 }

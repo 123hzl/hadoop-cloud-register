@@ -6,11 +6,11 @@ package com.hzl.hadoop.gp.constant;
  * @author hzl 2020/10/31 1:43 PM
  */
 public interface GpUrlConstant {
-	String YL_URL="http://hq.sinajs.cn/list=sh600887";
+	String YL_URL="https://hq.sinajs.cn/list=sh600887";
 
-	String MD_URL="http://hq.sinajs.cn/list=sz000333";
+	String MD_URL="https://hq.sinajs.cn/list=sz000333,sh600887";
 	//获取成交额，时时价格
-	String GP_BASE_URL="http://hq.sinajs.cn/list=";
+	String GP_BASE_URL="https://hq.sinajs.cn/list=";
 	//伊利
 	String GP_CODE_YL="sh600887";
 	//中兴

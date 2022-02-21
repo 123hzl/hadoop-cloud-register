@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.hzl.hadoop.gp.convert.ImageConvert;
 import com.hzl.hadoop.gp.entity.XlwebImagesEntity;
 import com.hzl.hadoop.gp.mapper.XlwebImagesMapper;
 import com.hzl.hadoop.gp.service.XlwebImagesService;
@@ -15,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.hzl.hadoop.gp.convert.ImageConvert.getImageInfosAll;
 
 
 @Service("xlwebImagesService")
@@ -23,6 +23,9 @@ public class XlwebImagesServiceImpl extends ServiceImpl<XlwebImagesMapper, Xlweb
 
 	@Autowired
 	XlwebImagesMapper mapper;
+
+	@Autowired
+	ImageConvert imageConvert;
 
 	@Override
 	public PageInfo queryPage(XlwebImagesEntity params, int start, int pageSize) {
@@ -35,10 +38,10 @@ public class XlwebImagesServiceImpl extends ServiceImpl<XlwebImagesMapper, Xlweb
 
 	@Override
 	public Boolean getAllImagePage(Long uid) {
-		List<XlwebImagesVO> list = getImageInfosAll(String.valueOf(uid));
+		List<XlwebImagesVO> list = imageConvert.getImageInfosAll(String.valueOf(uid),false);
 		Map<String, Object> map = new HashMap<>(1);
 		map.put("uid", uid);
-		mapper.deleteByMap(map);
+		//mapper.deleteByMap(map);
 		//新增一个文件下载表，所有下载的文件都在该表记录
 		list.forEach(a -> {
 			saveBatch(a.convert());

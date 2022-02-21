@@ -357,7 +357,7 @@ public class HttpUtils {
 	public static String sendGet(String url,String charset, Map<String, ?> param,Map<String, String> headerParam) throws HttpResponseException {
 		log.info("========  开始发送GET请求 ========");
 		BufferedReader in = null;
-		String result = "";
+		StringBuilder result = new StringBuilder();
 		Integer status = null;
 		try {
 			URL realUrl = new URL(getUrl(url, param));
@@ -367,7 +367,7 @@ public class HttpUtils {
 			connection.setReadTimeout(DEFAULT_READ_TIME_OUT);
 			connection.setRequestProperty("accept", "*/*");
 			connection.setRequestProperty("connection", "Keep-Alive");
-			connection.setRequestProperty("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36");
+			connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36");
 			// 添加头部参数
 			if (Objects.nonNull(headerParam) && !headerParam.isEmpty()) {
 				for (String key : headerParam.keySet()) {
@@ -384,11 +384,11 @@ public class HttpUtils {
 			String line;
 			try {
 				for (in = new BufferedReader(new InputStreamReader(connection.getInputStream(), charset)); (line =
-						in.readLine()) != null; result = result + line) {
+						in.readLine()) != null; result.append(line)) {
 				}
 			} catch (IOException e) {
 				for (in = new BufferedReader(new InputStreamReader(connection.getErrorStream(), charset)); (line =
-						in.readLine()) != null; result = result + line) {
+						in.readLine()) != null; result.append(line)) {
 
 				}
 			}
@@ -397,7 +397,7 @@ public class HttpUtils {
 
 		} catch (Exception var18) {
 			throw new HttpResponseException(
-					Optional.ofNullable(status).orElse(HttpStatus.INTERNAL_SERVER_ERROR.value()), result,
+					Optional.ofNullable(status).orElse(HttpStatus.INTERNAL_SERVER_ERROR.value()), result.toString(),
 					"请求失败");
 		} finally {
 			try {
@@ -409,10 +409,10 @@ public class HttpUtils {
 			}
 		}
 		if (Objects.nonNull(status) && status >= 200 && status < 300) {
-			return result;
+			return result.toString();
 		}
 		//
-		throw new HttpResponseException(Optional.ofNullable(status).orElse(HttpStatus.REQUEST_TIMEOUT.value()), result,
+		throw new HttpResponseException(Optional.ofNullable(status).orElse(HttpStatus.REQUEST_TIMEOUT.value()), result.toString(),
 				"请求失败");
 
 	}
@@ -453,6 +453,7 @@ public class HttpUtils {
 				}
 			}
 		}
+		System.out.println(sb.toString());
 		return sb.toString();
 	}
 

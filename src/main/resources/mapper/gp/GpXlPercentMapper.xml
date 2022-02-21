@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hzl.hadoop.gp.mapper.GpXlPercentMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.hzl.hadoop.gp.entity.GpXlPercentEntity" id="gpXlPercentMap">
+        <result property="id" column="id"/>
+        <result property="symbol" column="symbol"/>
+        <result property="name" column="name"/>
+        <result property="ticktime" column="ticktime"/>
+        <result property="price" column="price"/>
+        <result property="volume" column="volume"/>
+        <result property="prevPrice" column="prev_price"/>
+        <result property="kind" column="kind"/>
+    </resultMap>
+
+
+</mapper>

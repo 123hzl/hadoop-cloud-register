@@ -44,7 +44,7 @@ public class StartWorkFlowEngine {
 		QueryWrapper<StartNodeEntity> queryWrapper = new QueryWrapper();
 		queryWrapper.eq("node_num", startWorkFlowVO.getStartNodeNum());
 		//根据启动节点获取下一节点信息
-		StartNodeEntity startNodeEntity = startNodeService.getOne(queryWrapper);
+		StartNodeEntity startNodeEntity = startNodeService.getOne(queryWrapper,false);
 
 		ProcessHistoryEntity processHistoryEntity = ProcessHistoryEntity
 				.builder()

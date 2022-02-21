@@ -6,6 +6,7 @@ import com.hzl.hadoop.gp.vo.VolumeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -29,4 +30,16 @@ public class GpStareRepositoryImpl implements GpStareRepository {
 	public VolumeVO queryCurrentPercent(String gpCode) {
 		return gpStareMapper.queryCurrentPercent(gpCode);
 	}
+
+	@Override
+	public  List<VolumeVO> gpPriceCount(String gpCode) {
+		return  gpStareMapper.gpPriceCount(gpCode);
+	}
+
+	@Override
+	public List<VolumeVO> gpPriceCountByPrice(String gpCode, BigDecimal currentPrice) {
+		return gpStareMapper.gpPriceCountByPrice(gpCode,currentPrice);
+	}
+
+
 }
