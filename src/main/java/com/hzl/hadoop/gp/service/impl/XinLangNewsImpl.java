@@ -62,7 +62,7 @@ public class XinLangNewsImpl implements XinLangNews {
 
 		entities.forEach(a->{
 			Wrapper<GpNewsEntity> queryWrapper=new QueryWrapper<>(a);
-			if(gpNewsService.getOne(queryWrapper)==null){
+			if(gpNewsService.getOne(queryWrapper,false)==null){
 				//去重保存 TODO 优化查询将url生成短链接
 				gpNewsService.save(a);
 				//发送邮件消息

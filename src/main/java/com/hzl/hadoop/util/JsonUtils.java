@@ -42,6 +42,19 @@ public class JsonUtils {
 	}
 
 	/**
+	 * <p>
+	 * json字符串转java集合对象
+	 * </p>
+	 *
+	 * @author hzl 2020/08/06 12:58 PM
+	 */
+
+	public static <T> List<T>  jsonStringToList(String json,Class<T> className){
+
+		return JSONObject.parseArray(json, className);
+	}
+
+	/**
 	 *
 	 *
 	 * 实现对象克隆有两种方式：

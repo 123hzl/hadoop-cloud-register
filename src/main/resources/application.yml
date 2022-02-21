@@ -127,7 +127,7 @@ spring:
           password: ${SPRING_DATASOURCE_PASSWORD:Hzl1qaz2wsx}
           driver-class-name: com.mysql.cj.jdbc.Driver
         slave1:
-          url: ${SPRING_DATASOURCE_URL:jdbc:mysql://rm-uf6pbp6h2285c40n9to.mysql.rds.aliyuncs.com:3306/gp?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true}
+          url: ${SPRING_DATASOURCE_URL:jdbc:mysql://2343434343:3306/gp?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true}
           username: ${SPRING_DATASOURCE_USERNAME:hzl}
           password: ${SPRING_DATASOURCE_PASSWORD:Hzl1qaz2wsx}
           driver-class-name: com.mysql.cj.jdbc.Driver

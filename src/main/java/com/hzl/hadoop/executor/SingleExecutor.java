@@ -48,7 +48,7 @@ public class SingleExecutor {
 
 						@Override
 						protected void terminated() {
-							System.out.println("线程池结束");
+							log.info("线程池结束");
 						}
 					};
 				}

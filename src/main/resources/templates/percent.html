@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>基础饼图-蜘蛛标签</title>
+</head>
+<body>
+<div id="container" />
+<script src="https://gw.alipayobjects.com/os/lib/antv/g2/4.1.35/dist/g2.min.js"></script>
+<script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.data-set-0.11.1/dist/data-set.js"></script>
+<script>
+    <!-- 浏览器引入，请使用全局命名空间 G2，如 new Chart() 改为 new G2.Chart，即可运行。 -->
+    const data = ${maxMinHtmlVO.data};
+
+    const chart =  new G2.Chart({
+        container: 'container',
+        autoFit: true,
+        height: 500,
+    });
+
+    chart.coordinate('theta', {
+        radius: 0.75,
+    });
+
+    chart.data(data);
+
+    chart.tooltip({
+        showTitle: false,
+        showMarkers: false,
+    });
+
+    chart
+        .interval()
+        .position('value')
+        .color('type')
+        .label('type*value', {
+            layout: { type: 'pie-spider' },
+            labelHeight: 20,
+            content: (obj) => obj.type +"("+ (obj.value)+")",
+            labelLine: {
+                style: {
+                    lineWidth: 0.5,
+                },
+            },
+        })
+        .adjust('stack');
+
+    chart.interaction('element-active');
+
+    chart.render();
+</script>
+</body>
+</html>

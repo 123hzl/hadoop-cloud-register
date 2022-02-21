@@ -38,6 +38,9 @@ public class GpBasicInfoJob {
 	@Autowired
 	private GpInfoService gpInfoService;
 
+	@Autowired
+	private GpXlPercentService gpXlPercentService;
+
 	/**
 	 * 设置定时器的线程池
 	 *
@@ -47,7 +50,7 @@ public class GpBasicInfoJob {
 	@Bean
 	public TaskScheduler taskScheduler() {
 		ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
-		taskScheduler.setPoolSize(5);
+		taskScheduler.setPoolSize(6);
 		return taskScheduler;
 	}
 
@@ -56,6 +59,7 @@ public class GpBasicInfoJob {
 		List<GpInfoEntity> list = gpInfoService.list();
 		if (CollectionUtils.isNotEmpty(list)) {
 			list.forEach(gpInfoEntity -> {
+
 				//是否爬取
 				if (gpInfoEntity.getIsCreep()) {
 					log.info("定时器爬取股票数据----------------------------------------------------" + Thread.currentThread());
@@ -66,8 +70,8 @@ public class GpBasicInfoJob {
 					log.info("定时器买入卖出提醒----------------------------------------------------" + Thread.currentThread());
 					gpStareService.notifyBuyAndSale(gpInfoEntity.getGpCode());
 				}
-			});
 
+			});
 
 		}
 
@@ -110,6 +114,7 @@ public class GpBasicInfoJob {
 		return creep();
 
 	}
+
 
 //	/**
 //	 * 半小时执行一次，用于获取个股新闻数据，暂时只爬去新浪网

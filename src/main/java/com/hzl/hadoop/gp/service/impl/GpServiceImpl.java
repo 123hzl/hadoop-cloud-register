@@ -3,11 +3,13 @@ package com.hzl.hadoop.gp.service.impl;
 import com.hzl.hadoop.gp.constant.GpUrlConstant;
 import com.hzl.hadoop.gp.convert.GpConvert;
 import com.hzl.hadoop.gp.repository.GpRepository;
+import com.hzl.hadoop.gp.repository.GpStareRepository;
 import com.hzl.hadoop.gp.service.GpService;
 import com.hzl.hadoop.gp.vo.*;
 import com.hzl.hadoop.util.JsonUtils;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -24,8 +26,11 @@ public class GpServiceImpl implements GpService {
 
 	GpRepository gpRepository;
 
-	public GpServiceImpl(GpRepository gpRepository) {
+	GpStareRepository gpStareRepository;
+
+	public GpServiceImpl(GpRepository gpRepository, GpStareRepository gpStareRepository) {
 		this.gpRepository = gpRepository;
+		this.gpStareRepository = gpStareRepository;
 	}
 
 
@@ -98,6 +103,20 @@ public class GpServiceImpl implements GpService {
 		}
 
 
+	}
+
+	@Override
+	public List<PercentVO> gpPriceCount(String gpCode, BigDecimal currentPrice) {
+		List<VolumeVO> volumeVOS = currentPrice != null ? gpStareRepository.gpPriceCountByPrice(gpCode, currentPrice) : gpStareRepository.gpPriceCount(gpCode);
+
+		BigDecimal sumTurnover = volumeVOS.stream().map(a -> a.getTurnover()).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+		List<PercentVO> percentVOS = volumeVOS.stream().map(a -> PercentVO.builder()
+				.type(String.valueOf(a.getCurrentPrice()))
+				.value((a.getTurnover().multiply(BigDecimal.valueOf(100))).divide(sumTurnover, 2, BigDecimal.ROUND_HALF_UP))
+				.build()).collect(Collectors.toList());
+
+		return percentVOS;
 	}
 
 }
