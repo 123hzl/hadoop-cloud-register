@@ -54,43 +54,43 @@ public class GpBasicInfoPercentJob {
 	 * @author hzl 2020-11-03 2:27 PM
 	 * @}eturn
 	 */
-	@Scheduled(cron = "0 30,32,34,36,38,40,42,44,46,48,50,52,54,56,58 9 ? * MON-FRI")
-	public Boolean getPercent() {
-		return creep();
-	}
-
-	@Scheduled(cron = "0 0/1 10 ? * MON-FRI")
-	public Boolean getPercent1() {
-		return creep();
-	}
-
-	@Scheduled(cron = "0 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,31 11 ? * MON-FRI")
-	public Boolean getPercent2() {
-		return creep();
-
-	}
-
-
-	@Scheduled(cron = "0 0/2 13-14 ? * MON-FRI")
-	public Boolean getPercent3() {
-		return creep();
-
-	}
-
-	@Scheduled(cron = "0 1 15 ? * MON-FRI")
-	public Boolean getPercent4() {
-		return creep();
-
-	}
-
-	@Scheduled(cron = "0 1 19 ? * MON-FRI")
-	public Boolean removePercent() {
-		List<GpInfoEntity> list = gpInfoService.list();
-		if (CollectionUtils.isNotEmpty(list)) {
-			list.forEach(a -> gpXlPercentService.remove(a.getGpCode()));
-		}
-		return true;
-	}
+//	@Scheduled(cron = "0 30,32,34,36,38,40,42,44,46,48,50,52,54,56,58 9 ? * MON-FRI")
+//	public Boolean getPercent() {
+//		return creep();
+//	}
+//
+//	@Scheduled(cron = "0 0/1 10 ? * MON-FRI")
+//	public Boolean getPercent1() {
+//		return creep();
+//	}
+//
+//	@Scheduled(cron = "0 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,31 11 ? * MON-FRI")
+//	public Boolean getPercent2() {
+//		return creep();
+//
+//	}
+//
+//
+//	@Scheduled(cron = "0 0/2 13-14 ? * MON-FRI")
+//	public Boolean getPercent3() {
+//		return creep();
+//
+//	}
+//
+//	@Scheduled(cron = "0 1 15 ? * MON-FRI")
+//	public Boolean getPercent4() {
+//		return creep();
+//
+//	}
+//
+//	@Scheduled(cron = "0 1 19 ? * MON-FRI")
+//	public Boolean removePercent() {
+//		List<GpInfoEntity> list = gpInfoService.list();
+//		if (CollectionUtils.isNotEmpty(list)) {
+//			list.forEach(a -> gpXlPercentService.remove(a.getGpCode()));
+//		}
+//		return true;
+//	}
 
 
 }

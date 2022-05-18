@@ -22,7 +22,7 @@ public class RequestLogsServiceImpl extends ServiceImpl<RequestLogsMapper, Reque
     @Override
     public PageInfo queryPage(RequestLogsEntity params,int start, int pageSize) {
 		QueryWrapper<RequestLogsEntity> queryWrapper = new QueryWrapper(params);
-
+		queryWrapper.orderByDesc("create_time");
 		PageInfo<RequestLogsEntity> pageResult = PageHelper.startPage(start, pageSize).doSelectPageInfo(() -> mapper.selectList(queryWrapper));
 
         return pageResult;

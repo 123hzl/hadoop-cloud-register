@@ -30,7 +30,7 @@ public class ExcelParseToMapUtil {
 	 * 将excel数据按照不同的sheet页解析进Map
 	 *
 	 * @param file 导入的excel文件
-	 * @return Map<String,List <Map<String,String>>> key:sheet名,value : (List<Map<String,String>>) sheet页中行数据的集合（不包括头信息）
+	 * @return Map<String               ,               List                               <               Map               <               String               ,               String>>> key:sheet名,value : (List<Map<String,String>>) sheet页中行数据的集合（不包括头信息）
 	 * Map<String,String>   key:字段名  ,  value : 字段值
 	 * @throws Exception
 	 */

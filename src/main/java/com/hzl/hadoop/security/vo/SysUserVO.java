@@ -28,9 +28,14 @@ public class SysUserVO extends BaseDO {
 
 	private Long id;
 
-	private String name;
+	private String username;
 
 	private String password;
+
+	/*
+	 * 电话号码
+	 * */
+	private String phone;
 
 	private LocalDateTime creationDate;
 

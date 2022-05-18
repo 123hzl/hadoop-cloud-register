@@ -57,17 +57,6 @@ public class LoginController {
 		return new ResponseEntity(myUserDetailsService.register(sysUserVO), HttpStatus.OK);
 	}
 
-	/**
-	 * <p>
-	 * 退出界面
-	 * </p>
-	 *
-	 * @author hzl 2020/01/08 12:41 PM
-	 */
-	@GetMapping(value = "/login/out/{username}")
-	public String loginout(@PathVariable("username") String userName) {
-		return "loginout";
-	}
 
 	/**
 	 * <p>

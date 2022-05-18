@@ -37,7 +37,7 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
 	@Override
 	public SysUser selectUserByUserName(String username) {
 		SysUser sysUser = new SysUser();
-		sysUser.setName(username);
+		sysUser.setUsername(username);
 		return sysUserMapper.selectOne(sysUser);
 	}
 
@@ -61,10 +61,15 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
 		if(StringUtils.isBlank(sysUserV.getPassword())){
 			throw new CommonException("密码不能为空");
 		}
-		if(StringUtils.isBlank(sysUserV.getName())){
+		if(StringUtils.isBlank(sysUserV.getUsername())){
 			throw new CommonException("用户名不能为空");
 		}
-		SysUser sysUser=this.selectUserByUserName(sysUserV.getName());
+
+		if(StringUtils.isBlank(sysUserV.getPhone())){
+			throw new CommonException("手机号码不能为空");
+		}
+
+		SysUser sysUser=this.selectUserByUserName(sysUserV.getUsername());
 		if(sysUser!=null){
 			throw new CommonException("该用户名已存在");
 		}
