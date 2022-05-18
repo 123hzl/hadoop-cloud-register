@@ -48,7 +48,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
 		log.info("密码对比结果:{}", flag);
 
 		if (!flag) {
-			throw new CommonException("密码不正确");
+			throw new BadCredentialsException("密码不正确");
 		}
 		Collection<? extends GrantedAuthority> authorities = userInfo.getAuthorities();
 		// 构建返回的用户登录成功的token

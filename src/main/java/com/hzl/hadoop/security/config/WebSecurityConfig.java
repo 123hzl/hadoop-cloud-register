@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		// 1允许任何域名使用
-		corsConfiguration.addAllowedOrigin("*");
+		corsConfiguration.addAllowedOriginPattern("*");
 		// 2允许任何头
 		corsConfiguration.addAllowedHeader("*");
 		// 3允许任何方法（post、get等）
@@ -98,7 +98,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 				//登录处理
 				.formLogin() //表单方式，或httpBasic
-				.loginPage("/loginPage")
+				.loginPage("http://localhost:8000/user/login")
 				.loginProcessingUrl("/form")
 				.successHandler(myAuthenticationSuccessHandler)
 				.failureHandler(myAuthenticationFailHander)
@@ -120,7 +120,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 				.authorizeRequests() // 授权配置
 				//无需权限访问
-				.antMatchers("/css/**", "/error404", "/register", "/druid/**","/redis/migration","/favicon.ico","/workflow/**","/gp/**").permitAll()
+				.antMatchers("/css/**", "/error404", "/register", "/druid/**","/redis/migration","/favicon.ico","/workflow/**","/upload").permitAll()
 				//必须经过认证以后才能访问
 				.anyRequest().access("@roleOauthService.hasPermission(request,authentication)");
 

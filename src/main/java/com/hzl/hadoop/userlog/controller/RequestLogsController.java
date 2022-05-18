@@ -32,7 +32,7 @@ public class RequestLogsController {
      * 列表
      */
     @GetMapping("/list")
-    public ResponseEntity<PageInfo<RequestLogsEntity>> list(RequestLogsEntity params,@RequestParam int start, @RequestParam int pageSize){
+    public ResponseEntity<PageInfo<RequestLogsEntity>> list(RequestLogsEntity params,@RequestParam(defaultValue = "1") int start, @RequestParam(defaultValue = "20") int pageSize){
 		PageInfo<RequestLogsEntity> page = requestLogsService.queryPage(params,start,pageSize);
 
         return new ResponseEntity(page, HttpStatus.OK);

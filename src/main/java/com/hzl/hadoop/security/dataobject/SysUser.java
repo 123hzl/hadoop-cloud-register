@@ -27,19 +27,16 @@ public class SysUser extends BaseDO {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String name;
+	private String username;
 
 	private String password;
-//
-//	private LocalDateTime creationDate;
-//
-//	private Long createdBy;
-//
-//	private LocalDateTime lastUpdateDate;
-//
-//	private Long lastUpdatedBy;
-//
-//	private Long objectVersionNumber;
+
+	/*
+	* 电话号码
+	* */
+	private String phone;
+
+
 
 
 }

@@ -6,6 +6,9 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * description
  * BeanPostProcessor也称为Bean后置处理器，它是Spring中定义的接口，
@@ -33,5 +36,19 @@ public class BeanPostProcessorUtil implements BeanPostProcessor {
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
 		log.info("bean初始化后" + beanName);
 		return bean;
+	}
+
+
+	private static int getMonth(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int month = cal.get(Calendar.MONTH)+1;
+		return month;
+	}
+
+	public static void main(String args[]){
+
+		Date date=new Date();
+		System.out.println(getMonth(date));
 	}
 }
