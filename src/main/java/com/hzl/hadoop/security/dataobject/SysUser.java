@@ -1,5 +1,6 @@
 package com.hzl.hadoop.security.dataobject;
 
+import com.hzl.hadoop.config.mybatis.BaseEntity;
 import com.hzl.hadoop.constant.BaseDO;
 import lombok.*;
 
@@ -19,7 +20,7 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 @Table(name = "sys_user")
-public class SysUser extends BaseDO {
+public class SysUser extends BaseEntity {
 
 	@Id
 	@Column(name = "id")

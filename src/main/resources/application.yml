@@ -20,7 +20,7 @@ spring:
       # Content-Type值
       content-type: text/html
       # #模板加载路径 按需配置 ,默认路径是 classpath:/templates/
-      template-loader-path: classpath:/templates/
+      template-loader-path: classpath:/templates/,classpath:/dianziImages1/,classpath:/dianziImages2/
   #邮件配置信息，后期可保存到数据库
   mail:
     host: smtp.163.com
