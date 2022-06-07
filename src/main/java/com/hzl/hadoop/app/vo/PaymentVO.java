@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * description
@@ -19,6 +20,8 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class PaymentVO {
+
+	private int id;
 
 	private String barcodeImg;
 
@@ -34,6 +37,8 @@ public class PaymentVO {
 
 	private List<HashMap> receiptList;
 
+	private BigDecimal amount;
+
 	//private BigDecimal money;
 
 
@@ -42,5 +47,25 @@ public class PaymentVO {
 	}
 
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof PaymentVO)) return false;
+		PaymentVO paymentVO = (PaymentVO) o;
+		return getId() == paymentVO.getId() &&
+				Objects.equals(getBarcodeImg(), paymentVO.getBarcodeImg()) &&
+				Objects.equals(getBarcode(), paymentVO.getBarcode()) &&
+				Objects.equals(getUserName(), paymentVO.getUserName()) &&
+				Objects.equals(getSubmitDate(), paymentVO.getSubmitDate()) &&
+				Objects.equals(getDeptName(), paymentVO.getDeptName()) &&
+				Objects.equals(getReimReason(), paymentVO.getReimReason()) &&
+				Objects.equals(getReceiptList(), paymentVO.getReceiptList()) &&
+				Objects.equals(getAmount(), paymentVO.getAmount());
+	}
 
+	@Override
+	public int hashCode() {
+
+		return Objects.hash(getId(),getAmount());
+	}
 }

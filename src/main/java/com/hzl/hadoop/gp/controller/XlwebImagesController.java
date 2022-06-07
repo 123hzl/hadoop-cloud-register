@@ -139,4 +139,7 @@ public class XlwebImagesController {
 		return new ResponseEntity(xlwebImagesService.getAllImagePage(uid),HttpStatus.OK);
 	}
 
+
+
+
 }
