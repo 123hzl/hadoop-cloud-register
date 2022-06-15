@@ -1,14 +1,23 @@
 package com.hzl.hadoop.security.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.hzl.hadoop.exception.CommonException;
 import com.hzl.hadoop.security.dataobject.SysUser;
 import com.hzl.hadoop.security.mapper.SysUserMapper;
 import com.hzl.hadoop.security.service.MyUserDetailsService;
+import com.hzl.hadoop.security.vo.RecoveredPasswordVO;
 import com.hzl.hadoop.security.vo.SysUserVO;
+import com.hzl.hadoop.security.vo.UserInfoVO;
+import com.hzl.hadoop.util.GenerateCodeUtils;
 import com.hzl.hadoop.util.JsonUtils;
+import com.hzl.hadoop.util.RedisUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +64,83 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
 			return false;
 		}
 	}
+
+	@Override
+	public Boolean recoveredPassword(RecoveredPasswordVO recoveredPasswordVO) {
+
+		//校验验证码是否正确
+		String code= (String) RedisUtils.get(recoveredPasswordVO.getPhone());
+
+		if(StringUtils.isNotBlank(code)&&code.equals(recoveredPasswordVO.getIndentifyCode())){
+			//验证码没有失效，且校验通过，更新用户密码
+
+			//查询用户信息
+			SysUser sysUser = new SysUser();
+			sysUser.setPhone(recoveredPasswordVO.getPhone());
+			Wrapper<SysUser> queryWrapper = new QueryWrapper<>(sysUser);
+			sysUser=sysUserMapper.selectOne(queryWrapper);
+
+			//判断用户信息是否存在
+			if(sysUser!=null){
+
+				UpdateWrapper<SysUser> updateWrapper = new UpdateWrapper<>();
+				updateWrapper.eq("id",sysUser.getId());
+
+				SysUser sysUserUpdate = new SysUser();
+				sysUserUpdate.setPassword(passwordEncoder.encode(recoveredPasswordVO.getPassword()));
+
+				sysUserMapper.update(sysUserUpdate,updateWrapper);
+
+			}else{
+				throw new CommonException("用户信息不存在!");
+			}
+
+		}else{
+			throw new CommonException("验证码失效");
+		}
+
+		return true;
+	}
+
+	@Override
+	public Boolean authCodePassword(String phone) {
+
+		//查询用户信息
+		SysUser sysUser = new SysUser();
+		sysUser.setPhone(phone);
+		Wrapper<SysUser> queryWrapper = new QueryWrapper<>(sysUser);
+		sysUser=sysUserMapper.selectOne(queryWrapper);
+
+		if(sysUser==null){
+			throw new CommonException("用户信息不存在!");
+		}
+
+		//验证码存在直接返回
+		//生成验证码,并发情况下最多出现验证码被覆盖的情况
+		String code= (String) RedisUtils.get(phone);
+		if(StringUtils.isBlank(code)){
+			code= GenerateCodeUtils.generateNumCode(4);
+			//存入redis 默认五分钟失效
+			RedisUtils.set(phone,code,300);
+		}
+		//发送邮件,或者短信 todo
+
+		return true;
+	}
+
+	@Override
+	public UserInfoVO getCurrentUserInfo() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		String userName=authentication.getName();
+
+		SysUser sysUser=selectUserByUserName(userName);
+
+		UserInfoVO userInfoVO=JsonUtils.cloneObject(sysUser,UserInfoVO.class);
+		userInfoVO.setUserid(String.valueOf(sysUser.getId()));
+		return userInfoVO;
+	}
+
 
 
 	public void validateUser(SysUserVO sysUserV){

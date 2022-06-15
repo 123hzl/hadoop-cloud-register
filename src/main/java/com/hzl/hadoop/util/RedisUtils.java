@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.PostConstruct;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -35,11 +36,15 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisUtils{
 	@Autowired
-	private RedisTemplate<String, Object> redisTemplate;
+	private RedisTemplate<String, Object> redisTemplateTemp;
 
-	public RedisUtils(RedisTemplate<String, Object> redisTemplate) {
-		this.redisTemplate = redisTemplate;
+	private static RedisTemplate<String, Object> redisTemplate;
+
+	@PostConstruct
+	public void init() {
+		redisTemplate = redisTemplateTemp;
 	}
+
 
 	/**
 	 * 指定缓存失效时间
@@ -119,7 +124,7 @@ public class RedisUtils{
 	 * @param key 键
 	 * @return 值
 	 */
-	public Object get(String key) {
+	public static Object get(String key) {
 		return key == null ? null : redisTemplate.opsForValue().get(key);
 	}
 
@@ -130,7 +135,7 @@ public class RedisUtils{
 	 * @param value 值
 	 * @return true成功 false失败
 	 */
-	public boolean set(String key, Object value) {
+	public static boolean set(String key, Object value) {
 		try {
 			redisTemplate.opsForValue().set(key, value);
 			return true;
@@ -148,7 +153,7 @@ public class RedisUtils{
 	 * @param time  时间(秒) time要大于0 如果time小于等于0 将设置无限期
 	 * @return true成功 false 失败
 	 */
-	public boolean set(String key, Object value, long time) {
+	public static boolean set(String key, Object value, long time) {
 		try {
 			if (time > 0) {
 				redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);

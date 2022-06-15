@@ -23,7 +23,7 @@ import org.springframework.http.ResponseEntity;
  * @date 2021-11-16 14:05:48
  */
 @RestController
-@RequestMapping("workflow/interfacemanage")
+@RequestMapping("/api/interfacemanage")
 public class InterfaceManageController {
     @Autowired
     private InterfaceManageService interfaceManageService;

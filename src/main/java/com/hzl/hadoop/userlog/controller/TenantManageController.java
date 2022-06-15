@@ -23,7 +23,7 @@ import org.springframework.http.ResponseEntity;
  * @date 2021-11-19 16:18:12
  */
 @RestController
-@RequestMapping("workflow/tenantmanage")
+@RequestMapping("/api/tenantmanage")
 public class TenantManageController {
     @Autowired
     private TenantManageService tenantManageService;

@@ -1,7 +1,9 @@
 package com.hzl.hadoop.security.service;
 
 import com.hzl.hadoop.security.dataobject.SysUser;
+import com.hzl.hadoop.security.vo.RecoveredPasswordVO;
 import com.hzl.hadoop.security.vo.SysUserVO;
+import com.hzl.hadoop.security.vo.UserInfoVO;
 
 /**
  * description
@@ -15,4 +17,10 @@ public interface MyUserDetailsService {
 	SysUser selectUserByUserName(String username);
 
 	Boolean register(SysUserVO sysUserVO);
+
+	Boolean recoveredPassword(RecoveredPasswordVO recoveredPasswordVO);
+
+	Boolean authCodePassword(String phone);
+
+	UserInfoVO getCurrentUserInfo();
 }
