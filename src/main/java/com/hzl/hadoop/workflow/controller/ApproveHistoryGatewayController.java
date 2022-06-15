@@ -18,9 +18,9 @@ import org.springframework.http.ResponseEntity;
 /**
  * 网关审批历史
  *
- * @author chenshun
+ * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2021-11-04 14:56:40
+ * @date 2022-06-15 16:05:06
  */
 @RestController
 @RequestMapping("workflow/approvehistorygateway")
@@ -32,10 +32,10 @@ public class ApproveHistoryGatewayController {
      * 列表
      */
     @GetMapping("/list")
-    public ResponseEntity<PageInfo<ApproveHistoryGatewayEntity>> list(ApproveHistoryGatewayEntity params,@RequestParam int start, @RequestParam int pageSize){
-		PageInfo<ApproveHistoryGatewayEntity> page = approveHistoryGatewayService.queryPage(params,start,pageSize);
+    public ResponseEntity<PageInfo<ApproveHistoryGatewayEntity>> list(ApproveHistoryGatewayEntity params,@RequestParam(defaultValue = "1" ) int page, @RequestParam(defaultValue = "20") int pageSize){
+		PageInfo<ApproveHistoryGatewayEntity> pageinfos = approveHistoryGatewayService.queryPage(params,page,pageSize);
 
-        return new ResponseEntity(page, HttpStatus.OK);
+        return new ResponseEntity(pageinfos, HttpStatus.OK);
     }
 
 

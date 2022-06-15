@@ -14,16 +14,16 @@ import java.time.LocalDateTime;
 
 
 /**
- * 流程变量
+ * 流程变量-启动流程的时候初始化，个流程节点可以通过流程id查询变量
  *
- * @author chenshun
+ * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2021-11-03 18:55:13
+ * @date 2022-06-15 16:05:05
  */
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("process_variable")
 public class ProcessVariableEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

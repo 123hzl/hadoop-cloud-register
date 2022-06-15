@@ -8,9 +8,6 @@
         <result property="id" column="id"/>
         <result property="processId" column="process_id"/>
         <result property="currentNodeId" column="current_node_id"/>
-        <result property="currentNodeType" column="current_node_type"/>
-        <result property="nextNodeId" column="next_node_id"/>
-        <result property="nextNodeType" column="next_node_type"/>
         <result property="approverNum" column="approver_num"/>
         <result property="approveAction" column="approve_action"/>
         <result property="tenantId" column="tenant_id"/>

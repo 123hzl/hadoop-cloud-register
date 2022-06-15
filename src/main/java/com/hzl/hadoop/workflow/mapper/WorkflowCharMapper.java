@@ -8,9 +8,9 @@ import com.hzl.hadoop.workflow.entity.WorkflowCharEntity;
 /**
  * 前端生成的流程图，需要转换成开始节点，审批节点，网关节点，结束节点
  * 
- * @author chenshun
+ * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2021-11-24 09:34:57
+ * @date 2022-06-15 16:05:06
  */
 @Mapper
 public interface WorkflowCharMapper extends BaseMapper<WorkflowCharEntity> {

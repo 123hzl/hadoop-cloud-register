@@ -22,7 +22,7 @@ public class ProcessVariableServiceImpl extends ServiceImpl<ProcessVariableMappe
     @Override
     public PageInfo queryPage(ProcessVariableEntity params,int start, int pageSize) {
 		QueryWrapper<ProcessVariableEntity> queryWrapper = new QueryWrapper(params);
-
+		queryWrapper.orderByDesc("create_time");
 		PageInfo<ProcessVariableEntity> pageResult = PageHelper.startPage(start, pageSize).doSelectPageInfo(() -> mapper.selectList(queryWrapper));
 
         return pageResult;

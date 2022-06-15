@@ -16,14 +16,14 @@ import java.time.LocalDateTime;
 /**
  * 开始审批历史
  *
- * @author chenshun
+ * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2021-11-04 14:56:40
+ * @date 2022-06-15 16:05:06
  */
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("approve_history_start")
 public class ApproveHistoryStartEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -38,23 +38,11 @@ public class ApproveHistoryStartEntity implements Serializable {
 	 */
 	private Long processId;
 	/**
-	 * 当前节点id
+	 * 开始节点id
 	 */
 	private Long currentNodeId;
 	/**
-	 * 当前节点类型
-	 */
-	private Integer currentNodeType;
-	/**
-	 * 下一节点id，存的是历史表id
-	 */
-	private Long nextNodeId;
-	/**
-	 * 下一节点类型
-	 */
-	private Integer nextNodeType;
-	/**
-	 * 审批人，开始节点存储提交人信息
+	 * 审批人
 	 */
 	private String approverNum;
 	/**

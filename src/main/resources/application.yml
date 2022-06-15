@@ -123,7 +123,7 @@ spring:
       datasource:
         master:
           # 合并多个DruidDataSource的监控数据
-          url: ${SPRING_DATASOURCE_URL:jdbc:mysql://124.70.150.23:3307/workflow?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true}
+          url: ${SPRING_DATASOURCE_URL:jdbc:mysql://r/workflow?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true}
           username: ${SPRING_DATASOURCE_USERNAME:root}
           password: ${SPRING_DATASOURCE_PASSWORD:root}
           driver-class-name: com.mysql.cj.jdbc.Driver

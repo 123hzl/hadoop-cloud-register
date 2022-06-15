@@ -18,9 +18,9 @@ import org.springframework.http.ResponseEntity;
 /**
  * 审批节点类型
  *
- * @author chenshun
+ * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2021-11-03 18:55:14
+ * @date 2022-06-15 16:05:06
  */
 @RestController
 @RequestMapping("workflow/workflownodetype")
@@ -31,18 +31,18 @@ public class WorkflowNodeTypeController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
-    public ResponseEntity<PageInfo<WorkflowNodeTypeEntity>> list(WorkflowNodeTypeEntity params,@RequestParam int start, @RequestParam int pageSize){
-		PageInfo<WorkflowNodeTypeEntity> page = workflowNodeTypeService.queryPage(params,start,pageSize);
+    @GetMapping("/list")
+    public ResponseEntity<PageInfo<WorkflowNodeTypeEntity>> list(WorkflowNodeTypeEntity params,@RequestParam(defaultValue = "1" ) int page, @RequestParam(defaultValue = "20") int pageSize){
+		PageInfo<WorkflowNodeTypeEntity> pageinfos = workflowNodeTypeService.queryPage(params,page,pageSize);
 
-        return new ResponseEntity(page, HttpStatus.OK);
+        return new ResponseEntity(pageinfos, HttpStatus.OK);
     }
 
 
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     public ResponseEntity<WorkflowNodeTypeEntity> info(@PathVariable("id") Long id){
 		WorkflowNodeTypeEntity workflowNodeType = workflowNodeTypeService.getById(id);
 
@@ -62,7 +62,7 @@ public class WorkflowNodeTypeController {
     /**
      * 修改
      */
-    @RequestMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity update(@RequestBody WorkflowNodeTypeEntity workflowNodeType){
 		workflowNodeTypeService.updateById(workflowNodeType);
 
@@ -72,7 +72,7 @@ public class WorkflowNodeTypeController {
     /**
      * 删除
      */
-    @RequestMapping("/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity delete(@RequestBody Long[] ids){
 		workflowNodeTypeService.removeByIds(Arrays.asList(ids));
 

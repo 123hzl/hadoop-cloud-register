@@ -22,7 +22,7 @@ public class ApproveHistoryStartServiceImpl extends ServiceImpl<ApproveHistorySt
     @Override
     public PageInfo queryPage(ApproveHistoryStartEntity params,int start, int pageSize) {
 		QueryWrapper<ApproveHistoryStartEntity> queryWrapper = new QueryWrapper(params);
-
+		queryWrapper.orderByDesc("create_time");
 		PageInfo<ApproveHistoryStartEntity> pageResult = PageHelper.startPage(start, pageSize).doSelectPageInfo(() -> mapper.selectList(queryWrapper));
 
         return pageResult;

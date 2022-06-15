@@ -8,9 +8,9 @@ import com.hzl.hadoop.workflow.entity.ApproveHistoryGatewayEntity;
 /**
  * 网关审批历史
  * 
- * @author chenshun
+ * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2021-11-04 14:56:40
+ * @date 2022-06-15 16:05:06
  */
 @Mapper
 public interface ApproveHistoryGatewayMapper extends BaseMapper<ApproveHistoryGatewayEntity> {

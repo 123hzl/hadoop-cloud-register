@@ -3,7 +3,6 @@ package com.hzl.hadoop.workflow.controller;
 import com.github.pagehelper.PageInfo;
 import com.hzl.hadoop.workflow.entity.WorkflowCharEntity;
 import com.hzl.hadoop.workflow.service.WorkflowCharService;
-import com.hzl.hadoop.workflow.vo.WorkflowCharVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +14,9 @@ import java.util.Arrays;
 /**
  * 前端生成的流程图，需要转换成开始节点，审批节点，网关节点，结束节点
  *
- * @author chenshun
+ * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2021-11-24 09:34:57
+ * @date 2022-06-15 16:05:06
  */
 @RestController
 @RequestMapping("workflow/workflowchar")
@@ -29,10 +28,10 @@ public class WorkflowCharController {
 	 * 列表
 	 */
 	@GetMapping("/list")
-	public ResponseEntity<PageInfo<WorkflowCharEntity>> list(WorkflowCharEntity params, @RequestParam int start, @RequestParam int pageSize) {
-		PageInfo<WorkflowCharEntity> page = workflowCharService.queryPage(params, start, pageSize);
+	public ResponseEntity<PageInfo<WorkflowCharEntity>> list(WorkflowCharEntity params, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int pageSize) {
+		PageInfo<WorkflowCharEntity> pageInfos = workflowCharService.queryPage(params, page, pageSize);
 
-		return new ResponseEntity(page, HttpStatus.OK);
+		return new ResponseEntity(pageInfos, HttpStatus.OK);
 	}
 
 
@@ -51,7 +50,8 @@ public class WorkflowCharController {
 	 */
 	@PostMapping("/save")
 	public ResponseEntity save(@RequestBody WorkflowCharEntity workflowChar) {
-		workflowCharService.saveAndConvert(workflowChar);
+		workflowCharService.save(workflowChar);
+
 		return new ResponseEntity(HttpStatus.OK);
 	}
 

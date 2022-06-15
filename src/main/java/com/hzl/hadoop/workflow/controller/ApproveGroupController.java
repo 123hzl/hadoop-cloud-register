@@ -4,11 +4,7 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.hzl.hadoop.workflow.entity.ApproveGroupEntity;
 import com.hzl.hadoop.workflow.service.ApproveGroupService;
@@ -22,9 +18,9 @@ import org.springframework.http.ResponseEntity;
 /**
  * 审批组
  *
- * @author chenshun
+ * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2021-11-03 18:55:14
+ * @date 2022-06-15 16:05:06
  */
 @RestController
 @RequestMapping("workflow/approvegroup")
@@ -35,18 +31,18 @@ public class ApproveGroupController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
-    public ResponseEntity<PageInfo<ApproveGroupEntity>> list(ApproveGroupEntity params,@RequestParam int start, @RequestParam int pageSize){
-		PageInfo<ApproveGroupEntity> page = approveGroupService.queryPage(params,start,pageSize);
+    @GetMapping("/list")
+    public ResponseEntity<PageInfo<ApproveGroupEntity>> list(ApproveGroupEntity params,@RequestParam(defaultValue = "1" ) int page, @RequestParam(defaultValue = "20") int pageSize){
+		PageInfo<ApproveGroupEntity> pageinfos = approveGroupService.queryPage(params,page,pageSize);
 
-        return new ResponseEntity(page, HttpStatus.OK);
+        return new ResponseEntity(pageinfos, HttpStatus.OK);
     }
 
 
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     public ResponseEntity<ApproveGroupEntity> info(@PathVariable("id") Long id){
 		ApproveGroupEntity approveGroup = approveGroupService.getById(id);
 
@@ -56,7 +52,7 @@ public class ApproveGroupController {
     /**
      * 保存
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
     public ResponseEntity save(@RequestBody ApproveGroupEntity approveGroup){
 		approveGroupService.save(approveGroup);
 
@@ -66,7 +62,7 @@ public class ApproveGroupController {
     /**
      * 修改
      */
-    @RequestMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity update(@RequestBody ApproveGroupEntity approveGroup){
 		approveGroupService.updateById(approveGroup);
 
@@ -76,7 +72,7 @@ public class ApproveGroupController {
     /**
      * 删除
      */
-    @RequestMapping("/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity delete(@RequestBody Long[] ids){
 		approveGroupService.removeByIds(Arrays.asList(ids));
 

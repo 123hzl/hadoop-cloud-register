@@ -22,7 +22,7 @@ public class ApproveGroupServiceImpl extends ServiceImpl<ApproveGroupMapper, App
     @Override
     public PageInfo queryPage(ApproveGroupEntity params,int start, int pageSize) {
 		QueryWrapper<ApproveGroupEntity> queryWrapper = new QueryWrapper(params);
-
+		queryWrapper.orderByDesc("create_time");
 		PageInfo<ApproveGroupEntity> pageResult = PageHelper.startPage(start, pageSize).doSelectPageInfo(() -> mapper.selectList(queryWrapper));
 
         return pageResult;
