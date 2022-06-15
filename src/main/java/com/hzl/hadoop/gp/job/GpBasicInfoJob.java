@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -24,8 +25,10 @@ import java.util.List;
 @Slf4j
 @Component
 public class GpBasicInfoJob {
+
 	@Autowired
 	private GpService gpService;
+
 	@Autowired
 	private GpNoticeService gpNoticeService;
 
@@ -66,7 +69,7 @@ public class GpBasicInfoJob {
 					gpService.insert(gpInfoEntity.getGpCode());
 				}
 				//是否买入卖出通知
-				if (gpInfoEntity.getIsNotify()) {
+				if (gpInfoEntity.getIsNotify()){
 					log.info("定时器买入卖出提醒----------------------------------------------------" + Thread.currentThread());
 					gpStareService.notifyBuyAndSale(gpInfoEntity.getGpCode());
 				}
@@ -115,23 +118,23 @@ public class GpBasicInfoJob {
 //
 //	}
 
-
-//	/**
-//	 * 半小时执行一次，用于获取个股新闻数据，暂时只爬去新浪网
-//	 *
-//	 * @author hzl 2021-12-15 12:40 PM
-//	 * @return
-//	 * */
-//	@Scheduled(cron = "0 0/50 * * * ?")
-//	public void getTodayNews(){
-//		try {
-//			xinLangNews.getTodayNews(GpCodeEnum.sz000651);
-//			xinLangNews.getTodayNews(GpCodeEnum.sh600690);
-//			xinLangNews.getTodayNews(GpCodeEnum.sz000333);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
+/*
+	*//**
+	 * 半小时执行一次，用于获取个股新闻数据，暂时只爬去新浪网
+	 *
+	 * @author hzl 2021-12-15 12:40 PM
+	 * @return
+	 * *//*
+	@Scheduled(cron = "0 0/50 * * * ?")
+	public void getTodayNews(){
+		try {
+			xinLangNews.getTodayNews(GpCodeEnum.sz000651);
+			xinLangNews.getTodayNews(GpCodeEnum.sh600690);
+			xinLangNews.getTodayNews(GpCodeEnum.sz000333);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}*/
 
 	/**
 	 * fixedDelay 上传方法执行完成后开始计算

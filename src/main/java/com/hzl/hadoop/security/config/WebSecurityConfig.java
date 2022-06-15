@@ -98,8 +98,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 				//登录处理
 				.formLogin() //表单方式，或httpBasic
-				.loginPage("/loginPage")
-				.loginProcessingUrl("/form")
+				//.loginPage("/loginPage")
+				.loginProcessingUrl("/api/login/account1")
 				.successHandler(myAuthenticationSuccessHandler)
 				.failureHandler(myAuthenticationFailHander)
 				//成功登陆后跳转页面

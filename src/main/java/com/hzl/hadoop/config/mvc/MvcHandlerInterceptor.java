@@ -36,10 +36,10 @@ public class MvcHandlerInterceptor implements HandlerInterceptor {
 		if (StringUtils.isBlank(token)) {
 			token = request.getParameter("access_token");
 		}
-		//token为空
-		if (StringUtils.isBlank(token)) {
-			throw new CommonException("token不能为空");
-		}
+		//token为空,非oauth2情况下不需要
+//		if (StringUtils.isBlank(token)) {
+//			throw new CommonException("token不能为空");
+//		}
 
 		return true;//只有返回true才会继续向下执行，返回false取消当前请求
 	}

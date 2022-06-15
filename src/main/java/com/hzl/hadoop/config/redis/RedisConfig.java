@@ -162,55 +162,6 @@ public class RedisConfig extends CachingConfigurerSupport {
 		return redisTemplate;
 	}
 
-
-	/**
-	 * <p>
-	 * 多数据源
-	 * </p>
-	 * N
-	 *
-	 * @author hzl 2020/01/17 3:10 PM
-	 */
-	@Bean(value = "redisTemplate1")
-	public RedisTemplate<String, Object> redisTemplate2(RedisConnectProperties redisConnectProperties) {
-		log.info("自定义redis配置类{}", redisConnectProperties.toString());
-
-		/* ========= 基本配置 ========= */
-		RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
-		configuration.setHostName(redisConnectProperties.getHost());
-		configuration.setPort(redisConnectProperties.getPort());
-		configuration.setDatabase(redisConnectProperties.getDatabase());
-		/* ========= 连接池通用配置 ========= */
-		GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
-		genericObjectPoolConfig.setMaxIdle(redisConnectProperties.getLettuce().getPool().getMaxIdle());
-		genericObjectPoolConfig.setMinIdle(redisConnectProperties.getLettuce().getPool().getMinIdle());
-		genericObjectPoolConfig.setMaxTotal(redisConnectProperties.getLettuce().getPool().getMaxActive());
-		/* ========= lettuce pool ========= */
-		LettucePoolingClientConfiguration.LettucePoolingClientConfigurationBuilder builder = LettucePoolingClientConfiguration.builder();
-		builder.poolConfig(genericObjectPoolConfig);
-		builder.commandTimeout(redisConnectProperties.getTimeout());
-
-		LettuceConnectionFactory connectionFactory = new LettuceConnectionFactory(configuration, builder.build());
-		connectionFactory.afterPropertiesSet();
-
-		//上面是工厂定义
-		log.info("自定义redis工厂{}", connectionFactory.getClass().getName());
-		//日期格式化结束
-		Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
-		jackson2JsonRedisSerializer.setObjectMapper(objectMapper());
-
-		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>();
-		redisTemplate.setConnectionFactory(connectionFactory);
-		//设置键的序列号为string
-		redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-		redisTemplate.setKeySerializer(new StringRedisSerializer());
-		//设置值的序列化为json
-		redisTemplate.setHashValueSerializer(new StringRedisSerializer());
-		redisTemplate.setValueSerializer(new StringRedisSerializer());
-
-		return redisTemplate;
-	}
-
 	/**
 	 * <p>
 	 * https://github.com/alibaba/fastjson/issues/2802

@@ -160,3 +160,5 @@ https://github.com/google/diff-match-patch
 
 ---监控均价的异常波动，监控均价和最高均价，历史平均均价的对比，（分为正负两种情况）
 
+-- 获取当前用户信息接口
+localhost:8888/api/currentUser

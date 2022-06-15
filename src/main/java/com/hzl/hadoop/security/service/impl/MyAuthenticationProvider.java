@@ -36,6 +36,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String userName = authentication.getName();// 这个获取表单输入中返回的用户名;
+		log.info("用户名{}",userName);
 		String password = (String) authentication.getCredentials();// 这个是表单中输入的密码；
 		// 这里构建来判断用户是否存在和密码是否正确
 		UserDetails userInfo = userDetailsService.loadUserByUsername(userName); // 这里调用我们的自己写的获取用户的方法；
@@ -57,7 +58,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
 	}
 
 	@Override
-	public boolean supports(Class<?> aClass) {
+	public boolean supports(Class<?> Class) {
 		// 这里直接改成retrun true;表示是支持这个执行
 		return true;
 	}
