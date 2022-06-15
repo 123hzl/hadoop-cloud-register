@@ -25,4 +25,5 @@ public class LoginSuccessVO {
 	* ok成功，error失败
 	* */
 	private String status;
+
 }

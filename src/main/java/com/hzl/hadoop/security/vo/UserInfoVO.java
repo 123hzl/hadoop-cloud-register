@@ -56,10 +56,5 @@ public class UserInfoVO {
 	 */
 	private String address;
 
-	private String signature;
-
-	private String title;
-
-	private String group;
 
 }
