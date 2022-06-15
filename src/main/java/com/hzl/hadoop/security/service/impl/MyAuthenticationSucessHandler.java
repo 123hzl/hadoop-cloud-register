@@ -1,6 +1,7 @@
 package com.hzl.hadoop.security.service.impl;
 
 import com.alibaba.druid.support.json.JSONUtils;
+import com.hzl.hadoop.config.mvc.BaseResponse;
 import com.hzl.hadoop.security.vo.LoginSuccessVO;
 import com.hzl.hadoop.util.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +29,6 @@ import java.io.PrintWriter;
 @Component
 public class MyAuthenticationSucessHandler implements AuthenticationSuccessHandler {
 
-	private RequestCache requestCache = new HttpSessionRequestCache();
-	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
@@ -38,7 +36,7 @@ public class MyAuthenticationSucessHandler implements AuthenticationSuccessHandl
 		LoginSuccessVO loginSuccessVO=LoginSuccessVO.builder().status("ok").currentAuthority(userName).build();
 		//登陆成功后返回true
 		PrintWriter printWriter = response.getWriter();
-		log.info(JsonUtils.objectToString(loginSuccessVO));
+		log.info("登陆成功的用户{}",JsonUtils.objectToString(loginSuccessVO));
 		printWriter.write(JsonUtils.objectToString(loginSuccessVO));
 		printWriter.flush();
 		printWriter.close();
