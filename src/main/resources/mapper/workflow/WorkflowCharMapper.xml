@@ -13,6 +13,7 @@
         <result property="updateBy" column="update_by"/>
         <result property="updateTime" column="update_time"/>
         <result property="versionNum" column="version_num"/>
+        <result property="descr" column="descr"/>
     </resultMap>
 
 

@@ -4,11 +4,7 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.hzl.hadoop.workflow.entity.ProcessHistoryEntity;
 import com.hzl.hadoop.workflow.service.ProcessHistoryService;
@@ -20,11 +16,11 @@ import org.springframework.http.ResponseEntity;
 
 
 /**
- * 流程记录
+ * 流程记录-每次启动流程就插入一条流程记录
  *
- * @author chenshun
+ * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2021-11-03 18:55:14
+ * @date 2022-06-15 16:05:06
  */
 @RestController
 @RequestMapping("workflow/processhistory")
@@ -35,18 +31,18 @@ public class ProcessHistoryController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
-    public ResponseEntity<PageInfo<ProcessHistoryEntity>> list(ProcessHistoryEntity params,@RequestParam int start, @RequestParam int pageSize){
-		PageInfo<ProcessHistoryEntity> page = processHistoryService.queryPage(params,start,pageSize);
+    @GetMapping("/list")
+    public ResponseEntity<PageInfo<ProcessHistoryEntity>> list(ProcessHistoryEntity params,@RequestParam(defaultValue = "1" ) int page, @RequestParam(defaultValue = "20") int pageSize){
+		PageInfo<ProcessHistoryEntity> pageinfos = processHistoryService.queryPage(params,page,pageSize);
 
-        return new ResponseEntity(page, HttpStatus.OK);
+        return new ResponseEntity(pageinfos, HttpStatus.OK);
     }
 
 
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     public ResponseEntity<ProcessHistoryEntity> info(@PathVariable("id") Long id){
 		ProcessHistoryEntity processHistory = processHistoryService.getById(id);
 
@@ -56,7 +52,7 @@ public class ProcessHistoryController {
     /**
      * 保存
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
     public ResponseEntity save(@RequestBody ProcessHistoryEntity processHistory){
 		processHistoryService.save(processHistory);
 
@@ -66,7 +62,7 @@ public class ProcessHistoryController {
     /**
      * 修改
      */
-    @RequestMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity update(@RequestBody ProcessHistoryEntity processHistory){
 		processHistoryService.updateById(processHistory);
 
@@ -76,7 +72,7 @@ public class ProcessHistoryController {
     /**
      * 删除
      */
-    @RequestMapping("/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity delete(@RequestBody Long[] ids){
 		processHistoryService.removeByIds(Arrays.asList(ids));
 

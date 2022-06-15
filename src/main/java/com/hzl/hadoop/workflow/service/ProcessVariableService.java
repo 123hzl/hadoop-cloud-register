@@ -8,11 +8,11 @@ import com.github.pagehelper.PageInfo;
 import java.util.Map;
 
 /**
- * 流程变量
+ * 流程变量-启动流程的时候初始化，个流程节点可以通过流程id查询变量
  *
- * @author chenshun
+ * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2021-11-03 18:55:13
+ * @date 2022-06-15 16:05:05
  */
 public interface ProcessVariableService extends IService<ProcessVariableEntity> {
 

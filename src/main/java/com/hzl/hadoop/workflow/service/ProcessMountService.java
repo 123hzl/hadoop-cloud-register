@@ -10,9 +10,9 @@ import java.util.Map;
 /**
  * 流程挂载
  *
- * @author chenshun
+ * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2021-11-03 18:55:13
+ * @date 2022-06-15 16:05:06
  */
 public interface ProcessMountService extends IService<ProcessMountEntity> {
 

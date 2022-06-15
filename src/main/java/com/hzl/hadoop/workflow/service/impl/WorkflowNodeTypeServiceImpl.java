@@ -22,7 +22,7 @@ public class WorkflowNodeTypeServiceImpl extends ServiceImpl<WorkflowNodeTypeMap
     @Override
     public PageInfo queryPage(WorkflowNodeTypeEntity params,int start, int pageSize) {
 		QueryWrapper<WorkflowNodeTypeEntity> queryWrapper = new QueryWrapper(params);
-
+		queryWrapper.orderByDesc("create_time");
 		PageInfo<WorkflowNodeTypeEntity> pageResult = PageHelper.startPage(start, pageSize).doSelectPageInfo(() -> mapper.selectList(queryWrapper));
 
         return pageResult;

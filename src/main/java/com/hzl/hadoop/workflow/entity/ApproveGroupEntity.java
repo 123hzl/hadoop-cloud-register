@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -14,12 +16,14 @@ import java.time.LocalDateTime;
 /**
  * 审批组
  *
- * @author chenshun
+ * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2021-11-03 18:55:14
+ * @date 2022-06-15 16:05:06
  */
 @Data
-//@Table(name = "approve_group")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("approve_group")
 public class ApproveGroupEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

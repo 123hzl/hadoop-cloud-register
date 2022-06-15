@@ -8,6 +8,7 @@
         <result property="id" column="id"/>
         <result property="submitPerson" column="submit_person"/>
         <result property="currentApproveUser" column="current_approve_user"/>
+        <result property="processStatus" column="process_status"/>
         <result property="startId" column="start_id"/>
         <result property="tenantId" column="tenant_id"/>
         <result property="createBy" column="create_by"/>

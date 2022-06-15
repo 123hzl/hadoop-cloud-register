@@ -8,11 +8,11 @@ import com.github.pagehelper.PageInfo;
 import java.util.Map;
 
 /**
- * 流程记录
+ * 流程记录-每次启动流程就插入一条流程记录
  *
- * @author chenshun
+ * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2021-11-03 18:55:14
+ * @date 2022-06-15 16:05:06
  */
 public interface ProcessHistoryService extends IService<ProcessHistoryEntity> {
 

@@ -16,11 +16,11 @@ import org.springframework.http.ResponseEntity;
 
 
 /**
- * 审批节点审批历史
+ * 审批节点审批历史,一个节点是审批组多人审批，就插入多条记录
  *
- * @author chenshun
+ * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2021-11-04 14:56:39
+ * @date 2022-06-15 16:05:06
  */
 @RestController
 @RequestMapping("workflow/approvehistoryapprover")
@@ -32,10 +32,10 @@ public class ApproveHistoryApproverController {
      * 列表
      */
     @GetMapping("/list")
-    public ResponseEntity<PageInfo<ApproveHistoryApproverEntity>> list(ApproveHistoryApproverEntity params,@RequestParam int start, @RequestParam int pageSize){
-		PageInfo<ApproveHistoryApproverEntity> page = approveHistoryApproverService.queryPage(params,start,pageSize);
+    public ResponseEntity<PageInfo<ApproveHistoryApproverEntity>> list(ApproveHistoryApproverEntity params,@RequestParam(defaultValue = "1" ) int page, @RequestParam(defaultValue = "20") int pageSize){
+		PageInfo<ApproveHistoryApproverEntity> pageinfos = approveHistoryApproverService.queryPage(params,page,pageSize);
 
-        return new ResponseEntity(page, HttpStatus.OK);
+        return new ResponseEntity(pageinfos, HttpStatus.OK);
     }
 
 

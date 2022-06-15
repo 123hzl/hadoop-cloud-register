@@ -1,76 +1,71 @@
 package com.hzl.hadoop.workflow.vo;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import lombok.Data;
 
 /**
  * 网关审批历史
- * 
- * @author chenshun
+ *
+ * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2021-11-04 14:56:40
+ * @date 2022-06-15 16:05:06
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ApproveHistoryGatewayVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 *
 	 */
-private Long id;
+	private Long id;
 	/**
 	 * 流程记录id
 	 */
-private Long processId;
+	private Long processId;
 	/**
-	 * 当前节点id
+	 * 路由节点id
 	 */
-private Long currentNodeId;
-	/**
-	 * 当前节点类型
-	 */
-private Integer currentNodeType;
-	/**
-	 * 下一节点id
-	 */
-private Long nextNodeId;
-	/**
-	 * 下一节点类型
-	 */
-private Integer nextNodeType;
+	private Long currentNodeId;
 	/**
 	 * 审批人
 	 */
-private String approverNum;
+	private String approverNum;
 	/**
 	 * 审批动作，1同意，2拒绝，3跳过，4转交
 	 */
-private Long approveAction;
+	private Long approveAction;
 	/**
 	 * 租户id
 	 */
-private Long tenantId;
+	private Long tenantId;
 	/**
 	 * 创建人
 	 */
-private Long createBy;
+	private Long createBy;
 	/**
 	 * 创建时间
 	 */
-private LocalDateTime createTime;
+	private LocalDateTime createTime;
 	/**
 	 * 最后更新人
 	 */
-private Long updateBy;
+	private Long updateBy;
 	/**
 	 * 最后更新时间
 	 */
-private LocalDateTime updateTime;
+	private LocalDateTime updateTime;
 	/**
 	 * 版本号
 	 */
-private Integer versionNum;
+	private Integer versionNum;
 
 }

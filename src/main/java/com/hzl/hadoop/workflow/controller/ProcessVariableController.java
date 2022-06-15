@@ -4,11 +4,7 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.hzl.hadoop.workflow.entity.ProcessVariableEntity;
 import com.hzl.hadoop.workflow.service.ProcessVariableService;
@@ -20,11 +16,11 @@ import org.springframework.http.ResponseEntity;
 
 
 /**
- * 流程变量
+ * 流程变量-启动流程的时候初始化，个流程节点可以通过流程id查询变量
  *
- * @author chenshun
+ * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2021-11-03 18:55:13
+ * @date 2022-06-15 16:05:05
  */
 @RestController
 @RequestMapping("workflow/processvariable")
@@ -35,18 +31,18 @@ public class ProcessVariableController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
-    public ResponseEntity<PageInfo<ProcessVariableEntity>> list(ProcessVariableEntity params,@RequestParam int start, @RequestParam int pageSize){
-		PageInfo<ProcessVariableEntity> page = processVariableService.queryPage(params,start,pageSize);
+    @GetMapping("/list")
+    public ResponseEntity<PageInfo<ProcessVariableEntity>> list(ProcessVariableEntity params,@RequestParam(defaultValue = "1" ) int page, @RequestParam(defaultValue = "20") int pageSize){
+		PageInfo<ProcessVariableEntity> pageinfos = processVariableService.queryPage(params,page,pageSize);
 
-        return new ResponseEntity(page, HttpStatus.OK);
+        return new ResponseEntity(pageinfos, HttpStatus.OK);
     }
 
 
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     public ResponseEntity<ProcessVariableEntity> info(@PathVariable("id") Long id){
 		ProcessVariableEntity processVariable = processVariableService.getById(id);
 
@@ -56,7 +52,7 @@ public class ProcessVariableController {
     /**
      * 保存
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
     public ResponseEntity save(@RequestBody ProcessVariableEntity processVariable){
 		processVariableService.save(processVariable);
 
@@ -66,7 +62,7 @@ public class ProcessVariableController {
     /**
      * 修改
      */
-    @RequestMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity update(@RequestBody ProcessVariableEntity processVariable){
 		processVariableService.updateById(processVariable);
 
@@ -76,7 +72,7 @@ public class ProcessVariableController {
     /**
      * 删除
      */
-    @RequestMapping("/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity delete(@RequestBody Long[] ids){
 		processVariableService.removeByIds(Arrays.asList(ids));
 

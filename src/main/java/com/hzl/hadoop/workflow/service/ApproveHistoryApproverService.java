@@ -8,11 +8,11 @@ import com.github.pagehelper.PageInfo;
 import java.util.Map;
 
 /**
- * 审批节点审批历史
+ * 审批节点审批历史,一个节点是审批组多人审批，就插入多条记录
  *
- * @author chenshun
+ * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2021-11-04 14:56:39
+ * @date 2022-06-15 16:05:06
  */
 public interface ApproveHistoryApproverService extends IService<ApproveHistoryApproverEntity> {
 

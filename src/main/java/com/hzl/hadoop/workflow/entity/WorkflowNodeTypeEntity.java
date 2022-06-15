@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -12,17 +15,15 @@ import java.time.LocalDateTime;
 
 /**
  * 审批节点类型
- * 数据：{
- "nodeNum":"N1",
- "nodeName":"开始节点",
- "nodeType":1,
- "nodeDetail":"工作流开始节点"
- }
- * @author chenshun
+ *
+ * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2021-11-03 18:55:14
+ * @date 2022-06-15 16:05:06
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("workflow_node_type")
 public class WorkflowNodeTypeEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

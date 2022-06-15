@@ -8,11 +8,11 @@ import com.github.pagehelper.PageInfo;
 import java.util.Map;
 
 /**
- * 结束节点审批历史
+ * 结束节点审批历史，仅仅标记流程是否结束，不配置审批人，可以配置结束监听器
  *
- * @author chenshun
+ * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2021-11-04 14:56:39
+ * @date 2022-06-15 16:05:06
  */
 public interface ApproveHistoryEndService extends IService<ApproveHistoryEndEntity> {
 

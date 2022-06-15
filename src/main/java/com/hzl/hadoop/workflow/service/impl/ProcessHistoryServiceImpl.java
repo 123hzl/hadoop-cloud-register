@@ -22,7 +22,7 @@ public class ProcessHistoryServiceImpl extends ServiceImpl<ProcessHistoryMapper,
     @Override
     public PageInfo queryPage(ProcessHistoryEntity params,int start, int pageSize) {
 		QueryWrapper<ProcessHistoryEntity> queryWrapper = new QueryWrapper(params);
-
+		queryWrapper.orderByDesc("create_time");
 		PageInfo<ProcessHistoryEntity> pageResult = PageHelper.startPage(start, pageSize).doSelectPageInfo(() -> mapper.selectList(queryWrapper));
 
         return pageResult;
