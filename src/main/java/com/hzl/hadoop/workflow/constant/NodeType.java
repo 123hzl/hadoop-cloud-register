@@ -8,21 +8,28 @@ package com.hzl.hadoop.workflow.constant;
  */
 public enum NodeType {
 
-	START(1),
+	START(1,"开始"),
 
-	GATEWAY(2),
+	GATEWAY(2,"网关"),
 
-	APPROVE(3),
+	APPROVE(3,"审批节点"),
 
-	END(4);
+	END(4,"结束");
 
 	private final Integer value;
 
-	NodeType(Integer value) {
+	private final String dec;
+
+	NodeType(Integer value, String dec) {
 		this.value = value;
+		this.dec = dec;
 	}
 
-	public Integer value() {
+	public Integer getValue() {
 		return value;
+	}
+
+	public String getDec() {
+		return dec;
 	}
 }

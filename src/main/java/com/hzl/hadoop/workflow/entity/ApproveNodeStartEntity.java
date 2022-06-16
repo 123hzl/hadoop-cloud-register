@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 /**
  * 审批开始节点
- *
+ * 启动节点可以不做任何配置只用于启动标记
  * @author huangzhongliang
  * @email sunlightcs@gmail.com
  * @date 2022-06-15 16:05:06
@@ -32,11 +32,11 @@ public class ApproveNodeStartEntity implements Serializable {
 	 *
 	 */
 	@TableId
-	private Integer id;
+	private Long id;
 	/**
-	 * 节点编号
+	 * 流程图编号
 	 */
-	private String nodeNum;
+	private String flowNum;
 	/**
 	 * 审批人
 	 */

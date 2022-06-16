@@ -32,9 +32,9 @@ public class ApproveNodeEndEntity implements Serializable {
 	 *
 	 */
 	@TableId
-	private Integer id;
+	private Long id;
 	/**
-	 * 节点编号
+	 * 流程图编号
 	 */
 	private String nodeNum;
 	/**
@@ -50,11 +50,11 @@ public class ApproveNodeEndEntity implements Serializable {
 	 */
 	private String positionNum;
 	/**
-	 * 下一节点（一对一，可以是网管，审批节点）
+	 * 上一节点（一对一，可以是网管，审批节点）
 	 */
 	private Long upNodeId;
 	/**
-	 * 下一节点类型（关联审批节点表的node_type）
+	 * 上一节点类型（关联审批节点表的node_type）
 	 */
 	private Integer upNodeType;
 	/**

@@ -14,6 +14,7 @@
         <result property="updateTime" column="update_time"/>
         <result property="versionNum" column="version_num"/>
         <result property="descr" column="descr"/>
+        <result property="flowNum" column="flow_num"/>
     </resultMap>
 
 

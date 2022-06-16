@@ -52,7 +52,7 @@ public class ApproveHistoryEndEntity implements Serializable {
 	/**
 	 * 审批动作，1同意，2拒绝，3跳过，4转交
 	 */
-	private Long approveAction;
+	private Integer approveAction;
 	/**
 	 * 租户id
 	 */
