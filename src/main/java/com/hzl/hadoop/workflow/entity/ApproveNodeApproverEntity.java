@@ -32,11 +32,11 @@ public class ApproveNodeApproverEntity implements Serializable {
 	 *
 	 */
 	@TableId
-	private Integer id;
+	private Long id;
 	/**
-	 * 节点编号
+	 * 流程图编号
 	 */
-	private String nodeNum;
+	private String flowNum;
 	/**
 	 * 审批人
 	 */

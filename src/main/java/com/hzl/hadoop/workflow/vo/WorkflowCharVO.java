@@ -59,5 +59,9 @@ public class WorkflowCharVO implements Serializable {
 	 * 流程图名称
 	 */
 	private String descr;
+	/**
+	 * 流程图编号
+	 */
+	private String flowNum;
 
 }

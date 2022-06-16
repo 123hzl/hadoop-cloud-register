@@ -38,7 +38,6 @@ public class MyAuthenticationFailureHandler implements AuthenticationFailureHand
 		LoginSuccessVO loginSuccessVO=LoginSuccessVO.builder()
 				.status("error")
 				.currentAuthority("guest")
-				.errorMessage(exception.getMessage())
 				.build();
 
 		BaseResponse baseResponse=new BaseResponse(loginSuccessVO,false,exception.getMessage());

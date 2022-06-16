@@ -17,5 +17,7 @@ import java.util.Map;
 public interface WorkflowCharService extends IService<WorkflowCharEntity> {
 
 	PageInfo queryPage(WorkflowCharEntity params, int start, int pageSize);
+
+	WorkflowCharEntity selectCharByNum(String flowNum);
 }
 

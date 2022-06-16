@@ -1,14 +1,15 @@
 package com.hzl.hadoop.workflow.convert;
 
-import com.hzl.hadoop.workflow.entity.ApproveNodeEntity;
-import com.hzl.hadoop.workflow.entity.EndNodeEntity;
-import com.hzl.hadoop.workflow.entity.GatewayNodeEntity;
-import com.hzl.hadoop.workflow.entity.StartNodeEntity;
+import com.hzl.hadoop.workflow.entity.ApproveNodeApproverEntity;
+import com.hzl.hadoop.workflow.entity.ApproveNodeEndEntity;
+import com.hzl.hadoop.workflow.entity.ApproveNodeGatewayEntity;
+import com.hzl.hadoop.workflow.entity.ApproveNodeStartEntity;
 
 /**
  * description
  * CharVO 转换成开始节点,网关节点,审批节点,结束节点
  * T为需要转换的类
+ *
  * @author hzl 2021/11/24 4:59 PM
  */
 public interface WorkflowCharConver<T> {
@@ -20,7 +21,7 @@ public interface WorkflowCharConver<T> {
 	 *
 	 * @author hzl 2021/11/24 5:09 PM
 	 */
-	StartNodeEntity converToStartNode(T t);
+	ApproveNodeStartEntity converToStartNode(T t);
 
 	/**
 	 * <p>
@@ -29,7 +30,7 @@ public interface WorkflowCharConver<T> {
 	 *
 	 * @author hzl 2021/11/24 5:09 PM
 	 */
-	GatewayNodeEntity converToGateWayNode(T t);
+	ApproveNodeGatewayEntity converToGateWayNode(T t);
 
 	/**
 	 * <p>
@@ -38,7 +39,7 @@ public interface WorkflowCharConver<T> {
 	 *
 	 * @author hzl 2021/11/24 5:09 PM
 	 */
-	ApproveNodeEntity converToApproveNode(T t);
+	ApproveNodeApproverEntity converToApproveNode(T t);
 
 	/**
 	 * <p>
@@ -47,6 +48,6 @@ public interface WorkflowCharConver<T> {
 	 *
 	 * @author hzl 2021/11/24 5:09 PM
 	 */
-	EndNodeEntity converToEndNode(T t);
+	ApproveNodeEndEntity converToEndNode(T t);
 
 }

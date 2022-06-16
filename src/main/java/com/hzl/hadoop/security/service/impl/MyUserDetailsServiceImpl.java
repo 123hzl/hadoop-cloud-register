@@ -13,6 +13,8 @@ import com.hzl.hadoop.security.vo.UserInfoVO;
 import com.hzl.hadoop.util.GenerateCodeUtils;
 import com.hzl.hadoop.util.JsonUtils;
 import com.hzl.hadoop.util.RedisUtils;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -25,6 +27,7 @@ import org.springframework.stereotype.Service;
  *
  * @author hzl 2021/09/09 5:10 PM
  */
+@Slf4j
 @Service
 public class MyUserDetailsServiceImpl implements MyUserDetailsService {
 
@@ -132,6 +135,9 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		String userName = authentication.getName();
+
+		Object userInfo=authentication.getPrincipal();
+		log.info("用户信息{}",JsonUtils.objectToString(userInfo));
 
 		SysUser sysUser = selectUserByUserName(userName);
 

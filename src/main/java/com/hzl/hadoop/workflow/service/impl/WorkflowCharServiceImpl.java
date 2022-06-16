@@ -1,5 +1,6 @@
 package com.hzl.hadoop.workflow.service.impl;
 
+import com.hzl.hadoop.exception.CommonException;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -27,5 +28,16 @@ public class WorkflowCharServiceImpl extends ServiceImpl<WorkflowCharMapper, Wor
 
         return pageResult;
     }
+
+	@Override
+	public WorkflowCharEntity selectCharByNum(String flowNum) {
+		QueryWrapper<WorkflowCharEntity> queryWrapper = new QueryWrapper();
+		queryWrapper.eq("flow_num",flowNum);
+		WorkflowCharEntity workflowCharEntity=mapper.selectOne(queryWrapper);
+		if(workflowCharEntity==null){
+			throw new CommonException("流程图不存在");
+		}
+		return workflowCharEntity;
+	}
 
 }

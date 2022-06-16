@@ -46,9 +46,9 @@ public class ApproveHistoryStartEntity implements Serializable {
 	 */
 	private String approverNum;
 	/**
-	 * 审批动作，1同意，2拒绝，3跳过，4转交
+	 * 审批动作，0,待审批，1同意，2拒绝，3跳过，4转交
 	 */
-	private Long approveAction;
+	private Integer approveAction;
 	/**
 	 * 租户id
 	 */

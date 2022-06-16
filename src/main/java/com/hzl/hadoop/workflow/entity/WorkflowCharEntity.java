@@ -72,4 +72,9 @@ public class WorkflowCharEntity implements Serializable {
 	 */
 	private String descr;
 
+	/**
+	 * 流程图编号
+	 */
+	private String flowNum;
+
 }

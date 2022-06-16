@@ -17,5 +17,8 @@ import java.util.Map;
 public interface ApproveNodeStartService extends IService<ApproveNodeStartEntity> {
 
 	PageInfo queryPage(ApproveNodeStartEntity params, int start, int pageSize);
+
+	ApproveNodeStartEntity getStartWorkNode(String flowNum);
+
 }
 

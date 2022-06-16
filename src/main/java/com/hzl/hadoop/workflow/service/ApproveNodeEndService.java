@@ -5,6 +5,7 @@ import com.hzl.hadoop.workflow.entity.ApproveNodeEndEntity;
 import com.github.pagehelper.PageInfo;
 
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,5 +18,7 @@ import java.util.Map;
 public interface ApproveNodeEndService extends IService<ApproveNodeEndEntity> {
 
 	PageInfo queryPage(ApproveNodeEndEntity params, int start, int pageSize);
+
+	List<ApproveNodeEndEntity> selectByFlowNum(String flowNum);
 }
 

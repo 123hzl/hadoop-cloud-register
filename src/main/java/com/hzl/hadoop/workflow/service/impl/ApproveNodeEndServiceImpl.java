@@ -1,5 +1,6 @@
 package com.hzl.hadoop.workflow.service.impl;
 
+import com.hzl.hadoop.exception.CommonException;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -11,6 +12,7 @@ import com.hzl.hadoop.workflow.entity.ApproveNodeEndEntity;
 import com.hzl.hadoop.workflow.service.ApproveNodeEndService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
+import java.util.List;
 
 
 @Service("approveNodeEndService")
@@ -27,5 +29,16 @@ public class ApproveNodeEndServiceImpl extends ServiceImpl<ApproveNodeEndMapper,
 
         return pageResult;
     }
+
+	@Override
+	public List<ApproveNodeEndEntity> selectByFlowNum(String flowNum) {
+		QueryWrapper<ApproveNodeEndEntity> queryWrapper = new QueryWrapper();
+		queryWrapper.eq("flow_num",flowNum);
+		List<ApproveNodeEndEntity>  workflowCharEntity=mapper.selectList(queryWrapper);
+		if(workflowCharEntity==null){
+			throw new CommonException("流程图不存在");
+		}
+		return workflowCharEntity;
+	}
 
 }

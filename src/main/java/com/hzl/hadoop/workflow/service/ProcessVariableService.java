@@ -5,6 +5,7 @@ import com.hzl.hadoop.workflow.entity.ProcessVariableEntity;
 import com.github.pagehelper.PageInfo;
 
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,5 +18,7 @@ import java.util.Map;
 public interface ProcessVariableService extends IService<ProcessVariableEntity> {
 
 	PageInfo queryPage(ProcessVariableEntity params, int start, int pageSize);
+
+	List<ProcessVariableEntity> queryByProcessId(Long processId);
 }
 

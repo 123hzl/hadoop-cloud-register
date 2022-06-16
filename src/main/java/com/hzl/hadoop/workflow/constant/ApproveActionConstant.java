@@ -8,25 +8,29 @@ package com.hzl.hadoop.workflow.constant;
  */
 public enum ApproveActionConstant {
 
+
+	//待审批
+	WAIT(0),
+
 	//同意
-	AGREE(1L),
+	AGREE(1),
 
 	//拒绝
-	REJECT(2L),
+	REJECT(2),
 
 	//跳过
-	SKIP(3L),
+	SKIP(3),
 
 	//转交
-	TURN_ORVER(4L);
+	TURN_ORVER(4);
 
-	private final Long value;
+	private final Integer value;
 
-	ApproveActionConstant(Long value) {
+	ApproveActionConstant(Integer value) {
 		this.value = value;
 	}
 
-	public Long value() {
+	public Integer value() {
 		return value;
 	}
 }

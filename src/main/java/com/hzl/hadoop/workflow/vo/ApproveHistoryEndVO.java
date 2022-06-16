@@ -44,9 +44,9 @@ public class ApproveHistoryEndVO implements Serializable {
 	 */
 	private Long listenerId;
 	/**
-	 * 审批动作，1同意，2拒绝，3跳过，4转交
+	 * 审批动作，0待审批,1同意，2拒绝，3跳过，4转交
 	 */
-	private Long approveAction;
+	private Integer approveAction;
 	/**
 	 * 租户id
 	 */
