@@ -1,10 +1,8 @@
 package com.hzl.hadoop.workflow.flow.impl;
 
+import com.hzl.hadoop.util.JsonUtils;
 import com.hzl.hadoop.workflow.constant.NodeType;
-import com.hzl.hadoop.workflow.entity.ApproveHistoryApproverEntity;
-import com.hzl.hadoop.workflow.entity.ApproveHistoryEndEntity;
-import com.hzl.hadoop.workflow.entity.ApproveHistoryGatewayEntity;
-import com.hzl.hadoop.workflow.entity.ApproveHistoryStartEntity;
+import com.hzl.hadoop.workflow.entity.*;
 import com.hzl.hadoop.workflow.flow.ApproveHistoryHandle;
 import com.hzl.hadoop.workflow.service.ApproveHistoryApproverService;
 import com.hzl.hadoop.workflow.service.ApproveHistoryEndService;
@@ -33,20 +31,21 @@ public class ApproveHistoryHandleImpl implements ApproveHistoryHandle {
 
 
 	@Override
-	public <T> void saveHistory(NodeType nodeType, T hostory) {
+	public void saveHistory(NodeType nodeType, ApproveHistoryEntity hostory) {
 
 		switch (nodeType) {
 			case START:
-				approveHistoryStartService.save((ApproveHistoryStartEntity) hostory);
+
+				approveHistoryStartService.save(JsonUtils.cloneObject(hostory,ApproveHistoryStartEntity.class));
 				break;
 			case GATEWAY:
-				approveHistoryGatewayService.save((ApproveHistoryGatewayEntity) hostory);
+				approveHistoryGatewayService.save(JsonUtils.cloneObject(hostory,ApproveHistoryGatewayEntity.class));
 				break;
 			case APPROVE:
-				approveHistoryApproverService.save((ApproveHistoryApproverEntity) hostory);
+				approveHistoryApproverService.save(JsonUtils.cloneObject(hostory,ApproveHistoryApproverEntity.class));
 				break;
 			case END:
-				approveHistoryEndService.save((ApproveHistoryEndEntity) hostory);
+				approveHistoryEndService.save(JsonUtils.cloneObject(hostory,ApproveHistoryEndEntity.class));
 				break;
 			default:
 				break;

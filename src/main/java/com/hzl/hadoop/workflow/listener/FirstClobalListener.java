@@ -1,10 +1,13 @@
 package com.hzl.hadoop.workflow.listener;
 
+import org.springframework.stereotype.Component;
+
 /**
  * description
  *
  * @author hzl 2021/11/04 10:29 AM
  */
+@Component
 public class FirstClobalListener extends GlobalListener {
 
 	@Override

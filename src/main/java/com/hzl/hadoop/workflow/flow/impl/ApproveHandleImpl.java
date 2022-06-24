@@ -100,8 +100,8 @@ public class ApproveHandleImpl implements ApproveHandle {
 				//根据监听类，进行反射处理
 				try {
 					Object listenerObject=ApplicationContextUtil.getBean(Class.forName("com.hzl.hadoop.workflow.listener.FirstClobalListener"));
-					Class<?> clazz = listenerObject.getClass();
-					Method method = clazz.getMethod("listener");
+					Class<?> clazz = Class.forName("com.hzl.hadoop.workflow.listener.FirstClobalListener");
+					Method method = clazz.getMethod("listener",Long.class);
 					method.invoke(listenerObject,processId);
 
 				} catch (ClassNotFoundException e) {
@@ -137,13 +137,13 @@ public class ApproveHandleImpl implements ApproveHandle {
 
 			//判断是否自动审批 todo 该逻辑后续完善
 
-			if (nodeEntity.getClass().equals(ApproveNodeStartEntity.class)) {
+			if (nodeEntity.getNodeType().equals(NodeType.START.getValue())) {
 				approveHistoryList.stream().forEach(entity -> approveHistoryHandle.saveHistory(NodeType.START, entity));
-			} else if (nodeEntity.getClass().equals(ApproveNodeGatewayEntity.class)) {
+			} else if (nodeEntity.getNodeType().equals(NodeType.GATEWAY.getValue())) {
 				approveHistoryList.stream().forEach(entity -> approveHistoryHandle.saveHistory(NodeType.GATEWAY, entity));
-			} else if (nodeEntity.getClass().equals(ApproveNodeApproverEntity.class)) {
+			} else if (nodeEntity.getNodeType().equals(NodeType.APPROVE.getValue())) {
 				approveHistoryList.stream().forEach(entity -> approveHistoryHandle.saveHistory(NodeType.APPROVE, entity));
-			} else if (nodeEntity.getClass().equals(ApproveNodeEndEntity.class)) {
+			} else if (nodeEntity.getNodeType().equals(NodeType.END.getValue())) {
 				approveHistoryList.stream().forEach(entity -> approveHistoryHandle.saveHistory(NodeType.END, entity));
 
 			}
