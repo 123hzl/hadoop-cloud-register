@@ -2,6 +2,8 @@ package com.hzl.hadoop.interfacemanager.controller;
 
 import java.util.Arrays;
 
+import com.hzl.hadoop.interfacemanager.dto.InterfaceManageDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,7 @@ import org.springframework.http.ResponseEntity;
  * @email sunlightcs@gmail.com
  * @date 2021-11-16 14:05:48
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/interfacemanage")
 public class InterfaceManageController {
@@ -32,9 +35,9 @@ public class InterfaceManageController {
      * 列表
      */
     @GetMapping("/list")
-    public ResponseEntity<PageInfo<InterfaceManageEntity>> list(InterfaceManageEntity params,@RequestParam int start, @RequestParam int pageSize){
-		PageInfo<InterfaceManageEntity> page = interfaceManageService.queryPage(params,start,pageSize);
-
+    public ResponseEntity<PageInfo<InterfaceManageDTO>> list(InterfaceManageVO params,@RequestParam int start, @RequestParam int pageSize){
+		PageInfo<InterfaceManageDTO> page = interfaceManageService.queryPage(params,start,pageSize);
+        log.info("接口数据{}",page.toString());
         return new ResponseEntity(page, HttpStatus.OK);
     }
 

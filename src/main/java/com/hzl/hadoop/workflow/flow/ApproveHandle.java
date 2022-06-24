@@ -1,5 +1,6 @@
 package com.hzl.hadoop.workflow.flow;
 
+import com.hzl.hadoop.workflow.entity.ApproveNodeAbstract;
 import com.hzl.hadoop.workflow.entity.ApproveNodeStartEntity;
 import com.hzl.hadoop.workflow.vo.NodeContainer;
 import com.hzl.hadoop.workflow.vo.ProcessVariableVO;
@@ -11,5 +12,10 @@ import com.hzl.hadoop.workflow.vo.ProcessVariableVO;
  */
 public interface ApproveHandle {
 
-	void beforeApprove(Long processId,ApproveNodeStartEntity startEntity);
+	void beforeApprove(Long processId,ApproveNodeAbstract startEntity);
+
+	void approve(Long processId,ApproveNodeAbstract startEntity);
+
+	void afterApprove(Long processId,Long nodeId,Integer nodeType);
+
 }

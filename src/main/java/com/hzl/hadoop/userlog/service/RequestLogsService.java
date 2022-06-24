@@ -1,8 +1,10 @@
 package com.hzl.hadoop.userlog.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hzl.hadoop.userlog.dto.RequestLogsDTO;
 import com.hzl.hadoop.userlog.entity.RequestLogsEntity;
 import com.github.pagehelper.PageInfo;
+import com.hzl.hadoop.userlog.vo.RequestLogsVO;
 
 
 import java.util.Map;
@@ -16,6 +18,6 @@ import java.util.Map;
  */
 public interface RequestLogsService extends IService<RequestLogsEntity> {
 
-	PageInfo queryPage(RequestLogsEntity params, int start, int pageSize);
+	PageInfo<RequestLogsDTO> queryPage(RequestLogsVO params, Integer current, Integer pageSize);
 }
 

@@ -5,6 +5,7 @@ import com.hzl.hadoop.workflow.entity.ApproveGroupUserEntity;
 import com.github.pagehelper.PageInfo;
 
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,5 +18,7 @@ import java.util.Map;
 public interface ApproveGroupUserService extends IService<ApproveGroupUserEntity> {
 
 	PageInfo queryPage(ApproveGroupUserEntity params, int start, int pageSize);
+
+	List<Long> queryUserIdsByGroupId(Long groupId);
 }
 

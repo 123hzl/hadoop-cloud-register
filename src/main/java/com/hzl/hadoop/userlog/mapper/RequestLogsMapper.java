@@ -1,8 +1,12 @@
 package com.hzl.hadoop.userlog.mapper;
 
+import com.hzl.hadoop.userlog.dto.RequestLogsDTO;
+import com.hzl.hadoop.userlog.vo.RequestLogsVO;
 import org.apache.ibatis.annotations.Mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hzl.hadoop.userlog.entity.RequestLogsEntity;
+
+import java.util.List;
 
 
 /**
@@ -14,5 +18,5 @@ import com.hzl.hadoop.userlog.entity.RequestLogsEntity;
  */
 @Mapper
 public interface RequestLogsMapper extends BaseMapper<RequestLogsEntity> {
-	
+	List<RequestLogsDTO> listPage(RequestLogsVO params);
 }

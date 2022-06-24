@@ -15,7 +15,7 @@ public class FastJson3RedisSerializer<T> extends FastJsonRedisSerializer<T> {
 
 	static {
 		ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
-		ParserConfig.getGlobalInstance().addAccept("com.hzl.hadoop.app.dataobject");
+		ParserConfig.getGlobalInstance().addAccept("com.hzl.hadoop.app.entity");
 	}
 
 	private FastJsonConfig fastJsonConfig = new FastJsonConfig();

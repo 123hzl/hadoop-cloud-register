@@ -2,6 +2,9 @@ package com.hzl.hadoop.workflow.controller;
 
 import java.util.Arrays;
 
+import com.hzl.hadoop.interfacemanager.annotation.Permission;
+import com.hzl.hadoop.workflow.flow.StartWorkFlowService;
+import com.hzl.hadoop.workflow.vo.StartWorkFlowVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +25,14 @@ import org.springframework.http.ResponseEntity;
  * @email sunlightcs@gmail.com
  * @date 2022-06-15 16:05:06
  */
+@Permission(isLogin = false)
 @RestController
 @RequestMapping("workflow/approvehistorystart")
 public class ApproveHistoryStartController {
     @Autowired
     private ApproveHistoryStartService approveHistoryStartService;
-
+    @Autowired
+    StartWorkFlowService startWorkFlowService;
     /**
      * 列表
      */
@@ -36,6 +41,19 @@ public class ApproveHistoryStartController {
 		PageInfo<ApproveHistoryStartEntity> pageinfos = approveHistoryStartService.queryPage(params,page,pageSize);
 
         return new ResponseEntity(pageinfos, HttpStatus.OK);
+    }
+
+
+    /**
+     * 列表
+     */
+    @GetMapping("/start/{flowNum}")
+    public ResponseEntity<Boolean> startWorkFlow(@PathVariable("flowNum") String flowNum){
+        StartWorkFlowVO startWorkFlowVO=new StartWorkFlowVO();
+        startWorkFlowVO.setFlowNum(flowNum);
+        startWorkFlowService.startWorkFlow(startWorkFlowVO);
+
+        return new ResponseEntity(true, HttpStatus.OK);
     }
 
 

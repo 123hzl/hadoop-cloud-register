@@ -1,17 +1,12 @@
 package com.hzl.hadoop.security.service.impl;
 
-import com.alibaba.druid.support.json.JSONUtils;
-import com.hzl.hadoop.config.mvc.BaseResponse;
+import com.hzl.hadoop.security.service.SysUserService;
 import com.hzl.hadoop.security.vo.LoginSuccessVO;
 import com.hzl.hadoop.util.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.DefaultRedirectStrategy;
-import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
-import org.springframework.security.web.savedrequest.RequestCache;
-import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,17 +23,21 @@ import java.io.PrintWriter;
 @Slf4j
 @Component
 public class MyAuthenticationSucessHandler implements AuthenticationSuccessHandler {
-
+	@Autowired
+	SysUserService sysUserService;
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-		String userName = authentication.getName();// 这个获取表单输入中返回的用户名;
-		LoginSuccessVO loginSuccessVO=LoginSuccessVO.builder().status("ok").currentAuthority(userName).build();
+		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+		LoginSuccessVO loginSuccessVO = LoginSuccessVO.builder().status("ok").currentAuthority(customUserDetails.getUsername()).build();
 		//登陆成功后返回true
 		PrintWriter printWriter = response.getWriter();
-		log.info("登陆成功的用户{}",JsonUtils.objectToString(loginSuccessVO));
+		log.info("登陆成功的用户{}", JsonUtils.objectToString(loginSuccessVO));
+		sysUserService.updateStatus(customUserDetails.getUserId(), 1);
 		printWriter.write(JsonUtils.objectToString(loginSuccessVO));
 		printWriter.flush();
 		printWriter.close();
+		//设置用户登录成功
+
 	}
 }

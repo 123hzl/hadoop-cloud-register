@@ -1,6 +1,7 @@
 package com.hzl.hadoop.workflow.flow.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.hzl.hadoop.workflow.NodeDTO;
 import com.hzl.hadoop.workflow.constant.NodeType;
 import com.hzl.hadoop.workflow.flow.NodeHandle;
 import com.hzl.hadoop.workflow.service.ApproveNodeApproverService;
@@ -10,6 +11,8 @@ import com.hzl.hadoop.workflow.service.ApproveNodeStartService;
 import com.hzl.hadoop.workflow.vo.NodeContainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * description
@@ -83,4 +86,11 @@ public class NodeHandleImpl implements NodeHandle {
 		}
 		return nodeContainer;
 	}
+
+	@Override
+	public List<NodeDTO> queryNode(Integer nodeType, Long nodeId) {
+		return approveNodeStartService.queryNode(nodeType,nodeId);
+	}
+
+
 }

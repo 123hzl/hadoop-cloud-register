@@ -3,21 +3,48 @@
 
 <mapper namespace="com.hzl.hadoop.workflow.mapper.ApproveNodeStartMapper">
 
-	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.hzl.hadoop.workflow.entity.ApproveNodeStartEntity" id="approveNodeStartMap">
-        <result property="id" column="id"/>
-        <result property="nodeNum" column="node_num"/>
-        <result property="approverId" column="approver_id"/>
-        <result property="approverGroupId" column="approver_group_id"/>
-        <result property="positionNum" column="position_num"/>
-        <result property="listenerId" column="listener_id"/>
-        <result property="tenantId" column="tenant_id"/>
-        <result property="createBy" column="create_by"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateBy" column="update_by"/>
-        <result property="updateTime" column="update_time"/>
-        <result property="versionNum" column="version_num"/>
-    </resultMap>
+
+    <select id="queryNode" resultType="com.hzl.hadoop.workflow.NodeDTO">
+      SELECT
+        id,
+        approver_id,
+        approver_group_id,
+        position_id,
+        be_listener_id,
+        af_listener_id,
+        2 AS node_type
+    FROM
+        approve_node_gateway
+    WHERE
+        up_node_id = #{nodeId}
+        AND up_node_type = #{nodeType} UNION ALL
+    SELECT
+        id,
+        approver_id,
+        approver_group_id,
+        position_id,
+        be_listener_id,
+        af_listener_id,
+        3 AS node_type
+    FROM
+        approve_node_approver
+    WHERE
+        up_node_id = #{nodeId}
+        AND up_node_type = #{nodeType} UNION ALL
+    SELECT
+        id,
+        approver_id,
+        approver_group_id,
+        position_id,
+        be_listener_id,
+        af_listener_id,
+        4 AS node_type
+    FROM
+        approve_node_end
+    WHERE
+        up_node_id = #{nodeId}
+        AND up_node_type =#{nodeType}
+    </select>
 
 
 </mapper>

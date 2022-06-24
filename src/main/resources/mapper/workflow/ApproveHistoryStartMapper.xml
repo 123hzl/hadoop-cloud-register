@@ -3,20 +3,7 @@
 
 <mapper namespace="com.hzl.hadoop.workflow.mapper.ApproveHistoryStartMapper">
 
-	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.hzl.hadoop.workflow.entity.ApproveHistoryStartEntity" id="approveHistoryStartMap">
-        <result property="id" column="id"/>
-        <result property="processId" column="process_id"/>
-        <result property="currentNodeId" column="current_node_id"/>
-        <result property="approverNum" column="approver_num"/>
-        <result property="approveAction" column="approve_action"/>
-        <result property="tenantId" column="tenant_id"/>
-        <result property="createBy" column="create_by"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateBy" column="update_by"/>
-        <result property="updateTime" column="update_time"/>
-        <result property="versionNum" column="version_num"/>
-    </resultMap>
+
 
 
 </mapper>

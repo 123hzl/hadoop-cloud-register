@@ -17,6 +17,70 @@
         <result property="updateTime" column="update_time"/>
         <result property="versionNum" column="version_num"/>
     </resultMap>
+    <select id="listPage" resultType="com.hzl.hadoop.userlog.dto.RequestLogsDTO">
+        select
+        id,
+        ip,
+        method,
+        url,
+        city,
+        consume_time,
+        request_param,
+        response,
+        tenant_id,
+        create_by,
+        create_time,
+        update_by,
+        update_time,
+        version_num
+        from  request_logs
+        <where>
+            1=1
+            <if test="id!=null" >
+                and id=#{id}
+            </if>
+            <if test="ip!=null and ip!=''" >
+                and ip=#{ip}
+            </if>
+            <if test="method!=null and method!=''" >
+                and method=#{method}
+            </if>
+            <if test="url!=null and url!=''" >
+                and url=#{url}
+            </if>
+            <if test="city!=null and city!=''" >
+                and city=#{city}
+            </if>
+            <if test="consumeTime!=null" >
+                and consume_time=#{consumeTime}
+            </if>
+            <if test="requestParam!=null" >
+                and request_param=#{requestParam}
+            </if>
+            <if test="response!=null" >
+                and response=#{response}
+            </if>
+            <if test="tenantId!=null" >
+                and tenant_id=#{tenantId}
+            </if>
+            <if test="createBy!=null" >
+                and create_by=#{createBy}
+            </if>
+            <if test="createTime!=null" >
+                and create_time=#{createTime}
+            </if>
+            <if test="updateBy!=null" >
+                and update_by=#{updateBy}
+            </if>
+            <if test="updateTime!=null" >
+                and update_time=#{updateTime}
+            </if>
+            <if test="versionNum!=null" >
+                and version_num=#{versionNum}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
 
 
 </mapper>

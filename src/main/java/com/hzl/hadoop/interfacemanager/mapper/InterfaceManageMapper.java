@@ -1,10 +1,12 @@
 package com.hzl.hadoop.interfacemanager.mapper;
 
+import com.hzl.hadoop.interfacemanager.dto.InterfaceManageDTO;
 import com.hzl.hadoop.interfacemanager.vo.InterfaceManageVO;
 import org.apache.ibatis.annotations.Mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hzl.hadoop.interfacemanager.entity.InterfaceManageEntity;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -19,5 +21,8 @@ import java.util.Set;
 public interface InterfaceManageMapper extends BaseMapper<InterfaceManageEntity> {
 
 
-	Set<String> selectUrls(InterfaceManageVO interfaceManageVO);
+	List<InterfaceManageEntity> selectUrls(InterfaceManageVO interfaceManageVO);
+
+	List<InterfaceManageDTO> listPage(InterfaceManageVO params);
+
 }

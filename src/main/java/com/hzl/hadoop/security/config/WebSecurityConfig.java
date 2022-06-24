@@ -1,5 +1,6 @@
 package com.hzl.hadoop.security.config;
 
+import com.hzl.hadoop.security.service.impl.CustomLogoutSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
@@ -86,6 +88,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private AuthenticationSuccessHandler myAuthenticationSuccessHandler;
 	@Autowired
 	private AuthenticationFailureHandler myAuthenticationFailHander;
+	@Autowired
+	private LogoutSuccessHandler customLogoutSuccessHandler;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -112,8 +116,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.tokenRepository(persistentTokenRepository())
 				.tokenValiditySeconds(60);
 		http.logout()   //退出登录相关配置
-				.logoutUrl("/logout")   //自定义退出登录页面
-				//.logoutSuccessHandler(new CoreqiLogoutSuccessHandler()) //退出成功后要做的操作（如记录日志），和logoutSuccessUrl互斥
+				.logoutUrl("/api/login/outLogin")   //自定义退出登录页面
+				.logoutSuccessHandler(customLogoutSuccessHandler) //退出成功后要做的操作（如记录日志），和logoutSuccessUrl互斥
 				//.logoutSuccessUrl("/index") //退出成功后跳转的页面
 				.deleteCookies("JSESSIONID");    //退出时要删除的Cookies的名字
 

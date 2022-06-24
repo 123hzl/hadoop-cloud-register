@@ -3,23 +3,5 @@
 
 <mapper namespace="com.hzl.hadoop.workflow.mapper.ApproveNodeEndMapper">
 
-	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.hzl.hadoop.workflow.entity.ApproveNodeEndEntity" id="approveNodeEndMap">
-        <result property="id" column="id"/>
-        <result property="nodeNum" column="node_num"/>
-        <result property="approverId" column="approver_id"/>
-        <result property="approverGroupId" column="approver_group_id"/>
-        <result property="positionNum" column="position_num"/>
-        <result property="upNodeId" column="up_node_id"/>
-        <result property="upNodeType" column="up_node_type"/>
-        <result property="startId" column="start_id"/>
-        <result property="tenantId" column="tenant_id"/>
-        <result property="createBy" column="create_by"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateBy" column="update_by"/>
-        <result property="updateTime" column="update_time"/>
-        <result property="versionNum" column="version_num"/>
-    </resultMap>
-
 
 </mapper>

@@ -52,7 +52,13 @@ public class RequestLogsVO{
 	/**
 	 *耗时
 	 */
-	private long consumeTime;
+	private Long consumeTime;
+
+
+	/**
+	 * 是否成功返回
+	 */
+	private Boolean response;
 	/**
 	 * 租户id
 	 */

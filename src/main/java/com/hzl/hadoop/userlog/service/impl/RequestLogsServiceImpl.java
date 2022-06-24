@@ -1,5 +1,7 @@
 package com.hzl.hadoop.userlog.service.impl;
 
+import com.hzl.hadoop.userlog.dto.RequestLogsDTO;
+import com.hzl.hadoop.userlog.vo.RequestLogsVO;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -19,13 +21,12 @@ public class RequestLogsServiceImpl extends ServiceImpl<RequestLogsMapper, Reque
 	@Autowired
     RequestLogsMapper mapper;
 
-    @Override
-    public PageInfo queryPage(RequestLogsEntity params,int start, int pageSize) {
-		QueryWrapper<RequestLogsEntity> queryWrapper = new QueryWrapper(params);
-		queryWrapper.orderByDesc("create_time");
-		PageInfo<RequestLogsEntity> pageResult = PageHelper.startPage(start, pageSize).doSelectPageInfo(() -> mapper.selectList(queryWrapper));
 
-        return pageResult;
-    }
+	@Override
+	public PageInfo<RequestLogsDTO> queryPage(RequestLogsVO params, Integer current, Integer pageSize) {
+		PageInfo<RequestLogsDTO> pageResult = PageHelper.startPage(current, pageSize).doSelectPageInfo(() -> mapper.listPage(params));
+
+		return pageResult;
+	}
 
 }

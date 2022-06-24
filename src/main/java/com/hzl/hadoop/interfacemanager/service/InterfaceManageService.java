@@ -1,11 +1,13 @@
 package com.hzl.hadoop.interfacemanager.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hzl.hadoop.interfacemanager.dto.InterfaceManageDTO;
 import com.hzl.hadoop.interfacemanager.entity.InterfaceManageEntity;
 import com.github.pagehelper.PageInfo;
 import com.hzl.hadoop.interfacemanager.vo.InterfaceManageVO;
 
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,8 +20,8 @@ import java.util.Set;
  */
 public interface InterfaceManageService extends IService<InterfaceManageEntity> {
 
-	PageInfo queryPage(InterfaceManageEntity params, int start, int pageSize);
+	PageInfo<InterfaceManageDTO> queryPage(InterfaceManageVO params, int start, int pageSize);
 
-	Set<String> selectUrls(InterfaceManageVO interfaceManageVO);
+	List<InterfaceManageEntity> selectUrls(InterfaceManageVO interfaceManageVO);
 }
 

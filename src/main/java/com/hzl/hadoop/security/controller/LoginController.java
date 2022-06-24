@@ -98,6 +98,7 @@ public class LoginController {
 	 */
 	@GetMapping(value = "/login/out/{username}")
 	public String loginout(@PathVariable("username") String userName) {
+
 		return "loginout";
 	}
 

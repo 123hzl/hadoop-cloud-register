@@ -1,7 +1,5 @@
 package com.hzl.hadoop.security.vo;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -24,23 +22,10 @@ public class UserInfoVO {
 
 	private String username;
 
-
 	/**
 	 * 电话号码
 	 */
 	private String phone;
-
-	private LocalDateTime creationDate;
-
-	private Long createdBy;
-
-	private LocalDateTime lastUpdateDate;
-
-	private Long lastUpdatedBy;
-
-	private Long objectVersionNumber;
-
-	private Long tenantId;
 
 	/**
 	 * 头像
@@ -55,6 +40,28 @@ public class UserInfoVO {
 	 * 地址
 	 */
 	private String address;
+
+	/**
+	 * 角色id
+	 */
+	private Long roleId;
+
+	/**
+	 * 用户名-真实姓名，可以为空
+	 */
+	private String realName;
+
+	private LocalDateTime creationDate;
+
+	private Long createdBy;
+
+	private LocalDateTime lastUpdateDate;
+
+	private Long lastUpdatedBy;
+
+	private Long objectVersionNumber;
+
+	private Long tenantId;
 
 
 }

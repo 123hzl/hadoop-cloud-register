@@ -1,6 +1,8 @@
 package com.hzl.hadoop.config.mybatis;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.hzl.hadoop.security.service.impl.CustomUserDetails;
+import com.hzl.hadoop.security.utils.DetailHepler;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
@@ -16,26 +18,48 @@ import java.time.LocalDateTime;
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
 
+
 	@Override
 	public void insertFill(MetaObject metaObject) {
+
+
+		CustomUserDetails customUserDetails = DetailHepler.getUserDetails();
+		Long userId = 0L;
+		Long tenantId = 0L;
+		if (customUserDetails != null) {
+			userId = customUserDetails.getUserId();
+			tenantId = customUserDetails.getTenantId();
+
+		}
+
 		this.strictInsertFill(metaObject, "createTime", () -> LocalDateTime.now(), LocalDateTime.class);
 		this.strictInsertFill(metaObject, "updateTime", () -> LocalDateTime.now(), LocalDateTime.class);
 
-		this.strictInsertFill(metaObject, "createBy", Long.class, 0L);
-		this.strictInsertFill(metaObject, "tenantId", Long.class, 0L);
+		this.strictInsertFill(metaObject, "createBy", Long.class,userId);
+		this.strictInsertFill(metaObject, "tenantId", Long.class, tenantId);
 		this.strictInsertFill(metaObject, "versionNum", Integer.class, 0);
-		this.strictInsertFill(metaObject, "updateBy", Long.class, 0L);
+		this.strictInsertFill(metaObject, "updateBy", Long.class, userId);
 
 
 	}
 
 	@Override
 	public void updateFill(MetaObject metaObject) {
+
+
+		CustomUserDetails customUserDetails = DetailHepler.getUserDetails();
+		Long userId = 0L;
+		Long tenantId = 0L;
+		if (customUserDetails != null) {
+			userId = customUserDetails.getUserId();
+			tenantId = customUserDetails.getTenantId();
+		}
+
 		this.strictInsertFill(metaObject, "updateTime", () -> LocalDateTime.now(), LocalDateTime.class);
 
-		this.strictInsertFill(metaObject, "versionNum", Integer.class, 0);
+		this.strictInsertFill(metaObject, "versionNum", Integer.class, (Integer) metaObject.getValue("versionNum") + 1);
 
-		this.strictInsertFill(metaObject, "updateBy", Long.class, 0L);
+		this.strictInsertFill(metaObject, "updateBy", Long.class, userId);
 
 
 	}

@@ -1,8 +1,12 @@
 package com.hzl.hadoop.workflow.mapper;
 
+import com.hzl.hadoop.workflow.NodeDTO;
 import org.apache.ibatis.annotations.Mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hzl.hadoop.workflow.entity.ApproveNodeStartEntity;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 
 /**
@@ -14,5 +18,5 @@ import com.hzl.hadoop.workflow.entity.ApproveNodeStartEntity;
  */
 @Mapper
 public interface ApproveNodeStartMapper extends BaseMapper<ApproveNodeStartEntity> {
-	
+	List<NodeDTO> queryNode(@Param("nodeType") Integer nodeType, @Param("nodeId")Long nodeId );
 }

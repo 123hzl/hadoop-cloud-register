@@ -58,7 +58,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 
 	static {
 		ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
-		ParserConfig.getGlobalInstance().addAccept("com.hzl.hadoop.app.dataobject");
+		ParserConfig.getGlobalInstance().addAccept("com.hzl.hadoop.app.entity");
 	}
 
 

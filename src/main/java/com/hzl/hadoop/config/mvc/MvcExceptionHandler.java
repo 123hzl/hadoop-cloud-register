@@ -21,13 +21,10 @@ public class MvcExceptionHandler {
 
 	@ResponseBody
 	@ExceptionHandler(value =Exception.class )
-	public Map exceptionHander(Exception e, HttpServletRequest req){
+	public BaseResponse exceptionHander(Exception e, HttpServletRequest req){
 		e.printStackTrace();
 		log.error("mvc统一异常处理"+e);
-		HashMap map=new HashMap(3,1);
-		map.put("status",false);
-		map.put("code", ExceptionCode.ERROR);
-		map.put("message",e.getMessage());
-		return map;
+		BaseResponse baseResponse=new BaseResponse(null,false,e.getMessage());
+		return baseResponse;
 	}
 }

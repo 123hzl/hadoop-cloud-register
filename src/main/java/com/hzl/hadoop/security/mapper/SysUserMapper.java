@@ -1,16 +1,23 @@
 package com.hzl.hadoop.security.mapper;
 
-import com.hzl.hadoop.config.mybatis.BaseMapperUtil;
-import com.hzl.hadoop.security.dataobject.SysUser;
 import org.apache.ibatis.annotations.Mapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.hzl.hadoop.security.entity.SysUser;
+import com.hzl.hadoop.security.dto.SysUserDTO;
+import com.hzl.hadoop.security.vo.SysUserVO;
+
+import java.util.List;
 
 /**
- * description
+ * 用户信息表
  *
- * @author hzl 2021/09/09 5:15 PM
+ * @author huangzhongliang
+ * @email sunlightcs@gmail.com
+ * @date 2022-06-21 11:01:56
  */
 @Mapper
-public interface SysUserMapper extends BaseMapperUtil<SysUser> {
+public interface SysUserMapper extends BaseMapper<SysUser> {
 
-	SysUser selectUser(SysUser sysUser);
+	List<SysUserDTO> listPage(SysUserVO params);
+
 }

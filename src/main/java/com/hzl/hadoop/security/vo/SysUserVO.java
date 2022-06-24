@@ -4,13 +4,7 @@ import com.hzl.hadoop.constant.BaseDO;
 import lombok.*;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * description
@@ -23,39 +17,49 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class SysUserVO extends BaseDO {
+public class SysUserVO{
 
 
 	private Long id;
 
+	private String realname;
+
 	private String username;
 
 	private String password;
+
+	/**
+	 * 头像url
+	 */
+	private String avatar;
+
+	/**
+	 * 用户状态，1为登陆，0为离线
+	 */
+	private Integer status;
+
+	/**
+	 * 是否注销，true为已经注销，false为正常
+	 */
+	private Boolean deleted;
 
 	/*
 	 * 电话号码
 	 * */
 	private String phone;
 
-	private LocalDateTime creationDate;
+	private LocalDateTime createTime;
 
-	private Long createdBy;
+	private Long createBy;
 
-	private LocalDateTime lastUpdateDate;
+	private LocalDateTime updateTime;
 
-	private Long lastUpdatedBy;
+	private Long updateBy;
 
-	private Long objectVersionNumber;
-
-//	@Override
-//	public void init(){
-//		this.setCreatedBy(1L);
-//		this.setCreationDate(LocalDateTime.now());
-//		this.setLastUpdateDate(LocalDateTime.now());
-//		this.setLastUpdatedBy(1L);
-//		this.setObjectVersionNumber(1L);
-//	}
-
-
+	private Long versionNum;
+	/**
+	 * 租户id
+	 */
+	private Long tenantId;
 
 }

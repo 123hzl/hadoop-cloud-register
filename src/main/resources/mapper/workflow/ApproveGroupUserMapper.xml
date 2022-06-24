@@ -7,7 +7,7 @@
     <resultMap type="com.hzl.hadoop.workflow.entity.ApproveGroupUserEntity" id="approveGroupUserMap">
         <result property="id" column="id"/>
         <result property="groupId" column="group_id"/>
-        <result property="approverNum" column="approver_num"/>
+        <result property="approverId" column="approver_num"/>
         <result property="tenantId" column="tenant_id"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
@@ -15,6 +15,9 @@
         <result property="updateTime" column="update_time"/>
         <result property="versionNum" column="version_num"/>
     </resultMap>
+    <select id="queryUserIdsByGroupId" resultType="java.lang.Long">
+        select approverId from approve_group_user where group_id=#{groupId}
+    </select>
 
 
 </mapper>

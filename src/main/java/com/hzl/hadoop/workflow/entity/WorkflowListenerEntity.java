@@ -41,10 +41,7 @@ public class WorkflowListenerEntity implements Serializable {
 	 * 监听类
 	 */
 	private String listenerClass;
-	/**
-	 * 监听器类型，1前置监听，2后置监听
-	 */
-	private Integer listenerType;
+
 	/**
 	 * 租户id
 	 */
