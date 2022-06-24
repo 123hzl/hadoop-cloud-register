@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 /**
  * 审批开始节点
- * 启动节点可以不做任何配置只用于启动标记
+ * 启动节点只用于启动标记，表中的审批人，审批组，等线默认为空
  * @author huangzhongliang
  * @email sunlightcs@gmail.com
  * @date 2022-06-15 16:05:06
@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("approve_node_start")
-public class ApproveNodeStartEntity implements Serializable {
+public class ApproveNodeStartEntity extends ApproveNodeAbstract implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -48,11 +48,15 @@ public class ApproveNodeStartEntity implements Serializable {
 	/**
 	 * 指定岗位编号
 	 */
-	private String positionNum;
+	private Long positionId;
 	/**
-	 * 监听器id
+	 * 后置监听器id
 	 */
-	private Long listenerId;
+	private Long afListenerId;
+	/**
+	 * 前置监听器id
+	 */
+	private Long beListenerId;
 	/**
 	 * 租户id
 	 */

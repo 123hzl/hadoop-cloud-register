@@ -3,19 +3,7 @@
 
 <mapper namespace="com.hzl.hadoop.workflow.mapper.WorkflowListenerMapper">
 
-	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.hzl.hadoop.workflow.entity.WorkflowListenerEntity" id="workflowListenerMap">
-        <result property="id" column="id"/>
-        <result property="listenerName" column="listener_name"/>
-        <result property="listenerClass" column="listener_class"/>
-        <result property="listenerType" column="listener_type"/>
-        <result property="tenantId" column="tenant_id"/>
-        <result property="createBy" column="create_by"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateBy" column="update_by"/>
-        <result property="updateTime" column="update_time"/>
-        <result property="versionNum" column="version_num"/>
-    </resultMap>
+
 
 
 </mapper>

@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("approve_history_gateway")
-public class ApproveHistoryGatewayEntity implements Serializable {
+public class ApproveHistoryGatewayEntity extends ApproveHistoryEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -44,7 +44,7 @@ public class ApproveHistoryGatewayEntity implements Serializable {
 	/**
 	 * 审批人
 	 */
-	private String approverNum;
+	private Long approverId;
 	/**
 	 * 审批动作，1同意，2拒绝，3跳过，4转交
 	 */

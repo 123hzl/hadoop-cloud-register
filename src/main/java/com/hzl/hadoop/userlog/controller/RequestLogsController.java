@@ -2,6 +2,7 @@ package com.hzl.hadoop.userlog.controller;
 
 import java.util.Arrays;
 
+import com.hzl.hadoop.userlog.dto.RequestLogsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +33,8 @@ public class RequestLogsController {
      * 列表
      */
     @GetMapping("/list")
-    public ResponseEntity<PageInfo<RequestLogsEntity>> list(RequestLogsEntity params,@RequestParam(defaultValue = "1") int start, @RequestParam(defaultValue = "20") int pageSize){
-		PageInfo<RequestLogsEntity> page = requestLogsService.queryPage(params,start,pageSize);
+    public ResponseEntity<PageInfo<RequestLogsDTO>> list(RequestLogsVO params, @RequestParam(defaultValue = "1") int start, @RequestParam(defaultValue = "20") int pageSize){
+		PageInfo<RequestLogsDTO> page = requestLogsService.queryPage(params,start,pageSize);
 
         return new ResponseEntity(page, HttpStatus.OK);
     }

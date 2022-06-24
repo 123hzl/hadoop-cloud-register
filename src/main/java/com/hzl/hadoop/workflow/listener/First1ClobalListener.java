@@ -8,7 +8,14 @@ package com.hzl.hadoop.workflow.listener;
 public class First1ClobalListener extends GlobalListener {
 
 	@Override
-	public void listener(Long processId) {
-		System.out.println(2L);
+	public void approveListener(Long processId) {
+
 	}
+
+	@Override
+	public void businessListener(Long processId) {
+
+	}
+
+
 }

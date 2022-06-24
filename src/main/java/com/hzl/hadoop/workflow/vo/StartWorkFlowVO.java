@@ -2,6 +2,8 @@ package com.hzl.hadoop.workflow.vo;
 
 import lombok.Data;
 
+import java.util.Map;
+
 /**
  * description
  * 启动工作流参数
@@ -14,4 +16,9 @@ public class StartWorkFlowVO {
 	 * 流程图编号
 	 */
 	private String flowNum;
+
+	/**
+	 * 流程变量
+	 */
+	private Map<String,Object> processVariable;
 }

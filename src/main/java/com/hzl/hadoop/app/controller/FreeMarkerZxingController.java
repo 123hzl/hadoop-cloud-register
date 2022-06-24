@@ -1,11 +1,13 @@
 package com.hzl.hadoop.app.controller;
 
 import com.hzl.hadoop.app.vo.PaymentVO;
+import com.hzl.hadoop.interfacemanager.annotation.Permission;
 import com.hzl.hadoop.util.Zxing;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
@@ -13,6 +15,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 /**
  * description
@@ -44,7 +48,7 @@ public class FreeMarkerZxingController {
 	 *
 	 * @author hzl 2020/01/03 10:35 PM
 	 */
-	@RequestMapping(value = "/paymentOrder")
+	@GetMapping(value = "/paymentOrder")
 	public String paymentOrder(Model model) {
 
 		try {

@@ -1,12 +1,11 @@
 package com.hzl.hadoop.workflow.flow;
 
-import com.hzl.hadoop.security.service.MyUserDetailsService;
-import com.hzl.hadoop.security.vo.UserInfoVO;
+import com.hzl.hadoop.security.service.impl.CustomUserDetails;
+import com.hzl.hadoop.security.utils.DetailHepler;
 import com.hzl.hadoop.workflow.constant.NodeType;
 import com.hzl.hadoop.workflow.constant.ProcessStatusEnum;
 import com.hzl.hadoop.workflow.entity.ApproveNodeStartEntity;
 import com.hzl.hadoop.workflow.entity.ProcessHistoryEntity;
-import com.hzl.hadoop.workflow.service.ApproveNodeStartService;
 import com.hzl.hadoop.workflow.service.ProcessHistoryService;
 import com.hzl.hadoop.workflow.service.WorkflowCharService;
 import com.hzl.hadoop.workflow.vo.StartWorkFlowVO;
@@ -17,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * description
- *
+ * 开始节点制作启动表识，不进行审批人配置
  * @author hzl 2022/06/15 4:46 PM
  */
 @Component
@@ -27,16 +26,16 @@ public class StartWorkFlowService {
 	WorkflowCharService workflowCharService;
 	@Autowired
 	ProcessHistoryService processHistoryService;
-	@Autowired
-	MyUserDetailsService myUserDetailsService;
 
 	@Autowired
 	NodeHandle nodeHandle;
 
+	@Autowired
+	ApproveHandle approveHandle;
+
 	/**
 	 * 返回流程id
 	 *
-	 * @param null
 	 * @return
 	 * @author hzl 2022-06-15 4:48 PM
 	 */
@@ -46,21 +45,26 @@ public class StartWorkFlowService {
 		ApproveNodeStartEntity approveNodeStartEntity = nodeHandle.queryNodeInfoByFlowNum(NodeType.START, startWorkFlowVO.getFlowNum())
 				.getStartNodeList().get(0);
 
-		//1
-		UserInfoVO userInfoVO = myUserDetailsService.getCurrentUserInfo();
+		//1获取当前用户信息
+		CustomUserDetails customUserDetails = DetailHepler.getUserDetails();
 
-		//2根据流程节点配置，处理工作流审批逻辑
+		//判断当前开始节点是否配置了审批信息，还是只是作为流程开始的标志
 
 
 		//3
 		ProcessHistoryEntity processHistoryEntity = new ProcessHistoryEntity();
 		processHistoryEntity.setStartId(approveNodeStartEntity.getId());
 		processHistoryEntity.setProcessStatus(ProcessStatusEnum.START.value());
-		processHistoryEntity.setCurrentApproveUser(userInfoVO.getUsername());
-		processHistoryEntity.setSubmitPerson(userInfoVO.getUsername());
+		processHistoryEntity.setCurrentApproveUser(customUserDetails.getUsername());
+		processHistoryEntity.setSubmitPerson(customUserDetails.getUsername());
 
 		//插入流程记录
 		processHistoryService.save(processHistoryEntity);
+
+		//2根据流程节点配置，处理工作流审批逻辑
+		approveHandle.afterApprove(processHistoryEntity.getId(),approveNodeStartEntity.getId(),NodeType.START.getValue());
+
+
 
 
 		return "";

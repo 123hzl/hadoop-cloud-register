@@ -4,21 +4,19 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.hzl.hadoop.exception.CommonException;
-import com.hzl.hadoop.security.dataobject.SysUser;
+import com.hzl.hadoop.security.entity.SysUser;
 import com.hzl.hadoop.security.mapper.SysUserMapper;
 import com.hzl.hadoop.security.service.MyUserDetailsService;
+import com.hzl.hadoop.security.utils.DetailHepler;
 import com.hzl.hadoop.security.vo.RecoveredPasswordVO;
 import com.hzl.hadoop.security.vo.SysUserVO;
 import com.hzl.hadoop.security.vo.UserInfoVO;
 import com.hzl.hadoop.util.GenerateCodeUtils;
 import com.hzl.hadoop.util.JsonUtils;
 import com.hzl.hadoop.util.RedisUtils;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +29,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyUserDetailsServiceImpl implements MyUserDetailsService {
 
+
 	SysUserMapper sysUserMapper;
 
 	@Autowired
@@ -42,24 +41,25 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
 
 	@Override
 	public SysUser selectUser(SysUser sysUser) {
-		return sysUserMapper.selectOne(sysUser);
+		Wrapper<SysUser> queryWrapper = new QueryWrapper<>(sysUser);
+		return sysUserMapper.selectOne(queryWrapper);
 	}
 
 	@Override
 	public SysUser selectUserByUserName(String username) {
 		SysUser sysUser = new SysUser();
 		sysUser.setUsername(username);
-		return sysUserMapper.selectOne(sysUser);
+		Wrapper<SysUser> queryWrapper = new QueryWrapper<>(sysUser);
+		return sysUserMapper.selectOne(queryWrapper);
 	}
 
 	@Override
 	public Boolean register(SysUserVO sysUserVO) {
-		sysUserVO.init();
 		//用户名，密码为空校验，不能重复注册
 		validateUser(sysUserVO);
 		String password = sysUserVO.getPassword();
 		sysUserVO.setPassword(passwordEncoder.encode(password));
-		int i = sysUserMapper.insert((SysUser) JsonUtils.cloneObject(sysUserVO, SysUser.class));
+		int i = sysUserMapper.insert(JsonUtils.cloneObject(sysUserVO, SysUser.class));
 		if (i > 0) {
 			return true;
 		} else {
@@ -132,17 +132,12 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
 
 	@Override
 	public UserInfoVO getCurrentUserInfo() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-		String userName = authentication.getName();
-
-		Object userInfo=authentication.getPrincipal();
+		CustomUserDetails userInfo= DetailHepler.getUserDetails();
 		log.info("用户信息{}",JsonUtils.objectToString(userInfo));
 
-		SysUser sysUser = selectUserByUserName(userName);
+		UserInfoVO userInfoVO = JsonUtils.cloneObject(userInfo, UserInfoVO.class);
+		userInfoVO.setUserid(String.valueOf(userInfo.getUserId()));
 
-		UserInfoVO userInfoVO = JsonUtils.cloneObject(sysUser, UserInfoVO.class);
-		userInfoVO.setUserid(String.valueOf(sysUser.getId()));
 		return userInfoVO;
 	}
 

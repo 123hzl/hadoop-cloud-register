@@ -1,6 +1,6 @@
 package com.hzl.hadoop.security.service;
 
-import com.hzl.hadoop.security.dataobject.SysUser;
+import com.hzl.hadoop.security.entity.SysUser;
 import com.hzl.hadoop.security.vo.RecoveredPasswordVO;
 import com.hzl.hadoop.security.vo.SysUserVO;
 import com.hzl.hadoop.security.vo.UserInfoVO;

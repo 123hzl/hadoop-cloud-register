@@ -11,6 +11,7 @@ import com.hzl.hadoop.workflow.entity.ApproveGroupUserEntity;
 import com.hzl.hadoop.workflow.service.ApproveGroupUserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
+import java.util.List;
 
 
 @Service("approveGroupUserService")
@@ -27,5 +28,10 @@ public class ApproveGroupUserServiceImpl extends ServiceImpl<ApproveGroupUserMap
 
         return pageResult;
     }
+
+	@Override
+	public List<Long> queryUserIdsByGroupId(Long groupId) {
+		return mapper.queryUserIdsByGroupId(groupId);
+	}
 
 }

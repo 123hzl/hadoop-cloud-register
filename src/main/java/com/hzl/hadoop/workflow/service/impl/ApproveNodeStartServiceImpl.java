@@ -5,11 +5,14 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hzl.hadoop.exception.CommonException;
+import com.hzl.hadoop.workflow.NodeDTO;
 import com.hzl.hadoop.workflow.entity.ApproveNodeStartEntity;
 import com.hzl.hadoop.workflow.mapper.ApproveNodeStartMapper;
 import com.hzl.hadoop.workflow.service.ApproveNodeStartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service("approveNodeStartService")
@@ -36,6 +39,11 @@ public class ApproveNodeStartServiceImpl extends ServiceImpl<ApproveNodeStartMap
 			throw new CommonException("流程图不存在");
 		}
 		return approveNodeStartEntity;
+	}
+
+	@Override
+	public List<NodeDTO> queryNode(Integer nodeType, Long nodeId) {
+		return mapper.queryNode(nodeType,nodeId);
 	}
 
 }

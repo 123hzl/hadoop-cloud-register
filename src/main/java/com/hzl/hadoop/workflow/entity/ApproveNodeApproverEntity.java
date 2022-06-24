@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("approve_node_approver")
-public class ApproveNodeApproverEntity implements Serializable {
+public class ApproveNodeApproverEntity extends ApproveNodeAbstract implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -48,7 +48,7 @@ public class ApproveNodeApproverEntity implements Serializable {
 	/**
 	 * 指定岗位编号
 	 */
-	private String positionNum;
+	private Long positionId;
 	/**
 	 * 上一节点（一对一，可以是网管，审批节点）
 	 */

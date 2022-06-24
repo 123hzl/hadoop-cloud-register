@@ -40,7 +40,7 @@ public class ApproveGroupUserEntity implements Serializable {
 	/**
 	 * 审批人编号
 	 */
-	private String approverNum;
+	private Long approverId;
 	/**
 	 * 租户id
 	 */

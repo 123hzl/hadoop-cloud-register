@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.hzl.hadoop.config.mybatis.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,68 +26,38 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("request_logs")
-public class RequestLogsEntity{
+public class RequestLogsEntity extends BaseEntity{
 
 	/**
 	 *
 	 */
-	@TableId
 	private Long id;
 	/**
-	 *ip来源
+	 *
 	 */
 	private String ip;
 	/**
-	 *接口地址
-	 */
-	private String url;
-	/**
-	 *请求参数
-	 */
-	private String requestParam;
-	/**
-	 *操作类型
+	 *
 	 */
 	private String method;
 	/**
-	 *耗时
-	 */
-	private long consumeTime;
-
-	/**
-	* ip地址
 	 *
-	 * */
+	 */
+	private String url;
+	/**
+	 *
+	 */
 	private String city;
 	/**
-	 * 租户id
+	 * 耗时纳秒
 	 */
-	@TableField(fill = FieldFill.INSERT)
-	private Long tenantId;
+	private Long consumeTime;
 	/**
-	 * 创建人
+	 *
 	 */
-	@TableField(fill = FieldFill.INSERT)
-	private Long createBy;
+	private String requestParam;
 	/**
-	 * 创建时间
+	 * 是否成功返回
 	 */
-	@TableField(fill = FieldFill.INSERT)
-	private LocalDateTime createTime;
-	/**
-	 * 最后更新人
-	 */
-	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private Long updateBy;
-	/**
-	 * 最后更新时间
-	 */
-	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private LocalDateTime updateTime;
-	/**
-	 * 版本号
-	 */
-	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private Integer versionNum;
-
+	private Boolean response;
 }

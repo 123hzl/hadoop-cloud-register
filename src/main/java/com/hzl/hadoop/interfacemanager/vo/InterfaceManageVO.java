@@ -21,7 +21,7 @@ public class InterfaceManageVO {
 	/**
 	 *
 	 */
-	private Long id;
+	private String id;
 	/**
 	 * 编码
 	 */
