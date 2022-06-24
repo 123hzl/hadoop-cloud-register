@@ -2,7 +2,7 @@ package com.hzl.hadoop.workflow.listener;
 
 /**
  * description
- * 全局监听，实现自定义全局监听需要实现改抽象类
+ * 全局监听，实现自定义全局监听需要实现改抽象类，监听一定要注入到spring中
  * @author hzl 2021/11/04 9:21 AM
  */
 public abstract class GlobalListener {
