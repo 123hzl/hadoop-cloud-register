@@ -17,6 +17,15 @@
         <result property="updateTime" column="update_time"/>
         <result property="versionNum" column="version_num"/>
     </resultMap>
+    <select id="queryPage" resultType="com.hzl.hadoop.workflow.dto.ProcessHistoryPageDTO">
+        SELECT
+            ph.id as processId,ph.submit_person,ph.process_status,wc.descr,wc.flow_num,ans.id as startId,ph.create_time
+        FROM
+            process_history ph
+            left join approve_node_start ans on ph.start_id=ans.id
+            left join workflow_char wc on ans.flow_num=wc.flow_num
+        order by ph.create_time desc
+    </select>
 
 
 </mapper>

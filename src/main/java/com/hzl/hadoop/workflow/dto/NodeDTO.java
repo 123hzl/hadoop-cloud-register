@@ -1,4 +1,4 @@
-package com.hzl.hadoop.workflow;
+package com.hzl.hadoop.workflow.dto;
 
 import lombok.Data;
 

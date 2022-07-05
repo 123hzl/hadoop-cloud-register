@@ -70,7 +70,6 @@ public class GpPercentConvert {
 
 	public static List<GpXlPercentEntity> parse(String gpCode,String page) {
 		String data = httpGet(PERCENT_URL, gpCode,page);
-		log.info("数据{}",data);
 		return JsonUtils.jsonStringToList(data, GpXlPercentEntity.class);
 
 	}

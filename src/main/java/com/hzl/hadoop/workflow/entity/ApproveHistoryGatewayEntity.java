@@ -46,6 +46,10 @@ public class ApproveHistoryGatewayEntity extends ApproveHistoryEntity implements
 	 */
 	private Long approverId;
 	/**
+	 * 审批意见
+	 */
+	private String remark;
+	/**
 	 * 审批动作，1同意，2拒绝，3跳过，4转交
 	 */
 	private Integer approveAction;

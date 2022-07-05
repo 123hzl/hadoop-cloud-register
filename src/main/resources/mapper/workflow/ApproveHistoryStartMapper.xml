@@ -4,6 +4,9 @@
 <mapper namespace="com.hzl.hadoop.workflow.mapper.ApproveHistoryStartMapper">
 
 
+    <select id="listApproveHistory" resultType="com.hzl.hadoop.workflow.dto.ApproveHistoryDTO">
 
 
+
+    </select>
 </mapper>

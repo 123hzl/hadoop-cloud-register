@@ -1,6 +1,6 @@
 package com.hzl.hadoop.workflow.flow;
 
-import com.hzl.hadoop.workflow.NodeDTO;
+import com.hzl.hadoop.workflow.dto.NodeDTO;
 import com.hzl.hadoop.workflow.constant.NodeType;
 import com.hzl.hadoop.workflow.vo.NodeContainer;
 

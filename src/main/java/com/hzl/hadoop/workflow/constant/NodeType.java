@@ -32,4 +32,15 @@ public enum NodeType {
 	public String getDec() {
 		return dec;
 	}
+
+
+	public static NodeType match(Integer value){
+
+		for(NodeType nodeType:NodeType.values()){
+	       if(value.equals(nodeType.getValue())){
+	       	return nodeType;
+		   }
+		}
+		return null;
+	}
 }

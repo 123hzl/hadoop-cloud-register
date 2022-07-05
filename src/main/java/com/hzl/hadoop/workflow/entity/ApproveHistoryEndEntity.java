@@ -45,7 +45,10 @@ public class ApproveHistoryEndEntity extends ApproveHistoryEntity implements Ser
 	 * 审批人
 	 */
 	private Long approverId;
-
+	/**
+	 * 审批意见
+	 */
+	private String remark;
 	/**
 	 * 审批动作，1同意，2拒绝，3跳过，4转交
 	 */

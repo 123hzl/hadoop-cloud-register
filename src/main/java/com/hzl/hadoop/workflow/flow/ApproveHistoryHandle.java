@@ -2,6 +2,10 @@ package com.hzl.hadoop.workflow.flow;
 
 import com.hzl.hadoop.workflow.constant.NodeType;
 import com.hzl.hadoop.workflow.entity.ApproveHistoryEntity;
+import com.hzl.hadoop.workflow.vo.ApproveHistory;
+import com.hzl.hadoop.workflow.vo.ApproveVO;
+
+import java.util.List;
 
 /**
  * description
@@ -12,4 +16,9 @@ import com.hzl.hadoop.workflow.entity.ApproveHistoryEntity;
 public interface ApproveHistoryHandle {
 
 	void saveHistory(NodeType nodeType, ApproveHistoryEntity hostory);
+
+	List<ApproveHistoryEntity> queryHistory(ApproveVO approveVO);
+
+	Boolean updateHistory(Long historyId, Integer approveStatus,Integer nodeType);
+
 }

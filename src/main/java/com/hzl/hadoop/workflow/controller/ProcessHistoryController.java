@@ -2,6 +2,9 @@ package com.hzl.hadoop.workflow.controller;
 
 import java.util.Arrays;
 
+import com.hzl.hadoop.config.mvc.BaseResponse;
+import com.hzl.hadoop.workflow.dto.ProcessHistoryPageDTO;
+import com.hzl.hadoop.workflow.vo.ProcessHistoryPageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -32,10 +35,11 @@ public class ProcessHistoryController {
      * 列表
      */
     @GetMapping("/list")
-    public ResponseEntity<PageInfo<ProcessHistoryEntity>> list(ProcessHistoryEntity params,@RequestParam(defaultValue = "1" ) int page, @RequestParam(defaultValue = "20") int pageSize){
-		PageInfo<ProcessHistoryEntity> pageinfos = processHistoryService.queryPage(params,page,pageSize);
+    public ResponseEntity<BaseResponse> list(ProcessHistoryPageVO params, @RequestParam(defaultValue = "1" ) int current, @RequestParam(defaultValue = "20") int pageSize){
+		PageInfo<ProcessHistoryPageDTO> pageinfos = processHistoryService.queryPage(params,current,pageSize);
+        BaseResponse baseResponse=new BaseResponse(pageinfos);
 
-        return new ResponseEntity(pageinfos, HttpStatus.OK);
+        return new ResponseEntity(baseResponse, HttpStatus.OK);
     }
 
 

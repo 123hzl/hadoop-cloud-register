@@ -1,5 +1,7 @@
 package com.hzl.hadoop.workflow.service.impl;
 
+import com.hzl.hadoop.workflow.dto.ProcessHistoryPageDTO;
+import com.hzl.hadoop.workflow.vo.ProcessHistoryPageVO;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -20,10 +22,9 @@ public class ProcessHistoryServiceImpl extends ServiceImpl<ProcessHistoryMapper,
     ProcessHistoryMapper mapper;
 
     @Override
-    public PageInfo queryPage(ProcessHistoryEntity params,int start, int pageSize) {
-		QueryWrapper<ProcessHistoryEntity> queryWrapper = new QueryWrapper(params);
-		queryWrapper.orderByDesc("create_time");
-		PageInfo<ProcessHistoryEntity> pageResult = PageHelper.startPage(start, pageSize).doSelectPageInfo(() -> mapper.selectList(queryWrapper));
+    public PageInfo queryPage(ProcessHistoryPageVO params, int start, int pageSize) {
+
+		PageInfo<ProcessHistoryPageDTO> pageResult = PageHelper.startPage(start, pageSize).doSelectPageInfo(() -> mapper.queryPage(params));
 
         return pageResult;
     }

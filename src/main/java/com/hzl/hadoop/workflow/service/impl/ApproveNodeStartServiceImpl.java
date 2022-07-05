@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hzl.hadoop.exception.CommonException;
-import com.hzl.hadoop.workflow.NodeDTO;
+import com.hzl.hadoop.workflow.dto.NodeDTO;
 import com.hzl.hadoop.workflow.entity.ApproveNodeStartEntity;
 import com.hzl.hadoop.workflow.mapper.ApproveNodeStartMapper;
 import com.hzl.hadoop.workflow.service.ApproveNodeStartService;

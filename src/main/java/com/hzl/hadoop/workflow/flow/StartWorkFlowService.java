@@ -1,37 +1,46 @@
 package com.hzl.hadoop.workflow.flow;
 
+import com.hzl.hadoop.exception.CommonException;
 import com.hzl.hadoop.security.service.impl.CustomUserDetails;
 import com.hzl.hadoop.security.utils.DetailHepler;
 import com.hzl.hadoop.workflow.constant.NodeType;
 import com.hzl.hadoop.workflow.constant.ProcessStatusEnum;
+import com.hzl.hadoop.workflow.entity.ApproveHistoryEntity;
 import com.hzl.hadoop.workflow.entity.ApproveNodeStartEntity;
 import com.hzl.hadoop.workflow.entity.ProcessHistoryEntity;
 import com.hzl.hadoop.workflow.service.ProcessHistoryService;
 import com.hzl.hadoop.workflow.service.WorkflowCharService;
+import com.hzl.hadoop.workflow.vo.ApproveVO;
+import com.hzl.hadoop.workflow.vo.NodeContainer;
 import com.hzl.hadoop.workflow.vo.StartWorkFlowVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * description
  * 开始节点制作启动表识，不进行审批人配置
+ * 启动节点只用于启动标记，表中的审批人，审批组，等线默认为空
  * @author hzl 2022/06/15 4:46 PM
  */
 @Component
 public class StartWorkFlowService {
 
 	@Autowired
-	WorkflowCharService workflowCharService;
+	private WorkflowCharService workflowCharService;
 	@Autowired
-	ProcessHistoryService processHistoryService;
+	private ProcessHistoryService processHistoryService;
 
 	@Autowired
-	NodeHandle nodeHandle;
+	private NodeHandle nodeHandle;
 
 	@Autowired
-	ApproveHandle approveHandle;
+	private ApproveHandle approveHandle;
+	@Autowired
+	private ApproveHistoryHandle approveHistoryHandle;
 
 	/**
 	 * 返回流程id
@@ -71,13 +80,23 @@ public class StartWorkFlowService {
 	}
 
 	/**
-	 * 流转到下一个节点
+	 * 审批
 	 *
-	 * @param processId 流程ID
+	 * @param approveVO
 	 * @return
 	 * @author hzl 2022-06-15 6:00 PM
 	 */
-	public String next(Long processId) {
+	public String approve(ApproveVO approveVO) {
+
+		//1根据审批历史id和节点类型查询对应的流程审批历史数据，将状态从审批状态从待审批，更新为审批同意
+		//不需要了List<ApproveHistoryEntity> approveHistoryEntityList=approveHistoryHandle.queryHistory(approveVO);
+
+		Boolean isSuccess=approveHistoryHandle.updateHistory(approveVO.getHistoryId(),approveVO.getApproveAction(),approveVO.getNodeType());
+		if(!isSuccess){
+			throw new CommonException("审批失败！！！");
+		}
+
+		approveHandle.afterApprove(approveVO.getProcessId(),approveVO.getNodeId(),approveVO.getNodeType());
 
 		return "";
 	}

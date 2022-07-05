@@ -4,7 +4,7 @@
 <mapper namespace="com.hzl.hadoop.workflow.mapper.ApproveNodeStartMapper">
 
 
-    <select id="queryNode" resultType="com.hzl.hadoop.workflow.NodeDTO">
+    <select id="queryNode" resultType="com.hzl.hadoop.workflow.dto.NodeDTO">
       SELECT
         id,
         approver_id,

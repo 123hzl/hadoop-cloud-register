@@ -28,4 +28,10 @@ public class ApproveGroupServiceImpl extends ServiceImpl<ApproveGroupMapper, App
         return pageResult;
     }
 
+	@Override
+	public Boolean isAllApprove(Long nodeId,Integer nodeType) {
+
+		return null;
+	}
+
 }

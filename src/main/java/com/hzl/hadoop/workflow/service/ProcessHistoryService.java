@@ -3,6 +3,7 @@ package com.hzl.hadoop.workflow.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hzl.hadoop.workflow.entity.ProcessHistoryEntity;
 import com.github.pagehelper.PageInfo;
+import com.hzl.hadoop.workflow.vo.ProcessHistoryPageVO;
 
 
 import java.util.Map;
@@ -16,6 +17,6 @@ import java.util.Map;
  */
 public interface ProcessHistoryService extends IService<ProcessHistoryEntity> {
 
-	PageInfo queryPage(ProcessHistoryEntity params, int start, int pageSize);
+	PageInfo queryPage(ProcessHistoryPageVO params, int start, int pageSize);
 }
 
