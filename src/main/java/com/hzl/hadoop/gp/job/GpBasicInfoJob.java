@@ -1,5 +1,6 @@
 package com.hzl.hadoop.gp.job;
 
+import com.hzl.hadoop.gp.constant.GpCodeEnum;
 import com.hzl.hadoop.gp.entity.GpInfoEntity;
 import com.hzl.hadoop.gp.service.*;
 import lombok.extern.slf4j.Slf4j;
@@ -118,23 +119,20 @@ public class GpBasicInfoJob {
 //
 //	}
 
-/*
-	*//**
+	/**
 	 * 半小时执行一次，用于获取个股新闻数据，暂时只爬去新浪网
 	 *
 	 * @author hzl 2021-12-15 12:40 PM
 	 * @return
-	 * *//*
+	 * */
 	@Scheduled(cron = "0 0/50 * * * ?")
 	public void getTodayNews(){
 		try {
 			xinLangNews.getTodayNews(GpCodeEnum.sz000651);
-			xinLangNews.getTodayNews(GpCodeEnum.sh600690);
-			xinLangNews.getTodayNews(GpCodeEnum.sz000333);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}*/
+	}
 
 	/**
 	 * fixedDelay 上传方法执行完成后开始计算

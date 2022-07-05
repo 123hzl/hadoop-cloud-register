@@ -1,6 +1,6 @@
 package com.hzl.hadoop.workflow.mapper;
 
-import com.hzl.hadoop.workflow.NodeDTO;
+import com.hzl.hadoop.workflow.dto.NodeDTO;
 import org.apache.ibatis.annotations.Mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hzl.hadoop.workflow.entity.ApproveNodeStartEntity;

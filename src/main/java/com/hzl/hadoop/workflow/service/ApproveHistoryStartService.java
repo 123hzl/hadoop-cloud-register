@@ -1,8 +1,10 @@
 package com.hzl.hadoop.workflow.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hzl.hadoop.workflow.dto.ApproveHistoryDTO;
 import com.hzl.hadoop.workflow.entity.ApproveHistoryStartEntity;
 import com.github.pagehelper.PageInfo;
+import com.hzl.hadoop.workflow.vo.ApproveHistoryVO;
 
 
 import java.util.Map;
@@ -17,5 +19,8 @@ import java.util.Map;
 public interface ApproveHistoryStartService extends IService<ApproveHistoryStartEntity> {
 
 	PageInfo queryPage(ApproveHistoryStartEntity params, int start, int pageSize);
+
+	PageInfo<ApproveHistoryDTO> listApproveHistory(ApproveHistoryVO params, int start, int pageSize);
+
 }
 

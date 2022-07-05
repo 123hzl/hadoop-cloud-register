@@ -25,7 +25,7 @@ import org.springframework.http.ResponseEntity;
  * @email sunlightcs@gmail.com
  * @date 2022-06-15 16:05:06
  */
-@Permission(isLogin = false)
+@Permission(isLogin = true)
 @RestController
 @RequestMapping("workflow/approvehistorystart")
 public class ApproveHistoryStartController {

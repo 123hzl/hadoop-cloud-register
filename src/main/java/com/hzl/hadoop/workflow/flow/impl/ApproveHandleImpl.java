@@ -2,13 +2,12 @@ package com.hzl.hadoop.workflow.flow.impl;
 
 import com.hzl.hadoop.aop.ApplicationContextUtil;
 import com.hzl.hadoop.exception.CommonException;
-import com.hzl.hadoop.workflow.NodeDTO;
+import com.hzl.hadoop.workflow.dto.NodeDTO;
 import com.hzl.hadoop.workflow.constant.ApproveActionConstant;
 import com.hzl.hadoop.workflow.constant.NodeType;
 import com.hzl.hadoop.workflow.entity.*;
 import com.hzl.hadoop.workflow.flow.ApproveHandle;
 import com.hzl.hadoop.workflow.flow.ApproveHistoryHandle;
-import com.hzl.hadoop.workflow.listener.GlobalListener;
 import com.hzl.hadoop.workflow.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,6 +40,8 @@ public class ApproveHandleImpl implements ApproveHandle {
 	WorkflowListenerService workflowListenerService;
 	@Autowired
 	ApproveNodeStartService approveNodeStartService;
+	@Autowired
+	ApproveGroupService approveGroupService;
 
 	/**
 	 * 流程启动前执行
@@ -57,6 +58,7 @@ public class ApproveHandleImpl implements ApproveHandle {
 
 	@Override
 	public void approve(Long processId, ApproveNodeAbstract startEntity) {
+		//审批操作，
 
 	}
 
@@ -70,6 +72,12 @@ public class ApproveHandleImpl implements ApproveHandle {
 	 */
 	@Override
 	public void afterApprove(Long processId,Long nodeId,Integer nodeType) {
+		//todo 判断当前节点是否需要全部审批通过，如果需要全部审批完成后才执行后面的逻辑，也就是当前节点的审批组不为空，且为全部审批通过,isAllApprove逻辑待完善
+		//根据nodeId查询当前节点审批组信息。
+		if(!approveGroupService.isAllApprove(nodeId,nodeType)){
+			return;
+		}
+
 		//查询当前节点关联的所有节点
 		List<NodeDTO> nodeDTOS=approveNodeStartService.queryNode(nodeType,nodeId);
 
@@ -99,8 +107,8 @@ public class ApproveHandleImpl implements ApproveHandle {
 				WorkflowListenerEntity listenerEntitie=workflowListenerService.getById(beListenerId);
 				//根据监听类，进行反射处理
 				try {
-					Object listenerObject=ApplicationContextUtil.getBean(Class.forName("com.hzl.hadoop.workflow.listener.FirstClobalListener"));
-					Class<?> clazz = Class.forName("com.hzl.hadoop.workflow.listener.FirstClobalListener");
+					Object listenerObject=ApplicationContextUtil.getBean(Class.forName(listenerEntitie.getListenerClass()));
+					Class<?> clazz = Class.forName(listenerEntitie.getListenerClass());
 					Method method = clazz.getMethod("listener",Long.class);
 					method.invoke(listenerObject,processId);
 

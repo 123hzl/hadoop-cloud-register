@@ -1,8 +1,12 @@
 package com.hzl.hadoop.workflow.mapper;
 
+import com.hzl.hadoop.workflow.dto.ProcessHistoryPageDTO;
+import com.hzl.hadoop.workflow.vo.ProcessHistoryPageVO;
 import org.apache.ibatis.annotations.Mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hzl.hadoop.workflow.entity.ProcessHistoryEntity;
+
+import java.util.List;
 
 
 /**
@@ -14,5 +18,6 @@ import com.hzl.hadoop.workflow.entity.ProcessHistoryEntity;
  */
 @Mapper
 public interface ProcessHistoryMapper extends BaseMapper<ProcessHistoryEntity> {
-	
+
+	List<ProcessHistoryPageDTO> queryPage(ProcessHistoryPageVO params);
 }
