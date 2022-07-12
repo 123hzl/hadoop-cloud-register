@@ -53,28 +53,6 @@ public class AesUtil {
 		return null;
 	}
 
-	/**
-	 * 文件加密
-	 *
-	 * @param content 待加密内容
-	 * @param key     加密的密钥
-	 * @return
-	 */
-	public static String encryptFile(byte[] content, String key) {
-
-
-		return null;
-	}
-	/**
-	 * 解密
-	 *
-	 * @param content 待解密内容
-	 * @param key     解密的密钥
-	 * @return
-	 */
-	public static byte[] decryptFile(byte[] content, String key) {
-		return null;
-	}
 
 	/**
 	 * 解密
@@ -119,6 +97,30 @@ public class AesUtil {
 
 	public static String encrypt(String content) {
 		return encrypt(content, key);
+	}
+
+
+	/**
+	 * 文件加密
+	 *
+	 * @param content 待加密内容
+	 * @param key     加密的密钥
+	 * @return
+	 */
+	public static String encryptFile(byte[] content, String key) {
+
+
+		return null;
+	}
+	/**
+	 * 解密
+	 *
+	 * @param content 待解密内容
+	 * @param key     解密的密钥
+	 * @return
+	 */
+	public static byte[] decryptFile(byte[] content, String key) {
+		return null;
 	}
 
 

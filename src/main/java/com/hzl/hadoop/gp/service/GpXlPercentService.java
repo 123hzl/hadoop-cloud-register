@@ -15,6 +15,7 @@ public interface GpXlPercentService extends IService<GpXlPercentEntity> {
 
 	PageInfo queryPage(GpXlPercentEntity params, int start, int pageSize);
 
+	//作废以后不用了
 	Boolean init(String gpcode);
 
 	Boolean remove(String gpcode);

@@ -9,7 +9,7 @@ RUN echo 'Asia/Shanghai' >/etc/timezone
 RUN bash -c 'touch /register.jar'
 #EXPOSE 8888
 #容器启动时第一个运行的命令
-ENTRYPOINT exec java -jar -Xms128m -Xmx300m -Dspring.profiles.active=local /register.jar
+ENTRYPOINT exec java -jar -Xms255m -Xmx500m -Dspring.profiles.active=local /register.jar
 #运行 docker build --pull -t registry.cn-hangzhou.aliyuncs.com/hzl-hadoop/hzl:register-0.0.02 .
 #docker login -u 17602153276 -p 1qaz2wsx registry.cn-hangzhou.aliyuncs.com
 #docker push registry.cn-hangzhou.aliyuncs.com/hzl-hadoop/hzl:register-0.0.02

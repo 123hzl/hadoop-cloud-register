@@ -46,6 +46,11 @@ public class SysUser extends BaseEntity {
 	 * 电话号码
 	 */
 	private String phone;
+
+	/**
+	 * 邮箱
+	 */
+	private String email;
 	/**
 	 * 用户状态，1为登陆，0为离线
 	 */

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.hzl.hadoop.gp.constant.GpCodeEnum;
 import com.hzl.hadoop.gp.convert.NewsConvert;
+import com.hzl.hadoop.gp.entity.GpInfoEntity;
 import com.hzl.hadoop.gp.entity.GpNewsEntity;
 import com.hzl.hadoop.gp.service.GpNewsService;
 import com.hzl.hadoop.gp.service.XinLangNews;
@@ -44,10 +45,10 @@ public class XinLangNewsImpl implements XinLangNews {
 	private MailService mailService;
 
 	@Override
-	public boolean getTodayNews(GpCodeEnum gpCodeEnum) throws IOException {
+	public boolean getTodayNews(GpInfoEntity gpInfoEntity) throws IOException {
 
 		NewsConvert xinLangNews = new NewsConvert();
-		List<XlNewsVO> xlNewsVOS= xinLangNews.getXlNews(gpCodeEnum.getCode());
+		List<XlNewsVO> xlNewsVOS= xinLangNews.getXlNews(gpInfoEntity.getGpCode());
 
 		//过滤今天的新闻
 		List<GpNewsEntity> entities=xlNewsVOS.stream()
@@ -57,7 +58,7 @@ public class XinLangNewsImpl implements XinLangNews {
 						.releaseTime(x.getReleaseTime())
 						.url(x.getUrl())
 						.source(x.getSource())
-						.gpCode(gpCodeEnum.getCode())
+						.gpCode(gpInfoEntity.getGpCode())
 						.build()).collect(Collectors.toList());
 
 		entities.forEach(a->{
@@ -66,7 +67,7 @@ public class XinLangNewsImpl implements XinLangNews {
 				//去重保存 TODO 优化查询将url生成短链接
 				gpNewsService.save(a);
 				//发送邮件消息
-				mailService.sendSimpleMail(gpCodeEnum.getName()+"股票："+"有新动态发布", a.getReleaseTime()+"\n"+a.getTitle()+"\n"+a.getUrl()+"\n");
+				mailService.sendSimpleMail(gpInfoEntity.getGpName()+"股票："+"有新动态发布", a.getReleaseTime()+"\n"+a.getTitle()+"\n"+a.getUrl()+"\n");
 			}
 
 		});

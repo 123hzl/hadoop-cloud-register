@@ -71,8 +71,9 @@ public class GpXlPercentController {
 	}
 
 	/**
-	 * 信息
+	 * 信息,作废
 	 */
+	@Deprecated
 	@GetMapping("/init/{gpcode}")
 	public ResponseEntity<Boolean> init(@PathVariable("gpcode") String gpcode) {
 

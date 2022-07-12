@@ -45,12 +45,12 @@ public class GpNewsController {
 	/**
 	 * 插入今天的新闻
 	 */
-	@GetMapping("/insert/news/{gpCode}")
-	public ResponseEntity<Boolean> insertTodayNews(@PathVariable("gpCode") String gpCode) throws IOException {
-
-
-		return new ResponseEntity(xinLangNews.getTodayNews(GpCodeEnum.valueOf(gpCode)), HttpStatus.OK);
-	}
+//	@GetMapping("/insert/news/{gpCode}")
+//	public ResponseEntity<Boolean> insertTodayNews(@PathVariable("gpCode") String gpCode) throws IOException {
+//
+//
+//		return new ResponseEntity(xinLangNews.getTodayNews(GpCodeEnum.valueOf(gpCode)), HttpStatus.OK);
+//	}
 
 	/**
 	 * 信息

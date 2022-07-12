@@ -1,10 +1,7 @@
 package com.hzl.hadoop.workflow.vo;
 
 import com.hzl.hadoop.workflow.constant.NodeType;
-import com.hzl.hadoop.workflow.entity.ApproveNodeApproverEntity;
-import com.hzl.hadoop.workflow.entity.ApproveNodeEndEntity;
-import com.hzl.hadoop.workflow.entity.ApproveNodeGatewayEntity;
-import com.hzl.hadoop.workflow.entity.ApproveNodeStartEntity;
+import com.hzl.hadoop.workflow.entity.*;
 import lombok.Data;
 
 import java.util.List;
@@ -37,6 +34,22 @@ public class NodeContainer {
 	private List<ApproveNodeEndEntity> endNodeList;
 
 
+
+	public ApproveNodeAbstract getNodeInfo(NodeType nodeType){
+		switch (nodeType) {
+			case START:
+				return approveNodeStartEntity;
+			case GATEWAY:
+				return approveNodeGatewayEntity;
+			case APPROVE:
+				return approveNodeApproverEntity;
+			case END:
+				return approveNodeEndEntity;
+			default:
+				break;
+		}
+		return null;
+	}
 
 
 }

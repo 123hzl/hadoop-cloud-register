@@ -80,4 +80,5 @@ public class NewsConvert {
 		return parse(gpCode);
 	}
 
+
 }

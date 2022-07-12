@@ -1,8 +1,10 @@
 package com.hzl.hadoop.security.controller;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 import com.hzl.hadoop.config.mvc.BaseResponse;
+import com.hzl.hadoop.exception.CommonException;
 import com.hzl.hadoop.interfacemanager.annotation.Permission;
 import com.hzl.hadoop.security.entity.SysUser;
 import com.hzl.hadoop.security.dto.SysUserDTO;
@@ -10,6 +12,7 @@ import com.hzl.hadoop.security.service.SysUserService;
 import com.hzl.hadoop.security.vo.SysUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -61,7 +64,8 @@ public class SysUserController {
     @PostMapping("/save")
     public ResponseEntity save(@RequestBody SysUser sysUser){
 		sysUserService.save(sysUser);
-		return new ResponseEntity(HttpStatus.OK);
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     /**

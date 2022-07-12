@@ -2,12 +2,15 @@ package com.hzl.hadoop.security.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.hzl.hadoop.config.mvc.BaseResponse;
+import com.hzl.hadoop.exception.CommonException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 import com.hzl.hadoop.security.entity.SysRoleEntity;
 import com.hzl.hadoop.security.dto.SysRoleDTO;
@@ -80,5 +83,6 @@ public class SysRoleController {
 		sysRoleService.removeByIds(Arrays.asList(ids));
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
+
 
 }

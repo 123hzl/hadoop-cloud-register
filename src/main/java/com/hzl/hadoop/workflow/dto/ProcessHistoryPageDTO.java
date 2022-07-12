@@ -15,7 +15,7 @@ public class ProcessHistoryPageDTO {
 	/**
 	 * 流程id
 	 */
-	private Long processId;
+	private String processId;
 
 	/**
 	 * 提交人

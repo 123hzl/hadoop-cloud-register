@@ -47,11 +47,13 @@ public class MailServiceImpl implements MailService {
 	 */
 	@Override
 	public Boolean sendSimpleMail(String subject, String text) {
+		String[] to=new String[]{"1620516418@qq.com","853804270@qq.com"};
+
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 		//发件人邮箱
 		mailMessage.setFrom("hzlvip1994@163.com");
 		//收件人邮箱
-		mailMessage.setTo("1620516418@qq.com");
+		mailMessage.setTo(to);
 //		//抄送人
 //		mailMessage.setCc();
 //		//密送人
@@ -75,13 +77,15 @@ public class MailServiceImpl implements MailService {
 	 */
 	@Override
 	public Boolean sendHtmlMail(String subject, String text, Map<String, String> attachmentMap) throws MessagingException {
+		String[] to=new String[]{"1620516418@qq.com","853804270@qq.com"};
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 		//是否发送的邮件是富文本（附件，图片，html等）
 		MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
 		//发件人邮箱
 		messageHelper.setFrom("hzlvip1994@163.com");
 		//收件人邮箱
-		messageHelper.setTo("1620516418@qq.com");
+		messageHelper.setTo(to);
+
 		//网易邮箱需要抄送自己
 		//messageHelper.setCc("hzlvip1994@163.com");
 		messageHelper.setSubject(subject);

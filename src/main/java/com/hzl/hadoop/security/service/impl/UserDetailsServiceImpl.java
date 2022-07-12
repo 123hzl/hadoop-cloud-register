@@ -34,6 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		CustomUserDetails customUserDetails=new CustomUserDetails(username,sysUser.getPassword(), AuthorityUtils.commaSeparatedStringToAuthorityList("user"));
 		customUserDetails.setAvatar(sysUser.getAvatar());
 		customUserDetails.setPhone(sysUser.getPhone());
+		customUserDetails.setEmail(sysUser.getEmail());
 		customUserDetails.setRealName(sysUser.getName());
 		customUserDetails.setUserId(sysUser.getId());
 		//todo  角色id待完善
