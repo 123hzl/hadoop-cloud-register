@@ -48,6 +48,11 @@ public class SysUserVO{
 	 * */
 	private String phone;
 
+	/**
+	 * 邮箱
+	 */
+	private String email;
+
 	private LocalDateTime createTime;
 
 	private Long createBy;

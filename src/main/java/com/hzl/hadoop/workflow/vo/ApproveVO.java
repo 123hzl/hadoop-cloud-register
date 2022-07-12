@@ -1,6 +1,9 @@
 package com.hzl.hadoop.workflow.vo;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -9,6 +12,9 @@ import java.util.List;
  *
  * @author hzl 2022/07/05 2:58 PM
  */
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class ApproveVO {
 

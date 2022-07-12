@@ -72,9 +72,9 @@ public class ApproveHandleImpl implements ApproveHandle {
 	 */
 	@Override
 	public void afterApprove(Long processId,Long nodeId,Integer nodeType) {
-		//todo 判断当前节点是否需要全部审批通过，如果需要全部审批完成后才执行后面的逻辑，也就是当前节点的审批组不为空，且为全部审批通过,isAllApprove逻辑待完善
+		//判断当前节点是否需要全部审批通过，如果需要全部审批完成后才执行后面的逻辑，也就是当前节点的审批组不为空，且为全部审批通过
 		//根据nodeId查询当前节点审批组信息。
-		if(!approveGroupService.isAllApprove(nodeId,nodeType)){
+		if(!approveGroupService.isAllApprove(processId,nodeId,nodeType)){
 			return;
 		}
 

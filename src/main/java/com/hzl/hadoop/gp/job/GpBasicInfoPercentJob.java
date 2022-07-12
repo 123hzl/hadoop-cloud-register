@@ -30,30 +30,30 @@ public class GpBasicInfoPercentJob {
 	@Autowired
 	private GpXlPercentService gpXlPercentService;
 
-
-	public Boolean creep() {
-
-		List<GpInfoEntity> list = gpInfoService.list();
-		if (CollectionUtils.isNotEmpty(list)) {
-			list.forEach(gpInfoEntity -> {
-				//初始化扇形数据，获取交易明细
-				gpXlPercentService.init(gpInfoEntity.getGpCode());
-
-			});
-
-		}
-
-		return true;
-	}
-
-	/**
-	 * 、fixedDelay控制方法执行的间隔时间，是以上一次方法执行完开始算起，如上一次方法执行阻塞住了，那么直到上一次执行完，并间隔给定的时间后，执行下一次
-	 * 30秒执行一次@Scheduled(fixedDelay = 30 * 1000)
-	 * 0 0/1 9,11 ? * MON-FR,周一到周五，9点到11
-	 *
-	 * @author hzl 2020-11-03 2:27 PM
-	 * @}eturn
-	 */
+//
+//	public Boolean creep() {
+//
+//		List<GpInfoEntity> list = gpInfoService.list();
+//		if (CollectionUtils.isNotEmpty(list)) {
+//			list.forEach(gpInfoEntity -> {
+//				//初始化扇形数据，获取交易明细
+//				gpXlPercentService.init(gpInfoEntity.getGpCode());
+//
+//			});
+//
+//		}
+//
+//		return true;
+//	}
+//
+//	/**
+//	 * 、fixedDelay控制方法执行的间隔时间，是以上一次方法执行完开始算起，如上一次方法执行阻塞住了，那么直到上一次执行完，并间隔给定的时间后，执行下一次
+//	 * 30秒执行一次@Scheduled(fixedDelay = 30 * 1000)
+//	 * 0 0/1 9,11 ? * MON-FR,周一到周五，9点到11
+//	 *
+//	 * @author hzl 2020-11-03 2:27 PM
+//	 * @}eturn
+//	 */
 //	@Scheduled(cron = "0 30,32,34,36,38,40,42,44,46,48,50,52,54,56,58 9 ? * MON-FRI")
 //	public Boolean getPercent() {
 //		return creep();

@@ -86,7 +86,7 @@ public class GpServiceImpl implements GpService {
 		} else {
 			volumeVOS = gpRepository.queryVolume(volumeVO);
 			List<EndPriceVO> endPrice = volumeVOS.stream().map(a -> EndPriceVO.builder().series("收盘价/元").x(a.getDate()).y(a.getCurrentPrice().doubleValue()).build()).collect(Collectors.toList());
-			List<EndPriceVO> number = volumeVOS.stream().map(a -> EndPriceVO.builder().series("成交额/万手").x(a.getDate()).y(Double.valueOf(a.getNumber() / 10000)).build()).collect(Collectors.toList());
+			List<EndPriceVO> number = volumeVOS.stream().map(a -> EndPriceVO.builder().series("成交额/万手").x(a.getDate()).y(Double.valueOf(a.getNumber()/10000.00)).build()).collect(Collectors.toList());
 			List<EndPriceVO> turnover = volumeVOS.stream().map(a -> EndPriceVO.builder().series("成交额/亿元").x(a.getDate()).y(a.getTurnover().doubleValue()).build()).collect(Collectors.toList());
 			List<EndPriceVO> forecast = volumeVOS.stream().map(a -> EndPriceVO.builder().series("当日均价/元").x(a.getDate()).y(((a.getTurnover().doubleValue() * 1000000) / a.getNumber())).build()).collect(Collectors.toList());
 			List<EndPriceVO> forecastPercent = volumeVOS.stream().map(a -> EndPriceVO.builder().series("(当日均价-收盘价格)/收盘价格(万分之一)").x(a.getDate()).y(((((a.getTurnover().doubleValue() * 1000000) / a.getNumber()) - a.getCurrentPrice().doubleValue()) / (a.getCurrentPrice().doubleValue())) * 10000).build()).collect(Collectors.toList());
@@ -118,5 +118,6 @@ public class GpServiceImpl implements GpService {
 
 		return percentVOS;
 	}
+
 
 }

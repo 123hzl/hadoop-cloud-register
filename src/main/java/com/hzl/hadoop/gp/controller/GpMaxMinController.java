@@ -62,10 +62,8 @@ public class GpMaxMinController {
 	 */
 	@GetMapping(value = "/gp/yl/query/volume/{code}")
 	public String queryVolume(@PathVariable String code, VolumeVO volumeVO, Model model) {
-		log.info("请求参数" + volumeVO.toString());
 		volumeVO.setGpCode(code);
 		MaxMinHtmlVO maxMinHtmlVO = gpService.queryVolume(volumeVO);
-		log.info("结果" + maxMinHtmlVO.toString());
 		model.addAttribute(maxMinHtmlVO);
 
 		return "endPrice";
@@ -82,10 +80,9 @@ public class GpMaxMinController {
 	public String queryPercent(@PathVariable String code, Model model, @RequestParam(required = false, value = "currentPrice") BigDecimal currentPrice) {
 
 		//先初始化数据
-		//gpXlPercentService.init(code);
+		gpXlPercentService.init(code);
 
 		List<PercentVO> percentVOS = gpService.gpPriceCount(code, currentPrice);
-		log.info("百分比结果{}", JsonUtils.objectToString(percentVOS));
 		MaxMinHtmlVO maxMinHtmlVO = new MaxMinHtmlVO();
 		maxMinHtmlVO.setData(JsonUtils.objectToString(percentVOS));
 		model.addAttribute(maxMinHtmlVO);

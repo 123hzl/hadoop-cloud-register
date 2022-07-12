@@ -44,7 +44,7 @@ public class ApproveGroupEntity implements Serializable {
 	/**
 	 * 审批类型，任意一人同意true，或者多人全部统一false
 	 */
-	private Integer approveType;
+	private Boolean approveType;
 	/**
 	 * 租户id
 	 */

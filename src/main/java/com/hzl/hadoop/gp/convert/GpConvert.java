@@ -91,7 +91,6 @@ public class GpConvert {
 	public Map<String, String> getGpInfo(String url, String[] keys) {
 		//获取数据
 		String data = httpGet(url);
-		log.info("响应结果{}", data);
 		//解析数据
 		String[] dataSubString = subString(data);
 		//转化数据

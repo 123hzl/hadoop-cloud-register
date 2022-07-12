@@ -29,6 +29,7 @@
         password,
         avatar,
         phone,
+        email,
         status,
         version_num,
         create_by,
@@ -57,6 +58,9 @@
             </if>
             <if test="phone!=null and phone!=''">
                 and phone=#{phone}
+            </if>
+            <if test="email!=null and email!=''">
+                and email=#{email}
             </if>
             <if test="status!=null">
                 and status=#{status}

@@ -55,6 +55,11 @@ public class SysUserDTO implements Serializable {
 	private String phone;
 
 	/**
+	 * 邮箱
+	 */
+	private String email;
+
+	/**
 	 * 用户状态，1为登陆，0为离线
 	 */
 	private Integer status;

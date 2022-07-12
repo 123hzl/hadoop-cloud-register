@@ -40,6 +40,11 @@ public class CustomUserDetails extends User {
 	private String phone;
 
 	/**
+	 * 邮箱
+	 */
+	private String email;
+
+	/**
 	 * 用户名-真实姓名，可以为空
 	 */
 	private String realName;

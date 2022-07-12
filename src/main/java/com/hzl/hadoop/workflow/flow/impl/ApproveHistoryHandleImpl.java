@@ -66,7 +66,16 @@ public class ApproveHistoryHandleImpl implements ApproveHistoryHandle {
 	@Override
 	public List<ApproveHistoryEntity> queryHistory(ApproveVO approveVO) {
 		QueryWrapper wrapper= new QueryWrapper();
-		wrapper.eq("id",approveVO.getHistoryId());
+		if(approveVO!=null&&approveVO.getHistoryId()!=null){
+			wrapper.eq("id",approveVO.getHistoryId());
+
+		}else{
+			wrapper.eq("current_node_id",approveVO.getNodeId());
+			wrapper.eq("process_id",approveVO.getProcessId());
+		}
+
+
+
 
 		if(approveVO.getNodeType().equals(START.getValue())){
 			return approveHistoryStartService.list(wrapper);

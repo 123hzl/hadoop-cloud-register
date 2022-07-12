@@ -9,7 +9,7 @@ import org.springframework.data.annotation.Transient;
  * @author hzl 2022/06/23 5:02 PM
  */
 @Data
-public abstract class ApproveNodeAbstract {
+public class ApproveNodeAbstract {
 
 	private Long id;
 	/**
