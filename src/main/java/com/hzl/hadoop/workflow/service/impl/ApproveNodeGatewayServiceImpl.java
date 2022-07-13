@@ -1,5 +1,6 @@
 package com.hzl.hadoop.workflow.service.impl;
 
+import com.hzl.hadoop.workflow.dto.NodeDTO;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -27,5 +28,12 @@ public class ApproveNodeGatewayServiceImpl extends ServiceImpl<ApproveNodeGatewa
 
         return pageResult;
     }
+
+
+	@Override
+	public NodeDTO queryNodeById(Long nodeId) {
+		return mapper.queryNodeById(nodeId);
+	}
+
 
 }

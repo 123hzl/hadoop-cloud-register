@@ -19,4 +19,6 @@ import java.util.List;
 @Mapper
 public interface ApproveNodeStartMapper extends BaseMapper<ApproveNodeStartEntity> {
 	List<NodeDTO> queryNode(@Param("nodeType") Integer nodeType, @Param("nodeId")Long nodeId );
+
+	NodeDTO queryNodeById(@Param("nodeId")Long nodeId);
 }

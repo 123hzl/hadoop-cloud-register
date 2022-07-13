@@ -1,10 +1,9 @@
 package com.hzl.hadoop.workflow.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.pagehelper.PageInfo;
 import com.hzl.hadoop.workflow.dto.NodeDTO;
 import com.hzl.hadoop.workflow.entity.ApproveNodeStartEntity;
-import com.github.pagehelper.PageInfo;
-
 
 import java.util.List;
 
@@ -21,7 +20,9 @@ public interface ApproveNodeStartService extends IService<ApproveNodeStartEntity
 
 	ApproveNodeStartEntity getStartWorkNode(String flowNum);
 
-	List<NodeDTO> queryNode(Integer nodeType, Long nodeId );
+	List<NodeDTO> queryNode(Integer nodeType, Long nodeId);
+
+	NodeDTO queryNodeById(Long nodeId);
 
 }
 

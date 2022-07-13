@@ -1,6 +1,7 @@
 package com.hzl.hadoop.workflow.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hzl.hadoop.workflow.dto.NodeDTO;
 import com.hzl.hadoop.workflow.entity.ApproveNodeGatewayEntity;
 import com.github.pagehelper.PageInfo;
 
@@ -17,5 +18,7 @@ import java.util.Map;
 public interface ApproveNodeGatewayService extends IService<ApproveNodeGatewayEntity> {
 
 	PageInfo queryPage(ApproveNodeGatewayEntity params, int start, int pageSize);
+
+	NodeDTO queryNodeById(Long nodeId);
 }
 

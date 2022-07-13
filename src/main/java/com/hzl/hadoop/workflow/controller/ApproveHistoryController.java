@@ -36,4 +36,14 @@ public class ApproveHistoryController {
 
 		return new ResponseEntity(pageinfos, HttpStatus.OK);
 	}
+
+	/**
+	 * 待审批列表
+	 */
+	@GetMapping("/wait/approve")
+	public ResponseEntity<PageInfo<ApproveHistoryDTO>> waitApprove(ApproveHistoryVO params, @RequestParam(defaultValue = "1" ) Integer current, @RequestParam(defaultValue = "20") Integer pageSize){
+		PageInfo<ApproveHistoryDTO> pageinfos = approveHistoryStartService.waitApprove(params,current,pageSize);
+
+		return new ResponseEntity(pageinfos, HttpStatus.OK);
+	}
 }

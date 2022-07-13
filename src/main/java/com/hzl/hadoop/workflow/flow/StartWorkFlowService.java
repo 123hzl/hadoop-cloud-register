@@ -50,6 +50,7 @@ public class StartWorkFlowService {
 	 */
 	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
 	public String startWorkFlow(StartWorkFlowVO startWorkFlowVO) {
+
 		//0:根据流程图编号查询启动节点
 		ApproveNodeStartEntity approveNodeStartEntity = nodeHandle.queryNodeInfoByFlowNum(NodeType.START, startWorkFlowVO.getFlowNum())
 				.getStartNodeList().get(0);
@@ -80,26 +81,27 @@ public class StartWorkFlowService {
 	}
 
 	/**
-	 * 审批
+	 * 审批同意或者拒绝
 	 *
 	 * @param approveVO
 	 * @return
 	 * @author hzl 2022-06-15 6:00 PM
 	 */
-	public String approve(ApproveVO approveVO) {
+	public Boolean approveOrReject(ApproveVO approveVO) {
+		Boolean isSuccess=true;
+		isSuccess=approveHandle.beforeApprove(approveVO.getProcessId(),approveVO.getNodeId(),approveVO.getNodeType());
 
 		//1根据审批历史id和节点类型查询对应的流程审批历史数据，将状态从审批状态从待审批，更新为审批同意
 		//不需要了List<ApproveHistoryEntity> approveHistoryEntityList=approveHistoryHandle.queryHistory(approveVO);
 
-		Boolean isSuccess=approveHistoryHandle.updateHistory(approveVO.getHistoryId(),approveVO.getApproveAction(),approveVO.getNodeType());
+		isSuccess=approveHistoryHandle.updateHistory(approveVO.getHistoryId(),approveVO.getApproveAction(),approveVO.getNodeType());
 		if(!isSuccess){
 			throw new CommonException("审批失败！！！");
 		}
 
-		approveHandle.afterApprove(approveVO.getProcessId(),approveVO.getNodeId(),approveVO.getNodeType());
+		isSuccess=approveHandle.afterApprove(approveVO.getProcessId(),approveVO.getNodeId(),approveVO.getNodeType());
 
-		return "";
+		return isSuccess;
 	}
-
 
 }

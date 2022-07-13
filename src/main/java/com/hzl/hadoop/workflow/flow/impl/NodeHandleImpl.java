@@ -88,8 +88,23 @@ public class NodeHandleImpl implements NodeHandle {
 	}
 
 	@Override
-	public List<NodeDTO> queryNode(Integer nodeType, Long nodeId) {
-		return approveNodeStartService.queryNode(nodeType,nodeId);
+	public NodeDTO queryNodeById(NodeType nodeType, Long nodeId) {
+		switch (nodeType) {
+			case START:
+				return approveNodeStartService.queryNodeById(nodeId);
+			case GATEWAY:
+				return approveNodeGatewayService.queryNodeById(nodeId);
+
+			case APPROVE:
+				return approveNodeApproverService.queryNodeById(nodeId);
+
+			case END:
+				return approveNodeEndService.queryNodeById(nodeId);
+
+			default:
+				break;
+		}
+		return null;
 	}
 
 

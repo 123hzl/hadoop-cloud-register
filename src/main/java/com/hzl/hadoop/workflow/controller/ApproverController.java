@@ -2,6 +2,9 @@ package com.hzl.hadoop.workflow.controller;
 
 import java.util.Arrays;
 
+import com.hzl.hadoop.config.mvc.BaseResponse;
+import com.hzl.hadoop.workflow.flow.StartWorkFlowService;
+import com.hzl.hadoop.workflow.vo.ApproveVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +30,8 @@ import org.springframework.http.ResponseEntity;
 public class ApproverController {
     @Autowired
     private ApproverService approverService;
+    @Autowired
+    private StartWorkFlowService startWorkFlowService;
 
     /**
      * 列表
@@ -77,6 +82,15 @@ public class ApproverController {
 		approverService.removeByIds(Arrays.asList(ids));
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    /**
+     * 保存
+     */
+    @PostMapping("/approve")
+    public ResponseEntity<BaseResponse> approve(@RequestBody ApproveVO approveVO){
+        BaseResponse baseResponse=new BaseResponse(startWorkFlowService.approveOrReject(approveVO));
+        return new ResponseEntity(baseResponse ,HttpStatus.OK);
     }
 
 }

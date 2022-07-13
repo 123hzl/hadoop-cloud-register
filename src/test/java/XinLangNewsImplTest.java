@@ -27,8 +27,8 @@ public class XinLangNewsImplTest {
 
 	@Test
 	public void getTodayNews() throws IOException {
-		XinLangNewsImpl xinLangNews = new XinLangNewsImpl();
-		xinLangNews.getTodayNews(GpCodeEnum.sz000333);
+//		XinLangNewsImpl xinLangNews = new XinLangNewsImpl();
+//		xinLangNews.getTodayNews(GpCodeEnum.sz000333);
 	}
 
 }

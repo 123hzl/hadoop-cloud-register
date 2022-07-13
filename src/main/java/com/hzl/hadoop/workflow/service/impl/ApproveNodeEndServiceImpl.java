@@ -1,6 +1,7 @@
 package com.hzl.hadoop.workflow.service.impl;
 
 import com.hzl.hadoop.exception.CommonException;
+import com.hzl.hadoop.workflow.dto.NodeDTO;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -40,5 +41,12 @@ public class ApproveNodeEndServiceImpl extends ServiceImpl<ApproveNodeEndMapper,
 		}
 		return workflowCharEntity;
 	}
+
+
+	@Override
+	public NodeDTO queryNodeById(Long nodeId) {
+		return mapper.queryNodeById(nodeId);
+	}
+
 
 }

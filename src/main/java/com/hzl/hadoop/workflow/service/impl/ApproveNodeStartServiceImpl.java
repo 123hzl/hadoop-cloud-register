@@ -46,4 +46,9 @@ public class ApproveNodeStartServiceImpl extends ServiceImpl<ApproveNodeStartMap
 		return mapper.queryNode(nodeType,nodeId);
 	}
 
+	@Override
+	public NodeDTO queryNodeById(Long nodeId) {
+		return mapper.queryNodeById(nodeId);
+	}
+
 }
