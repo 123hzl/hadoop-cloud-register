@@ -45,6 +45,21 @@
         up_node_id = #{nodeId}
         AND up_node_type =#{nodeType}
     </select>
+    <select id="queryNodeById" resultType="com.hzl.hadoop.workflow.dto.NodeDTO">
+        SELECT
+        id,
+        approver_id,
+        approver_group_id,
+        position_id,
+        be_listener_id,
+        af_listener_id,
+        1 AS node_type
+      FROM
+        approve_node_start
+      WHERE
+        id = #{nodeId}
+        limit 1
+    </select>
 
 
 </mapper>

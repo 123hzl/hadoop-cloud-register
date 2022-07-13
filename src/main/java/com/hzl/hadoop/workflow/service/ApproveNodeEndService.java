@@ -1,6 +1,7 @@
 package com.hzl.hadoop.workflow.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hzl.hadoop.workflow.dto.NodeDTO;
 import com.hzl.hadoop.workflow.entity.ApproveNodeEndEntity;
 import com.github.pagehelper.PageInfo;
 
@@ -20,5 +21,7 @@ public interface ApproveNodeEndService extends IService<ApproveNodeEndEntity> {
 	PageInfo queryPage(ApproveNodeEndEntity params, int start, int pageSize);
 
 	List<ApproveNodeEndEntity> selectByFlowNum(String flowNum);
+
+	NodeDTO queryNodeById(Long nodeId);
 }
 

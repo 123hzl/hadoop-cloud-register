@@ -13,6 +13,6 @@ public class GpPercentConvertTest {
 
 	@Test
 	public void getPercent() {
- 		GpPercentConvert.parse("sh600597","1");
+ 		System.out.println(GpPercentConvert.parse("sh600138","1"));
 	}
 }

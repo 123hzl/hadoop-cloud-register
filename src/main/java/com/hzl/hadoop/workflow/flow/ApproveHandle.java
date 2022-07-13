@@ -12,10 +12,10 @@ import com.hzl.hadoop.workflow.vo.ProcessVariableVO;
  */
 public interface ApproveHandle {
 
-	void beforeApprove(Long processId,ApproveNodeAbstract startEntity);
+	Boolean beforeApprove(Long processId,Long nodeId,Integer nodeType);
 
-	void approve(Long processId,ApproveNodeAbstract startEntity);
+	Boolean approve(Long processId,ApproveNodeAbstract startEntity);
 
-	void afterApprove(Long processId,Long nodeId,Integer nodeType);
+	Boolean afterApprove(Long processId,Long nodeId,Integer nodeType);
 
 }

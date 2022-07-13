@@ -22,5 +22,8 @@ public interface ApproveHistoryStartService extends IService<ApproveHistoryStart
 
 	PageInfo<ApproveHistoryDTO> listApproveHistory(ApproveHistoryVO params, int start, int pageSize);
 
+	PageInfo<ApproveHistoryDTO> waitApprove(ApproveHistoryVO params, int start, int pageSize);
+
+
 }
 
