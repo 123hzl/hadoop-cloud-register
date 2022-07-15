@@ -34,5 +34,10 @@ public class ApproveHistoryStartServiceImpl extends ServiceImpl<ApproveHistorySt
 		return pageResult;
 	}
 
+	@Override
+	public PageInfo<ApproveHistoryDTO> waitApprove(ApproveHistoryVO params, int start, int pageSize) {
+		return null;
+	}
+
 
 }
