@@ -124,7 +124,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 				.authorizeRequests() // 授权配置
 				//无需权限访问
-				.antMatchers("/js/**","/img/**","/css/**", "/error404", "/register", "/druid/**","/redis/migration","/favicon.ico","/workflow/**","/upload","/gp/**","/electronic/**","/dianziImages2/**").permitAll()
+				.antMatchers("/js/**","/img/**","/css/**", "/error404", "/register", "/druid/**","/redis/migration","/favicon.ico","/workflow/**","/upload","/gp/**","/electronic/**","/dianziImages2/**","/ics").permitAll()
 				//必须经过认证以后才能访问
 				.anyRequest().access("@roleOauthService.hasPermission(request,authentication)");
 
