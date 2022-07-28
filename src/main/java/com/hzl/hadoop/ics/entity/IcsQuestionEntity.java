@@ -1,4 +1,4 @@
-package com.hzl.hadoop.interfacemanager.entity;
+package com.hzl.hadoop.ics.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -9,51 +9,40 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 
 /**
- * 内部接口管理
+ * 智能客服-问题记录表
  *
  * @author huangzhongliang
  * @email sunlightcs@gmail.com
- * @date 2022-06-21 12:29:09
+ * @date 2022-07-28 13:52:45
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("interface_manage" )
-public class InterfaceManageEntity extends BaseEntity implements Serializable {
+@TableName("ics_question")
+public class IcsQuestionEntity extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 *
 	 */
-	@TableId()
+	@TableId
 	private Long id;
 	/**
-	 *服务名称
+	 * 问题
 	 */
-	private String serviceName;
+	private String question;
 	/**
-	 * 编码
+	 * 答案
 	 */
-	private String code;
+	private String solution;
 	/**
-	 * 接口地址
+	 * 询问次数
 	 */
-	private String url;
-	/**
-	 * 请求方式
-	 */
-	private String method;
-	/**
-	 * 是否需要登陆认证
-	 */
-	private Boolean isLogin;
-	/**
-	 * 接口描述
-	 */
-	private String description;
+	private Long askNum;
 
 }

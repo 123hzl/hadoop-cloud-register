@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hzl.hadoop.ics.mapper.IcsQuestionMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.hzl.hadoop.ics.entity.IcsQuestionEntity" id="icsQuestionMap">
+        <result property="id" column="id"/>
+        <result property="question" column="question"/>
+        <result property="solution" column="solution"/>
+        <result property="askNum" column="ask_num"/>
+        <result property="tenantId" column="tenant_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="versionNum" column="version_num"/>
+    </resultMap>
+
+    <select id="listPage" resultType="com.hzl.hadoop.ics.dto.IcsQuestionDTO">
+     select
+            id,
+            question,
+            solution,
+            ask_num,
+            tenant_id,
+            create_by,
+            create_time,
+            update_by,
+            update_time,
+            version_num,
+      from  ics_question
+      <where>
+          1=1
+      <if test="id!=null" >
+        and id=#{id}
+      </if>
+      <if test="question!=null and question!=''" >
+          and question=#{question}
+      </if>
+      <if test="solution!=null and solution!=''" >
+          and solution=#{solution}
+      </if>
+      <if test="askNum!=null" >
+        and ask_num=#{askNum}
+      </if>
+      <if test="tenantId!=null" >
+        and tenant_id=#{tenantId}
+      </if>
+      <if test="createBy!=null" >
+        and create_by=#{createBy}
+      </if>
+      <if test="createTime!=null" >
+        and create_time=#{createTime}
+      </if>
+      <if test="updateBy!=null" >
+        and update_by=#{updateBy}
+      </if>
+      <if test="updateTime!=null" >
+        and update_time=#{updateTime}
+      </if>
+      <if test="versionNum!=null" >
+        and version_num=#{versionNum}
+      </if>
+      </where>
+    </select>
+    <select id="searchQuestion">
+        SELECT
+        count( ikw.ics_question_id ) as hitRate,
+        ikw.`key`,
+        ikw.ics_question_id,
+        iq.question,iq.solution,iq.ask_num
+        FROM
+        ics_key_word ikw
+        left join ics_question iq on iq.id=ikw.ics_question_id
+        WHERE
+        `key` IN ( '国庆', '放假', '时间','国' )
+        GROUP BY
+        ics_question_id
+        order by hitrate desc
+    </select>
+
+</mapper>

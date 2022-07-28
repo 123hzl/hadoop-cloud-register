@@ -63,17 +63,17 @@ public class GpBasicInfoJob {
 		List<GpInfoEntity> list = gpInfoService.list();
 		if (CollectionUtils.isNotEmpty(list)) {
 			list.forEach(gpInfoEntity -> {
-
-				//是否爬取
-				if (gpInfoEntity.getIsCreep()) {
-					log.info("定时器爬取股票数据----------------------------------------------------" + Thread.currentThread());
-					gpService.insert(gpInfoEntity.getGpCode());
-				}
-				//是否买入卖出通知
-				if (gpInfoEntity.getIsNotify()){
-					log.info("定时器买入卖出提醒----------------------------------------------------" + Thread.currentThread());
-					gpStareService.notifyBuyAndSale(gpInfoEntity.getGpCode());
-				}
+//
+//				//是否爬取
+//				if (gpInfoEntity.getIsCreep()) {
+//					log.info("定时器爬取股票数据----------------------------------------------------" + Thread.currentThread());
+//					gpService.insert(gpInfoEntity.getGpCode());
+//				}
+//				//是否买入卖出通知
+//				if (gpInfoEntity.getIsNotify()){
+//					log.info("定时器买入卖出提醒----------------------------------------------------" + Thread.currentThread());
+//					gpStareService.notifyBuyAndSale(gpInfoEntity.getGpCode());
+//				}
 
 			});
 

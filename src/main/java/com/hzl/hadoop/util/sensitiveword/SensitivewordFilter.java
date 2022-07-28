@@ -7,7 +7,7 @@ import java.util.Set;
 
 /**
  * @version 1.0
- * @Description: 敏感词过滤
+ * @Description: 敏感词过滤，滑动窗口算法
  * @Project：test
  * @Author : chenming
  * @Date ： 2014年4月20日 下午4:17:15

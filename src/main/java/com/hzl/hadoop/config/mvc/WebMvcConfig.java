@@ -147,10 +147,6 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 		registry.addResourceHandler("/css/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX + "/dianziImages1/css/");
 		registry.addResourceHandler("/img/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX + "/dianziImages1/img/");
 
-		registry.addResourceHandler("/dianziImages2/css/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX + "/dianziImages2/css/");
-		registry.addResourceHandler("/dianziImages2/img/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX + "/dianziImages2/img/");
-		registry.addResourceHandler("/dianziImages2/js/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX + "/dianziImages2/js/");
-
 		super.addResourceHandlers(registry);
 	}
 
