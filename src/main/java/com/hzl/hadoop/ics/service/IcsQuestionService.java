@@ -7,8 +7,10 @@ import com.hzl.hadoop.ics.entity.IcsQuestionEntity;
 
 
 import com.github.pagehelper.PageInfo;
+import com.hzl.hadoop.ics.vo.IcsResultVO;
 
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,6 +27,6 @@ public interface IcsQuestionService extends IService<IcsQuestionEntity> {
 
 	boolean saveInfo(IcsQuestionEntity icsQuestionEntity);
 
-	void searchQuestion(String question);
+	List<IcsResultVO> searchQuestion(String question);
 }
 

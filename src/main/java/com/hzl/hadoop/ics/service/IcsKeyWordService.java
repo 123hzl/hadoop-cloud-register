@@ -7,8 +7,10 @@ import com.hzl.hadoop.ics.entity.IcsKeyWordEntity;
 
 
 import com.github.pagehelper.PageInfo;
+import com.hzl.hadoop.ics.vo.IcsResultVO;
 
 
+import java.util.List;
 import java.util.Map;
 
 /**
