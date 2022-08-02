@@ -1,4 +1,4 @@
-package com.hzl.hadoop.ics.ee;
+package com.hzl.hadoop.ics.constant;
 
 /**
  * description

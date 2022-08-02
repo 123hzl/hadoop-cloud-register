@@ -64,17 +64,22 @@
       </if>
       </where>
     </select>
-    <select id="searchQuestion">
+    <select id="searchQuestion" resultType="com.hzl.hadoop.ics.vo.IcsResultVO">
         SELECT
         count( ikw.ics_question_id ) as hitRate,
         ikw.`key`,
         ikw.ics_question_id,
-        iq.question,iq.solution,iq.ask_num
+        iq.question,
+        iq.solution,
+        iq.ask_num
         FROM
         ics_key_word ikw
         left join ics_question iq on iq.id=ikw.ics_question_id
         WHERE
-        `key` IN ( '国庆', '放假', '时间','国' )
+        `key` IN
+        <foreach open="(" collection="words" index="index" item="word" close=")" separator=",">
+          #{word}
+         </foreach>
         GROUP BY
         ics_question_id
         order by hitrate desc

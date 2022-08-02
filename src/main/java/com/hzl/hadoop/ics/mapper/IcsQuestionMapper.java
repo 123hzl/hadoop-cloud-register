@@ -1,10 +1,13 @@
 package com.hzl.hadoop.ics.mapper;
 
+import com.hzl.hadoop.ics.vo.IcsResultVO;
 import org.apache.ibatis.annotations.Mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hzl.hadoop.ics.entity.IcsQuestionEntity;
 import com.hzl.hadoop.ics.dto.IcsQuestionDTO;
 import com.hzl.hadoop.ics.vo.IcsQuestionVO;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 /**
  * 智能客服-问题记录表
@@ -18,5 +21,5 @@ public interface IcsQuestionMapper extends BaseMapper<IcsQuestionEntity> {
 
 	List<IcsQuestionDTO> listPage(IcsQuestionVO params);
 
-	void searchQuestion(String[] word);
+	List<IcsResultVO> searchQuestion(@Param("words") List<String> words);
 }

@@ -1,5 +1,9 @@
 package com.hzl.hadoop.ics.service.impl;
 
+import com.hzl.hadoop.ics.engine.SplitWord;
+import com.hzl.hadoop.ics.mapper.IcsQuestionMapper;
+import com.hzl.hadoop.ics.vo.IcsResultVO;
+import org.ansj.domain.Result;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -13,6 +17,7 @@ import com.hzl.hadoop.ics.dto.IcsKeyWordDTO;
 import com.hzl.hadoop.ics.service.IcsKeyWordService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
+import java.util.List;
 
 
 @Service("icsKeyWordService")
@@ -21,11 +26,13 @@ public class IcsKeyWordServiceImpl extends ServiceImpl<IcsKeyWordMapper, IcsKeyW
 	@Autowired
     IcsKeyWordMapper mapper;
 
+
     @Override
     public PageInfo<IcsKeyWordDTO> queryPage(IcsKeyWordVO params,Integer current, Integer pageSize) {
 		PageInfo<IcsKeyWordDTO> pageResult = PageHelper.startPage(current, pageSize).doSelectPageInfo(() -> mapper.listPage(params));
 
         return pageResult;
     }
+
 
 }
