@@ -7,7 +7,7 @@
     <resultMap type="com.hzl.hadoop.ics.entity.IcsQuestionSulotionEntity" id="icsQuestionSulotionMap">
         <result property="id" column="id"/>
         <result property="searchLogId" column="search_log_id"/>
-        <result property="isHit" column="is_hit"/>
+        <result property="icsQuestionId" column="ics_question_id"/>
         <result property="tenantId" column="tenant_id"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>

@@ -56,12 +56,19 @@ public class KeyWordTest {
 		//TokenizerEngine engine = new WordEngine();
 
 		//解析文本
-		String text = "这两个方法的区别在于返回值";
+		String text = "客服价值客服";
 		Result result = engine.parse(text);
         //输出：这 两个 方法 的 区别 在于 返回 值
 		String resultStr = CollUtil.join((Iterable<Word>)result, " ");
 		long endTime = System.currentTimeMillis();
 		System.out.println(resultStr.toString());
 		System.out.println("总共消耗时间为：" + (endTime - beginTime));
+	}
+
+	@Test
+	public  void ss(){
+		Integer s=new Integer(1);
+		Integer s1=new Integer(2);
+		System.out.println(s.compareTo(s1));
 	}
 }

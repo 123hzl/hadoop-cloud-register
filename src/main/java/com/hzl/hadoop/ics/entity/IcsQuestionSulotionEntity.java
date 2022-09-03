@@ -37,9 +37,10 @@ public class IcsQuestionSulotionEntity extends BaseEntity implements Serializabl
 	 */
 	private Long searchLogId;
 	/**
-	 * 是否回答正确
+	 * 问题记录表id
 	 */
-	private Integer isHit;
+	private Long icsQuestionId;
+
 
 
 }

@@ -9,6 +9,8 @@ import com.hzl.hadoop.ics.vo.IcsQuestionVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
+
 /**
  * 智能客服-问题记录表
  * 
@@ -21,5 +23,5 @@ public interface IcsQuestionMapper extends BaseMapper<IcsQuestionEntity> {
 
 	List<IcsQuestionDTO> listPage(IcsQuestionVO params);
 
-	List<IcsResultVO> searchQuestion(@Param("words") List<String> words);
+	List<IcsResultVO> searchQuestion(@Param("words") Set<String> words);
 }
