@@ -39,6 +39,6 @@ public class IcsQuestionSearchLogEntity extends BaseEntity implements Serializab
 	/**
 	 * 是否回答正确
 	 */
-	private Integer isHit;
+	private Boolean isHit;
 
 }

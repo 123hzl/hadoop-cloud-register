@@ -18,6 +18,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
@@ -188,6 +189,16 @@ public class UserLogAspect {
 				.build();
 		return requestLogsService.save(requestLogsEntity);
 	}
+
+
+	public static void main(String args[]){
+		BigDecimal a=new BigDecimal(100);
+
+		BigDecimal s=new BigDecimal(-100);
+
+		System.out.println(a.add(s));
+	}
+
 
 
 }

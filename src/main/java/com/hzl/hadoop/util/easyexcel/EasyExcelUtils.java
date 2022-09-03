@@ -5,10 +5,6 @@ import com.alibaba.excel.converters.bigdecimal.BigDecimalNumberConverter;
 import com.alibaba.excel.converters.date.DateStringConverter;
 import com.alibaba.excel.converters.integer.IntegerNumberConverter;
 import com.alibaba.excel.converters.longconverter.LongNumberConverter;
-import com.hzl.hadoop.file.excel.convert.biginteger.BigIntegerNumberConverter;
-import com.hzl.hadoop.file.excel.convert.localdatetime.LocalDateTimeConverter;
-import com.hzl.hadoop.file.excel.convert.localdatetime.SqlDateStringConverter;
-import com.hzl.hadoop.file.excel.convert.localdatetime.TimeStampStringConverter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletResponse;
@@ -46,10 +42,11 @@ public class EasyExcelUtils {
 				.registerConverter(new BigDecimalNumberConverter())
 				.registerConverter(new DateStringConverter())
 				.registerConverter(new LongNumberConverter())
-				.registerConverter(new BigIntegerNumberConverter())
-				.registerConverter(new LocalDateTimeConverter())
-				.registerConverter(new TimeStampStringConverter())
-				.registerConverter(new SqlDateStringConverter())
+				//todo 待优化
+//				.registerConverter(new BigIntegerNumberConverter())
+//				.registerConverter(new LocalDateTimeConverter())
+//				.registerConverter(new TimeStampStringConverter())
+//				.registerConverter(new SqlDateStringConverter())
 				.autoCloseStream(Boolean.TRUE)
 				.head(head(list))
 				.sheet("模板")
