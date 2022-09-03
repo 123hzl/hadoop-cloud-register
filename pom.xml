@@ -33,7 +33,7 @@
         <hutool>5.7.4</hutool>
         <mybatis-plus-baomi>3.5.2</mybatis-plus-baomi>
         <dynamic-datasource>3.5.1</dynamic-datasource>
-        <jsoup>1.14.3</jsoup>
+        <jsoup>1.15.3</jsoup>
         <elasticsearch>8.0.0</elasticsearch>
         <jackson>2.12.3</jackson>
     </properties>
