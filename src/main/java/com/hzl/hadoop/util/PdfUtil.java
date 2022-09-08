@@ -518,23 +518,23 @@ public class PdfUtil {
 	 */
 	public static String getPdfFileStr(byte[] bytes) {
 		// 存放读取出的文档内容
-		String content = "";
+		StringBuilder content = new StringBuilder();
 		try {
 			// 读取pdf所使用的输出流
 			PdfReader reader = new PdfReader(bytes);
 			// 获得页数
-			int PageNum = reader.getNumberOfPages();
-
-			for (int i = 1; i <= PageNum; i++) {
+			int pageNum = reader.getNumberOfPages();
+             log.info("pdf页数{}",pageNum);
+			for (int i = 1; i <= pageNum; i++) {
 				// 读取第i页的文档内容
-				content += PdfTextExtractor.getTextFromPage(reader, i);
+				content.append(PdfTextExtractor.getTextFromPage(reader, i));
 			}
 		} catch (IOException e) {
 			log.info("错误：" + e.getMessage());
 			e.printStackTrace();
 		}
 
-		return content;
+		return String.valueOf(content);
 
 	}
 

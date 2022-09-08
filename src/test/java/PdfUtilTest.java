@@ -207,7 +207,7 @@ public class PdfUtilTest {
 	 */
 	@Test
 	public void getPdfFileStr() throws IOException {
-		File source = new File("/Users/hzl/Desktop/SSCPS202009009.pdf");
+		File source = new File("/Users/hzl/Desktop/电子.pdf");
 		FileInputStream fileInputStream = new FileInputStream(source);
 
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -217,6 +217,7 @@ public class PdfUtilTest {
 			output.write(buffers, 0, n);
 		}
 		log.info(PdfUtil.getPdfFileStr(output.toByteArray()));
+		fileInputStream.close();
 		output.flush();
 		output.close();
 	}

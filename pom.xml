@@ -16,7 +16,7 @@
 
 
     <properties>
-        <itextpdf>5.5.13.1</itextpdf>
+        <itextpdf>5.5.13.3</itextpdf>
         <google.zxing>3.3.3</google.zxing>
         <httpclient>5.2-alpha1</httpclient>
         <freemarker>2.2.2.RELEASE</freemarker>

@@ -23,7 +23,7 @@ public class FillExcelController {
 
 	/**
 	 * <p>
-	 * 通用文件下载，可以下载任何格式的文件
+	 * excel模版填充
 	 * </p>
 	 *
 	 * @author hzl 2020/01/05 2:36 PM
@@ -31,6 +31,6 @@ public class FillExcelController {
 	@GetMapping(value = "/fill/download/file")
 	public void downFileResponse(HttpServletResponse response) {
 
-		fillExcelService.estimateBill(response);
+		fillExcelService.estimateBillNew(response);
 	}
 }
