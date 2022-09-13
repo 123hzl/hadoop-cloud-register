@@ -113,7 +113,7 @@ public class FillExcelServiceImpl implements FillExcelService {
 			ExcelWriter excelWriter = EasyExcel.write(outputStream).withTemplate(inputStream).build();
 			WriteSheet writeSheet = EasyExcel.writerSheet().build();
 			//自动合并头，头中相同的字段上下左右都会去尝试匹配
-			WriteSheet writeSheet1 = EasyExcel.writerSheet().registerWriteHandler(new ExcelMergeHandler()).build();
+			WriteSheet writeSheet1 = EasyExcel.writerSheet().registerWriteHandler(new ExcelMergeHandler(transportFeesize,advanceSize)).build();
 
 			//水平填充
 			FillConfig fillConfig = FillConfig.builder().direction(WriteDirectionEnum.HORIZONTAL).forceNewRow(Boolean.TRUE).autoStyle(true).build();
