@@ -112,7 +112,7 @@ public class CompletableFutureUtils {
 				e.printStackTrace();
 			}
 		}*/
-		//等待所有线程完成后执行
+		//获取所有线程的返回结果，join和get都可以，get需要抛出异常
 		CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).join();
 		System.out.println(1111);
 

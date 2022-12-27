@@ -31,7 +31,7 @@ import static org.springframework.http.MediaType.*;
 /**
  * description
  * http请求工具类
- *
+ * 无法处理http2.0协议，切没有连接池，需要换成okhttp3
  * @author hzl 2020/01/02 7:24 PM
  */
 @Slf4j

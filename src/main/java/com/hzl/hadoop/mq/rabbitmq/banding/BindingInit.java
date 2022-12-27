@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * description
- * 声明绑定规则
+ * 声明绑定规则，队列和交换机通过路由键进行绑定
  *
  * @author hzl 2021/11/09 2:10 PM
  */
