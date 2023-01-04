@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 /**
  * 审批开始节点
- * 启动节点只用于启动标记，表中的审批人，审批组，等线默认为空
+ * 启动节点只用于启动标记，表中的审批人，审批组，等默认为空
  * @author huangzhongliang
  * @email sunlightcs@gmail.com
  * @date 2022-06-15 16:05:06

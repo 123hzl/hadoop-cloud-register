@@ -72,6 +72,9 @@ public class ApproveHistoryHandleImpl implements ApproveHistoryHandle {
 		}else{
 			wrapper.eq("current_node_id",approveVO.getNodeId());
 			wrapper.eq("process_id",approveVO.getProcessId());
+			//查询待处理的节点，因为有驳回再提交的
+			wrapper.eq("node_status",approveVO.getNodeStatus());
+
 		}
 
 
@@ -80,11 +83,11 @@ public class ApproveHistoryHandleImpl implements ApproveHistoryHandle {
 		if(approveVO.getNodeType().equals(START.getValue())){
 			return approveHistoryStartService.list(wrapper);
 		}else if(approveVO.getNodeType().equals(GATEWAY.getValue())){
-			return approveHistoryStartService.list(wrapper);
+			return approveHistoryGatewayService.list(wrapper);
 		}else if(approveVO.getNodeType().equals(APPROVE.getValue())){
 			return approveHistoryStartService.list(wrapper);
 		}else if(approveVO.getNodeType().equals(END.getValue())){
-			return approveHistoryStartService.list(wrapper);
+			return approveHistoryEndService.list(wrapper);
 		}
 
 		return null;
@@ -98,11 +101,11 @@ public class ApproveHistoryHandleImpl implements ApproveHistoryHandle {
 		if(nodeType.equals(START.getValue())){
 			return approveHistoryStartService.update(wrapper);
 		}else if(nodeType.equals(GATEWAY.getValue())){
-			return approveHistoryStartService.update(wrapper);
+			return approveHistoryGatewayService.update(wrapper);
 		}else if(nodeType.equals(APPROVE.getValue())){
 			return approveHistoryStartService.update(wrapper);
 		}else if(nodeType.equals(END.getValue())){
-			return approveHistoryStartService.update(wrapper);
+			return approveHistoryEndService.update(wrapper);
 		}
 		return false;
 	}

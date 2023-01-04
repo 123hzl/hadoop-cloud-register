@@ -1,6 +1,7 @@
 package com.hzl.hadoop.workflow.flow.impl;
 
 import com.hzl.hadoop.workflow.constant.ApproveActionConstant;
+import com.hzl.hadoop.workflow.constant.NodeStatusEnum;
 import com.hzl.hadoop.workflow.constant.NodeType;
 import com.hzl.hadoop.workflow.dto.NodeDTO;
 import com.hzl.hadoop.workflow.entity.ApproveHistoryEntity;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 
 /**
  * description
- *
+ * todo 路由节点加一个开关，用来控制转发的节点是否需要全部审批通过，
  * @author hzl 2022/06/16 10:37 AM
  */
 @Component
@@ -74,7 +75,7 @@ public class ApproveHandleImpl implements ApproveHandle {
 	/**
 	 * 启动时和每次触发审批按钮后执行，用于生成生成下一个节点的数据
 	 * nodeEntity 当前节点实体
-	 *
+	 * todo 全部审批完成，需要更新节点状态为已结束
 	 * @return
 	 * @author hzl 2022-06-16 1:22 PM
 	 */
@@ -91,6 +92,7 @@ public class ApproveHandleImpl implements ApproveHandle {
 		NodeDTO nodeDTO = nodeHandle.queryNodeById(NodeType.match(nodeType), nodeId);
 
 		if (nodeDTO != null) {
+			//执行后置监听
 			listenerHandler.handle(processId, nodeDTO.getAfListenerId());
 		}
 
@@ -136,7 +138,7 @@ public class ApproveHandleImpl implements ApproveHandle {
 				//todo 查询岗位下的所有员工
 				approveHistoryList = generateApproveHistoryEntity(null, null, nodeEntity.getId(), processId);
 			} else {
-				//只有启动节点可以审批人，审批组，岗位不做配置
+				//todo 只有启动节点,路由节点，结束节点，可以审批人，审批组，岗位不做配置待确定
 
 			}
 
@@ -164,7 +166,7 @@ public class ApproveHandleImpl implements ApproveHandle {
 			approveHistoryStartEntity.setApproveAction(ApproveActionConstant.WAIT.value());
 			approveHistoryStartEntity.setCurrentNodeId(nodeId);
 			approveHistoryStartEntity.setProcessId(processId);
-
+			approveHistoryStartEntity.setNodeStatus(NodeStatusEnum.WAIT.getValue());
 			approveHistoryStartEntity.setApproverId(userId);
 			return Collections.singletonList(approveHistoryStartEntity);
 		} else {
@@ -173,6 +175,7 @@ public class ApproveHandleImpl implements ApproveHandle {
 				approveHistoryStartEntity.setApproveAction(ApproveActionConstant.WAIT.value());
 				approveHistoryStartEntity.setCurrentNodeId(nodeId);
 				approveHistoryStartEntity.setProcessId(processId);
+				approveHistoryStartEntity.setNodeStatus(NodeStatusEnum.WAIT.getValue());
 
 				approveHistoryStartEntity.setApproverId(user);
 				return approveHistoryStartEntity;

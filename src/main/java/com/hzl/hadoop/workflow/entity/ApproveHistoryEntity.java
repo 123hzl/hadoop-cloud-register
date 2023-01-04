@@ -33,4 +33,9 @@ public class ApproveHistoryEntity extends BaseEntity {
 	 */
 	private Integer approveAction;
 
+	/**
+	 * 节点状态，0待处理，1已结束
+	 */
+	private Integer nodeStatus;
+
 }

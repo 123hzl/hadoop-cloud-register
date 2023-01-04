@@ -54,6 +54,10 @@ public class ApproveHistoryStartEntity extends ApproveHistoryEntity implements S
 	 */
 	private Integer approveAction;
 	/**
+	 * 节点状态，0待处理，1已结束
+	 */
+	private Integer nodeStatus;
+	/**
 	 * 租户id
 	 */
 	@TableField(fill = FieldFill.INSERT)

@@ -6,6 +6,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hzl.hadoop.exception.CommonException;
 import com.hzl.hadoop.workflow.constant.ApproveActionConstant;
+import com.hzl.hadoop.workflow.constant.NodeStatusEnum;
 import com.hzl.hadoop.workflow.constant.NodeType;
 import com.hzl.hadoop.workflow.entity.ApproveGroupEntity;
 import com.hzl.hadoop.workflow.entity.ApproveHistoryEntity;
@@ -62,6 +63,7 @@ public class ApproveGroupServiceImpl extends ServiceImpl<ApproveGroupMapper, App
 				List<ApproveHistoryEntity> approveHistoryEntityList = approveHistoryHandle.queryHistory(ApproveVO.builder()
 						.nodeId(nodeId)
 						.processId(processId)
+						.nodeStatus(NodeStatusEnum.WAIT.getValue())
 						.nodeType(nodeType)
 						.build());
 				for (ApproveHistoryEntity a : approveHistoryEntityList) {

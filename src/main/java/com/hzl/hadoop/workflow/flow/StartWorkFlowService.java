@@ -1,14 +1,18 @@
 package com.hzl.hadoop.workflow.flow;
 
+import com.alibaba.fastjson.JSON;
 import com.hzl.hadoop.exception.CommonException;
 import com.hzl.hadoop.security.service.impl.CustomUserDetails;
 import com.hzl.hadoop.security.utils.DetailHepler;
+import com.hzl.hadoop.util.JsonUtils;
 import com.hzl.hadoop.workflow.constant.NodeType;
 import com.hzl.hadoop.workflow.constant.ProcessStatusEnum;
 import com.hzl.hadoop.workflow.entity.ApproveHistoryEntity;
 import com.hzl.hadoop.workflow.entity.ApproveNodeStartEntity;
 import com.hzl.hadoop.workflow.entity.ProcessHistoryEntity;
+import com.hzl.hadoop.workflow.entity.ProcessVariableEntity;
 import com.hzl.hadoop.workflow.service.ProcessHistoryService;
+import com.hzl.hadoop.workflow.service.ProcessVariableService;
 import com.hzl.hadoop.workflow.service.WorkflowCharService;
 import com.hzl.hadoop.workflow.vo.ApproveVO;
 import com.hzl.hadoop.workflow.vo.NodeContainer;
@@ -42,9 +46,13 @@ public class StartWorkFlowService {
 	@Autowired
 	private ApproveHistoryHandle approveHistoryHandle;
 
+	@Autowired
+	ProcessVariableService processVariableService;
+
 	/**
 	 * 返回流程id
 	 * todo 防止重复提交，如果已经生成对应的流程记录就不能再提交，添加撤回功能
+	 * 开始节点只作为流程启动的标示。不能配置审批人信息
 	 * @return
 	 * @author hzl 2022-06-15 4:48 PM
 	 */
@@ -58,9 +66,6 @@ public class StartWorkFlowService {
 		//1获取当前用户信息
 		CustomUserDetails customUserDetails = DetailHepler.getUserDetails();
 
-		//判断当前开始节点是否配置了审批信息，还是只是作为流程开始的标志
-
-
 		//3
 		ProcessHistoryEntity processHistoryEntity = new ProcessHistoryEntity();
 		processHistoryEntity.setStartId(approveNodeStartEntity.getId());
@@ -71,10 +76,14 @@ public class StartWorkFlowService {
 		//插入流程记录
 		processHistoryService.save(processHistoryEntity);
 
+		//启动的时候保存流程变量
+		processVariableService.save(ProcessVariableEntity.builder()
+				.processId(processHistoryEntity.getId())
+				.variable(JSON.toJSONString(JsonUtils.mapToJson(startWorkFlowVO.getProcessVariable())))
+				.build());
+
 		//2根据流程节点配置，处理工作流审批逻辑
 		approveHandle.afterApprove(processHistoryEntity.getId(),approveNodeStartEntity.getId(),NodeType.START.getValue());
-
-
 
 
 		return "";
