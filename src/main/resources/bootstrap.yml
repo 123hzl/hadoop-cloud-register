@@ -1,0 +1,31 @@
+#服务端口号
+server:
+  port: 8888
+
+spring:
+  application:
+    name: hzl-register
+  cloud:
+    #注册中心
+    nacos:
+      discovery:
+        server-addr: http://47.100.71.50:8848
+
+#禁止eureka作为注册中心
+eureka:
+  client:
+    enabled: false
+
+
+management:
+  port: 8889
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+hadoop:
+  openMulti: false #是否开启多数据源
+  hdfs:
+    name-node: "hdfs://localhost:9000" #hdfs的nameNode节点ip
+    user-name: "root" #linux启动hdf是的用户名
