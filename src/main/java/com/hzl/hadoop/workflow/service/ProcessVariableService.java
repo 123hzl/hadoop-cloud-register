@@ -19,6 +19,6 @@ public interface ProcessVariableService extends IService<ProcessVariableEntity> 
 
 	PageInfo queryPage(ProcessVariableEntity params, int start, int pageSize);
 
-	List<ProcessVariableEntity> queryByProcessId(Long processId);
+	ProcessVariableEntity queryByProcessId(Long processId);
 }
 

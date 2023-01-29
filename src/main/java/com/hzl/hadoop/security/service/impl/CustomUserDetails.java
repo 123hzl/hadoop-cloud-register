@@ -1,5 +1,6 @@
 package com.hzl.hadoop.security.service.impl;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;

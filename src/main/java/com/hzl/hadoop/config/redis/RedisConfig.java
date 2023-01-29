@@ -14,6 +14,7 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import com.hzl.hadoop.constant.CharsetConstant;
+import io.lettuce.core.SocketOptions;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -108,19 +109,8 @@ public class RedisConfig extends CachingConfigurerSupport {
 	public ObjectMapper objectMapper() {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-		//过期objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
 		objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,
 				ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
-		//日期格式化
-//		JavaTimeModule javaTimeModule = new JavaTimeModule();
-//		javaTimeModule.addSerializer(Date.class, new DateSerializer());
-//		javaTimeModule.addDeserializer(Date.class, new DateDeserializers.DateDeserializer());
-//		javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(DataConstant.DATE)));
-//		javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern(DataConstant.DATE)));
-//		javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DataConstant.DATETIME)));
-//		javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(DataConstant.DATETIME)));
-		//日期格式化结束
-//
 		// TODO: 2020/1/20  
 //		SimpleModule simpleModule = new SimpleModule();对数据进行格式化，例如去除前后空格，后期做
 
@@ -152,6 +142,63 @@ public class RedisConfig extends CachingConfigurerSupport {
 
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>();
 		redisTemplate.setConnectionFactory(factory);
+		//设置键的序列号为string
+		redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+		redisTemplate.setKeySerializer(new StringRedisSerializer());
+		//设置值的序列化为json
+		redisTemplate.setHashValueSerializer(new StringRedisSerializer());
+		redisTemplate.setValueSerializer(new StringRedisSerializer());
+
+		return redisTemplate;
+	}
+
+	/**
+	 * <p>
+	 * 多数据源
+	 * </p>
+	 * N
+	 *
+	 * @author hzl 2020/01/17 3:10 PM
+	 */
+	@Bean(value = "redisTemplate1")
+	public RedisTemplate<String, Object> redisTemplate1(RedisConnectProperties redisConnectProperties) {
+		log.info("自定义redis配置类{}", redisConnectProperties.toString());
+
+		/* ========= 基本配置 ========= */
+		RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
+		configuration.setHostName(redisConnectProperties.getHost());
+		configuration.setPort(redisConnectProperties.getPort());
+		configuration.setPassword(redisConnectProperties.getPassword());
+		configuration.setDatabase(redisConnectProperties.getDatabase());
+		/* ========= 连接池通用配置 ========= */
+		GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
+		genericObjectPoolConfig.setMaxIdle(redisConnectProperties.getLettuce().getPool().getMaxIdle());
+		genericObjectPoolConfig.setMinIdle(redisConnectProperties.getLettuce().getPool().getMinIdle());
+		genericObjectPoolConfig.setMaxTotal(redisConnectProperties.getLettuce().getPool().getMaxActive());
+
+		/* ========= lettuce pool ========= */
+		LettucePoolingClientConfiguration.LettucePoolingClientConfigurationBuilder builder = LettucePoolingClientConfiguration.builder();
+		builder.poolConfig(genericObjectPoolConfig);
+		builder.commandTimeout(redisConnectProperties.getTimeout());
+
+		Duration connectTimeout = redisConnectProperties.getConnectTimeout();
+
+//		if (connectTimeout != null) {
+//			builder.socketOptions(SocketOptions.builder().connectTimeout(connectTimeout).build());
+//		}
+
+
+		LettuceConnectionFactory connectionFactory = new LettuceConnectionFactory(configuration, builder.build());
+		connectionFactory.afterPropertiesSet();
+
+		//上面是工厂定义
+		log.info("自定义redis工厂{}", connectionFactory.getClass().getName());
+		//日期格式化结束
+		Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+		jackson2JsonRedisSerializer.setObjectMapper(objectMapper());
+
+		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>();
+		redisTemplate.setConnectionFactory(connectionFactory);
 		//设置键的序列号为string
 		redisTemplate.setHashKeySerializer(new StringRedisSerializer());
 		redisTemplate.setKeySerializer(new StringRedisSerializer());

@@ -99,7 +99,6 @@ public class XlwebImagesController {
 
 		QueryWrapper queryWrapper = new QueryWrapper();
 		queryWrapper.eq("uid", uid);
-		queryWrapper.gt("create_time", "2022-01-17 00:00:00");
 		List<XlwebImagesEntity> allImages = xlwebImagesService.list(queryWrapper);
 
 		String path="/Users/hzl/Desktop/xlimage/"+fileName+uid+"/";
@@ -113,10 +112,15 @@ public class XlwebImagesController {
 		allImages.forEach(a->{
 			try {
 				log.info("文件名称{}", fileName);
+				File file = new File(path+ a.getPid() + ".jpg");
+				if (file.exists()) {
+					log.info("文件名称{}已经存在", path+a.getPid() + ".jpg");
+					return;
+				}
 				//下载文件
 				try (InputStream inputStream = HttpUtils.download(a.getOriginalImageUrl())) {
 					//文件保存目录
-					File file = new File(path+ a.getPid() + ".jpg");
+
 					try (FileOutputStream fileOutputStream = new FileOutputStream(file);) {
 						IOUtils.copy(inputStream, fileOutputStream);
 

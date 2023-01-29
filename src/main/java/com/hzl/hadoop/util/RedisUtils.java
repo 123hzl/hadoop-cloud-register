@@ -2,6 +2,7 @@ package com.hzl.hadoop.util;
 
 import com.hzl.hadoop.constant.Status;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.BoundListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -36,6 +37,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisUtils{
 	@Autowired
+	@Qualifier("redisTemplate")
 	private RedisTemplate<String, Object> redisTemplateTemp;
 
 	private static RedisTemplate<String, Object> redisTemplate;
@@ -124,7 +126,7 @@ public class RedisUtils{
 	 * @param key 键
 	 * @return 值
 	 */
-	public static Object get(String key) {
+	public  static Object get(String key) {
 		return key == null ? null : redisTemplate.opsForValue().get(key);
 	}
 

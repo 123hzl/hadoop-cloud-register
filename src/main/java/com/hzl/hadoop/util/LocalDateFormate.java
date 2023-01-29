@@ -7,6 +7,7 @@ import org.springframework.util.StringUtils;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -162,5 +163,17 @@ public class LocalDateFormate {
 	 */
 	public static LocalDateTime getTodayInitTime(){
 		return LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
+	}
+
+	/**
+	 * <p>
+	 * 获取时间差,返回多少天，1.3天显示1天，2.6天显示2天
+	 * </p>
+	 *
+	 * @author hzl 2021/12/15 10:47 AM
+	 */
+	public static String getTimeDiff(LocalDateTime localDateTime){
+
+		return String.valueOf(LocalDateTime.now().until(localDateTime, ChronoUnit.DAYS)).concat("天");
 	}
 }

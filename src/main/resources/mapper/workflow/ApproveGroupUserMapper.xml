@@ -16,7 +16,7 @@
         <result property="versionNum" column="version_num"/>
     </resultMap>
     <select id="queryUserIdsByGroupId" resultType="java.lang.Long">
-        select approverId from approve_group_user where group_id=#{groupId}
+        select approver_id from approve_group_user where group_id=#{groupId}
     </select>
 
 

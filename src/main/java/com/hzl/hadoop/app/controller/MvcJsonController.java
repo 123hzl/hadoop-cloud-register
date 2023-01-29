@@ -47,6 +47,10 @@ public class MvcJsonController {
 	@Qualifier("redisTemplate")
 	private RedisTemplate<String, Object> redisTemplate;
 
+	@Autowired
+	@Qualifier("redisTemplate1")
+	private RedisTemplate<String, Object> redisTemplate1;
+
 	@GetMapping(value = "/jsontest")
 	public ResponseEntity<PaymentVO> jsonTest() {
 		return new ResponseEntity<PaymentVO>(new PaymentVO(), HttpStatus.OK);
@@ -164,5 +168,97 @@ public class MvcJsonController {
 	}
 
 
+	/**
+	 * redis迁移工具，需要将redistemple的序列化换成，new StringRedisSerializer()（需要根据具体项目进行调试）
+	 *
+	 * @param null
+	 * @author hzl 2021-11-19 2:57 PM
+	 * @return
+	 */
+	@GetMapping(value = "/redis/migration")
+	public ResponseEntity redisMigration() {
+		//读取数据,获取所有key
+
+		Set<String> allKey = redisTemplate.keys("dlink_oct.**");
+		//log.info("所有key:{}",allKey);
+		log.info("所有key数量:{}", allKey.size());
+		List<CompletableFuture> completableFutures = new ArrayList<>();
+
+		if (CollectionUtils.isNotEmpty(allKey)) {
+			log.info("线程池是否为空开始:{}",SingleExecutor.getInstance().isShutdown());
+			allKey.forEach(key -> {
+				CompletableFuture completableFuture = CompletableFuture.runAsync(() -> {
+
+					DataType dataType = redisTemplate.type(key);
+					putValue(dataType, key);
+
+				}, SingleExecutor.getInstance());
+
+				completableFutures.add(completableFuture);
+
+			});
+		}
+		CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).join();
+		//因为不需要多次初始化，所有用完关闭线程池
+		SingleExecutor.getInstance().shutdown();
+		log.info("线程池是否为空结束:{}",SingleExecutor.getInstance().isShutdown());
+
+		return new ResponseEntity(HttpStatus.OK);
+	}
+
+	private void putValue(DataType dataType, String key) {
+		switch (dataType) {
+			case STRING:
+
+				if (!redisTemplate1.hasKey(key)) {
+
+					//获取值
+					String value = redisTemplate.opsForValue().get(key).toString();
+					//获取过期时间
+					Long exporeTime = redisTemplate.getExpire(key, TimeUnit.SECONDS);
+					log.info("过期时间string：{}----{}",exporeTime,key);
+					//插入数据
+					redisTemplate1.opsForValue().set(key, value);
+					//设置过期时间
+					if(exporeTime.longValue()!=-1){
+						//设置过期时间为-1会将key删除
+						redisTemplate1.expire(key, exporeTime, TimeUnit.SECONDS);
+					}
+
+				}
+				break;
+			case SET:
+
+				if (!redisTemplate1.hasKey(key)) {
+
+					Set<Object> set = redisTemplate.opsForSet().members(key);
+					log.info("set的key{}---{}",key,set.toString());
+					//获取过期时间
+					Long exporeTimeSet = redisTemplate.getExpire(key, TimeUnit.SECONDS);
+					//插入数据
+					log.info("过期时间set：{}",exporeTimeSet);
+					//插入数据
+					redisTemplate1.opsForSet().add(key, set.toArray());
+					//设置过期时间
+					if(exporeTimeSet.longValue()!=-1){
+						redisTemplate1.expire(key, exporeTimeSet, TimeUnit.SECONDS);
+					}
+				}
+				break;
+			case LIST:
+				log.info("未知类型" + dataType.code());
+				break;
+			case ZSET:
+				log.info("未知类型" + dataType.code());
+				break;
+			case HASH:
+				log.info("未知类型" + dataType.code());
+				break;
+			default:
+				break;
+		}
+
+
+	}
 
 }

@@ -60,6 +60,7 @@ public class ApproveGroupServiceImpl extends ServiceImpl<ApproveGroupMapper, App
 				//全部同意的情况，如果节点审批人员已经全部同意则返回true，否则返回false
 				//根据节点类型，流程id，当前节点id
 
+				//todo 需要排除自身，因为无法读未提交，，，还有一个问题并非审批的问题，会出现俩人发现对方都未审批，认为流程没有结束
 				List<ApproveHistoryEntity> approveHistoryEntityList = approveHistoryHandle.queryHistory(ApproveVO.builder()
 						.nodeId(nodeId)
 						.processId(processId)

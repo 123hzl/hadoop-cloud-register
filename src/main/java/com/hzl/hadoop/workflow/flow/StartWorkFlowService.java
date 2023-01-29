@@ -5,6 +5,7 @@ import com.hzl.hadoop.exception.CommonException;
 import com.hzl.hadoop.security.service.impl.CustomUserDetails;
 import com.hzl.hadoop.security.utils.DetailHepler;
 import com.hzl.hadoop.util.JsonUtils;
+import com.hzl.hadoop.workflow.constant.ApproveActionConstant;
 import com.hzl.hadoop.workflow.constant.NodeType;
 import com.hzl.hadoop.workflow.constant.ProcessStatusEnum;
 import com.hzl.hadoop.workflow.entity.ApproveHistoryEntity;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.script.ScriptException;
 import java.util.List;
 
 /**
@@ -57,7 +59,7 @@ public class StartWorkFlowService {
 	 * @author hzl 2022-06-15 4:48 PM
 	 */
 	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-	public String startWorkFlow(StartWorkFlowVO startWorkFlowVO) {
+	public String startWorkFlow(StartWorkFlowVO startWorkFlowVO) throws ScriptException {
 
 		//0:根据流程图编号查询启动节点
 		ApproveNodeStartEntity approveNodeStartEntity = nodeHandle.queryNodeInfoByFlowNum(NodeType.START, startWorkFlowVO.getFlowNum())
@@ -83,6 +85,9 @@ public class StartWorkFlowService {
 				.build());
 
 		//2根据流程节点配置，处理工作流审批逻辑
+		approveHandle.approve(processHistoryEntity.getId(),approveNodeStartEntity.getId(),NodeType.START.getValue());
+
+		//执行后置监听
 		approveHandle.afterApprove(processHistoryEntity.getId(),approveNodeStartEntity.getId(),NodeType.START.getValue());
 
 
@@ -96,7 +101,8 @@ public class StartWorkFlowService {
 	 * @return
 	 * @author hzl 2022-06-15 6:00 PM
 	 */
-	public Boolean approveOrReject(ApproveVO approveVO) {
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	public Boolean approveOrReject(ApproveVO approveVO) throws ScriptException {
 		Boolean isSuccess=true;
 		isSuccess=approveHandle.beforeApprove(approveVO.getProcessId(),approveVO.getNodeId(),approveVO.getNodeType());
 
@@ -107,7 +113,12 @@ public class StartWorkFlowService {
 		if(!isSuccess){
 			throw new CommonException("审批失败！！！");
 		}
+		//只有审批通过才执行approve方法
+		if(ApproveActionConstant.AGREE.value().equals(approveVO.getApproveAction())){
+			approveHandle.approve(approveVO.getProcessId(),approveVO.getNodeId(),approveVO.getNodeType());
+		}
 
+		//执行后置监听
 		isSuccess=approveHandle.afterApprove(approveVO.getProcessId(),approveVO.getNodeId(),approveVO.getNodeType());
 
 		return isSuccess;

@@ -41,21 +41,21 @@ public class ApproveHistoryHandleImpl implements ApproveHistoryHandle {
 
 
 	@Override
-	public void saveHistory(NodeType nodeType, ApproveHistoryEntity hostory) {
+	public void saveHistory(NodeType nodeType, ApproveHistoryEntity historyEntity) {
 
 		switch (nodeType) {
 			case START:
 
-				approveHistoryStartService.save(JsonUtils.cloneObject(hostory,ApproveHistoryStartEntity.class));
+				approveHistoryStartService.save(JsonUtils.cloneObject(historyEntity,ApproveHistoryStartEntity.class));
 				break;
 			case GATEWAY:
-				approveHistoryGatewayService.save(JsonUtils.cloneObject(hostory,ApproveHistoryGatewayEntity.class));
+				approveHistoryGatewayService.save(JsonUtils.cloneObject(historyEntity,ApproveHistoryGatewayEntity.class));
 				break;
 			case APPROVE:
-				approveHistoryApproverService.save(JsonUtils.cloneObject(hostory,ApproveHistoryApproverEntity.class));
+				approveHistoryApproverService.save(JsonUtils.cloneObject(historyEntity,ApproveHistoryApproverEntity.class));
 				break;
 			case END:
-				approveHistoryEndService.save(JsonUtils.cloneObject(hostory,ApproveHistoryEndEntity.class));
+				approveHistoryEndService.save(JsonUtils.cloneObject(historyEntity,ApproveHistoryEndEntity.class));
 				break;
 			default:
 				break;
@@ -108,5 +108,31 @@ public class ApproveHistoryHandleImpl implements ApproveHistoryHandle {
 			return approveHistoryEndService.update(wrapper);
 		}
 		return false;
+	}
+
+	@Override
+	public Boolean updateNodeStatus(NodeType nodeType, ApproveHistoryEntity historyEntity) {
+		Boolean result=false;
+		UpdateWrapper updateWrapper=new UpdateWrapper();
+		updateWrapper.set("node_status",historyEntity.getNodeStatus());
+		updateWrapper.eq("process_id",historyEntity.getProcessId());
+		updateWrapper.eq("current_node_id",historyEntity.getCurrentNodeId());
+		switch (nodeType) {
+			case START:
+				result=approveHistoryStartService.update(updateWrapper);
+				break;
+			case GATEWAY:
+				result=approveHistoryGatewayService.update(updateWrapper);
+				break;
+			case APPROVE:
+				result=approveHistoryApproverService.update(updateWrapper);
+				break;
+			case END:
+				result=approveHistoryEndService.update(updateWrapper);
+				break;
+			default:
+				break;
+		}
+		return result;
 	}
 }
