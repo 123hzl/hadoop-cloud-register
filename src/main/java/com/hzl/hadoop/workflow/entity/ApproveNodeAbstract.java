@@ -17,6 +17,10 @@ public class ApproveNodeAbstract {
 	 */
 	private Long approverId;
 	/**
+	 * 审批条件id
+	 */
+	private Long conditionId;
+	/**
 	 * 审批组（全组同意，或者任意一人同意）
 	 */
 	private Long approverGroupId;

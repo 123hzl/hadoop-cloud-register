@@ -18,4 +18,5 @@ public interface NodeHandle {
 	NodeContainer queryNodeInfoByFlowNum(NodeType nodeType, String flowNum);
 
 	NodeDTO queryNodeById(NodeType nodeType, Long nodeId );
+
 }

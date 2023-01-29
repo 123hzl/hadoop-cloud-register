@@ -53,6 +53,11 @@ public class ApproveHistoryEndEntity extends ApproveHistoryEntity implements Ser
 	 * 审批动作，1同意，2拒绝，3跳过，4转交
 	 */
 	private Integer approveAction;
+
+	/**
+	 * 节点状态，0待处理，1已结束
+	 */
+	private Integer nodeStatus;
 	/**
 	 * 租户id
 	 */

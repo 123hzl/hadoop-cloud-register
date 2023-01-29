@@ -15,7 +15,7 @@ import com.github.pagehelper.PageInfo;
 import com.hzl.hadoop.workflow.vo.ApproveHistoryStartVO;
 import org.springframework.http.ResponseEntity;
 
-
+import javax.script.ScriptException;
 
 
 /**
@@ -47,11 +47,14 @@ public class ApproveHistoryStartController {
     /**
      * 列表
      */
-    @GetMapping("/start/{flowNum}")
-    public ResponseEntity<Boolean> startWorkFlow(@PathVariable("flowNum") String flowNum){
-        StartWorkFlowVO startWorkFlowVO=new StartWorkFlowVO();
-        startWorkFlowVO.setFlowNum(flowNum);
-        startWorkFlowService.startWorkFlow(startWorkFlowVO);
+    @PostMapping("/start")
+    public ResponseEntity<Boolean> startWorkFlow(@RequestBody StartWorkFlowVO startWorkFlowVO){
+
+        try {
+            startWorkFlowService.startWorkFlow(startWorkFlowVO);
+        } catch (ScriptException e) {
+            e.printStackTrace();
+        }
 
         return new ResponseEntity(true, HttpStatus.OK);
     }

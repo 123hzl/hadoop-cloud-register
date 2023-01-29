@@ -15,7 +15,7 @@ import com.github.pagehelper.PageInfo;
 import com.hzl.hadoop.workflow.vo.ApproverVO;
 import org.springframework.http.ResponseEntity;
 
-
+import javax.script.ScriptException;
 
 
 /**
@@ -89,7 +89,12 @@ public class ApproverController {
      */
     @PostMapping("/approve")
     public ResponseEntity<BaseResponse> approve(@RequestBody ApproveVO approveVO){
-        BaseResponse baseResponse=new BaseResponse(startWorkFlowService.approveOrReject(approveVO));
+        BaseResponse baseResponse= null;
+        try {
+            baseResponse = new BaseResponse(startWorkFlowService.approveOrReject(approveVO));
+        } catch (ScriptException e) {
+            e.printStackTrace();
+        }
         return new ResponseEntity(baseResponse ,HttpStatus.OK);
     }
 

@@ -29,10 +29,10 @@ public class ProcessVariableServiceImpl extends ServiceImpl<ProcessVariableMappe
 	}
 
 	@Override
-	public List<ProcessVariableEntity> queryByProcessId(Long processId) {
+	public ProcessVariableEntity queryByProcessId(Long processId) {
 		QueryWrapper<ProcessVariableEntity> queryWrapper = new QueryWrapper();
 		queryWrapper.eq("process_id", processId);
-		return mapper.selectList(queryWrapper);
+		return mapper.selectOne(queryWrapper);
 	}
 
 }

@@ -84,7 +84,7 @@ public class XlFriendConvert {
 //		param.put("uid","7530253054");
 //		String friends=httpGet(param,friendsUrl);
 
-		log.info(getFriendsAll("3542313421").toString());
+		log.info(getFriendsAll("1590681790").toString());
 	}
 
 

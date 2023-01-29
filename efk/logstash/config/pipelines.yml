@@ -1,4 +1,0 @@
-- pipeline.id: pipeline_1
-  pipeline.batch.size: 200
-  pipeline.batch.delay: 1
-  path.config: /usr/share/logstash/pipeline

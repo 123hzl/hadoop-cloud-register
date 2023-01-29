@@ -16,7 +16,7 @@
 
 
     <properties>
-        <itextpdf>5.5.13.1</itextpdf>
+        <itextpdf>5.5.13.3</itextpdf>
         <google.zxing>3.3.3</google.zxing>
         <httpclient>5.2-alpha1</httpclient>
         <freemarker>2.2.2.RELEASE</freemarker>
@@ -46,11 +46,6 @@
         <!--<groupId>com.alibaba.cloud</groupId>-->
         <!--<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
         <!--</dependency>-->
-        <!--实现服务的注册与发现-->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -171,42 +166,6 @@
             <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
         </dependency>
 
-        <!--集成工作流-->
-        <!-- https://mvnrepository.com/artifact/org.activiti/activiti-spring -->
-        <!-- https://mvnrepository.com/artifact/org.activiti/activiti-spring-boot-starter -->
-        <!--<dependency>-->
-            <!--<groupId>org.activiti</groupId>-->
-            <!--<artifactId>activiti-spring-boot-starter</artifactId>-->
-            <!--<version>${activiti}</version>-->
-        <!--</dependency>-->
-        <!--集成Hadoop开始-->
-        <!--hdfs开始-->
-        <!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client -->
-        <dependency>
-            <groupId>org.apache.hadoop</groupId>
-            <artifactId>hadoop-hdfs</artifactId>
-            <version>${hadoop-client}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.hadoop</groupId>
-            <artifactId>hadoop-mapreduce-client-core</artifactId>
-            <version>${hadoop-client}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.google.guava</groupId>
-                    <artifactId>guava</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.apache.hadoop</groupId>
-            <artifactId>hadoop-client</artifactId>
-            <version>${hadoop-client}</version>
-        </dependency>
-        <!--</dependency>-->
 
         <!--hdfs结束-->
         <!--mapreduce开始-->
@@ -244,13 +203,6 @@
         <!--dubbo结束-->
 
 
-        <!--websocket-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-        <!--websocket结束-->
-
         <!--集成工具包https://www.hutool.cn/docs/#/-->
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -270,20 +222,6 @@
             <version>3.2.1</version>
         </dependency>
 
-
-        <!--添加springsecurity-->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-security</artifactId>-->
-        <!--</dependency>-->
-
-        <!-- https://mvnrepository.com/artifact/org.springframework.security.oauth.boot/spring-security-oauth2-autoconfigure -->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.security.oauth.boot</groupId>-->
-            <!--<artifactId>spring-security-oauth2-autoconfigure</artifactId>-->
-        <!--</dependency>-->
-
-        <!--添加springsecurity结束-->
         <!--<dependency>-->
             <!--<groupId>org.apache.commons</groupId>-->
             <!--<artifactId>commons-lang3</artifactId>-->
@@ -350,6 +288,15 @@
             <artifactId>htmlunit</artifactId>
             <version>2.58.0</version>
         </dependency>
+        <!--ui自动化-->
+        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.7.2</version>
+        </dependency>
+
+
 
 
         <dependency>

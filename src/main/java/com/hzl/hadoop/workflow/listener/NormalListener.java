@@ -11,6 +11,7 @@ public abstract class NormalListener {
 	/**
 	 *
 	 * 审批监听，用于执行审批逻辑，如果配置了该监听，节点上配置的审批人，审批组，审批岗位将不起作用
+	 *  todo 目前审批人，审批组，审批岗位仍然起作用
 	 * @param processId 流程id
 	 * @author hzl 2021-11-04 9:58 AM
 	 * @return

@@ -17,26 +17,18 @@ import java.util.Set;
  */
 public class AlgorithmUtils {
 
-	public static void main(String args[]) {
-		int[] array = {1, 7, 8, 9, 3,6};
+	public static void main(String args[]){
+		int[] array = {1, 7, 8, 9, 3,6,10,3,12,10};
 		int[] result;
-		//调用冒泡排序
-		long beginTime = System.currentTimeMillis();
-		System.out.println("开始时间" + beginTime);
 
-		System.out.println(beginTime);
-		result = selectionSort(array);
-		long endTime = System.currentTimeMillis();
 
-		System.out.println("排序后结果"+result);
 
-		System.out.println("结束时间" + endTime);
-		System.out.println("耗时" + (endTime - beginTime));
-
+		System.out.println("归并排序结果"+Arrays.toString(sort(array)));
 	}
 
 	//===============================================================================
-	//  选择排序,1,7,8,9,3(从左往右排序，排序完成后小的在右边，大的在左边)
+	//  选择排序,1,7,8,9,3(从左往右排序，排序完成后小的在右边，大的在左边)，
+	// 冒泡排序和选择排序的区别，冒泡每次比较大小后都要交换位置，而选择排序是选出最大最小的后再交换位置
 	// 比较次数：params.length*(params.length-1)/2
 	//===============================================================================
 
@@ -169,4 +161,136 @@ public class AlgorithmUtils {
 		return allSon;
 	}
 	//方法2结束
+
+
+	//归并排序，裂变程最小的数组大小为2，然后进行排序，然后把最小的单元从下往上合并排序
+	// {1, 7, 8, 9, 3,6,10};
+
+
+	public static int[] sort(int[] array){
+
+		int length=array.length;
+
+		if(length<2){
+			return array;
+		}
+
+		int splitPosition=length/2;
+		System.out.println(splitPosition);
+		int[] left=Arrays.copyOfRange(array,0,splitPosition);
+		int[] right=Arrays.copyOfRange(array,splitPosition,length);
+
+		System.out.println("left:"+Arrays.toString(left)+"---"+"right:"+Arrays.toString(right));
+		return merge(sort(left),sort(right));
+
+	}
+
+	public static int[] merge(int[] left,int[] right){
+         int[] array=new int[left.length+right.length];
+		//两个数组合并排序
+
+		//判断left和right哪个大
+
+		int leftI=0;
+		int rightJ=0;
+		int j=0;
+		while (j<array.length){
+
+			if(leftI!=left.length&&rightJ!=right.length){
+				if(left[leftI]>right[rightJ]){
+					array[j]=right[rightJ];
+					rightJ++;
+				}else if (left[leftI]<right[rightJ]){
+
+					array[j]=left[leftI];
+					leftI++;
+				}else {
+					array[j]=right[rightJ];
+					j++;
+					array[j]=left[leftI];
+					rightJ++;
+					leftI++;
+				}
+			}else if(rightJ==right.length){
+
+				array[j]=left[leftI];
+				leftI++;
+
+
+			}else if(leftI==left.length){
+				array[j]=right[rightJ];
+				rightJ++;
+			}
+			j++;
+		}
+
+		return array;
+	}
+
+
+
+
+
+
+
+
+	//归并排序结束
+
+	//堆排序 int[] array = {1, 7, 8, 9, 3,6,10};
+	public static void heapSort(int arr[]) {
+		int temp;
+
+		for (int i = arr.length / 2 - 1; i >= 0; i--) {
+			adjustHeap(arr, i, arr.length);
+		}
+		/**
+		 * 将堆项元素与末尾元素交换，将最大元素"沉"到数组末端;
+		 * 重新调整结构，使其满足堆定义，然后继续交换堆项元素与当前末尾元素，反复执行调整+交换步骤，直到整个序列有序。
+		 */
+
+		for (int j = arr.length - 1; j > 0; j--) {
+			temp = arr[j];
+			arr[j] = arr[0];
+			arr[0] = temp;
+			adjustHeap(arr, 0, j);
+
+		}
+
+
+	}
+
+
+	/**
+	 * 将一个数组（二叉树）调整成一个大根堆
+	 * 功能：完成将以i对应的非叶子结点的树调整成大顶堆
+	 * 举例int arr[]={4, 6,8,5,9};=>i=1=> adjustHeap=>得到{4,9,8,5, 6}
+	 * 如果我们再次调用adjustHeap 传入的是i=0=>得到{4,9, 8,5,6}=> {9,6,8,5, 4}
+	 *
+	 * @param arr    待调整的数组
+	 * @param i      表示非叶子结点在数组中索引
+	 * @param length 表示对多少个元素继续调整，length 是在逐渐的减少
+	 */
+	public static void adjustHeap(int arr[], int i, int length) {
+
+		int temp = arr[i];//先取出当前元素的值，保存在临时变量
+		//开始调整.
+		//说明:k=i*2+1k是i结点的左子结点
+		for (int k = i * 2 + 1; k < length; k = k * 2 + 1) {
+			if (k + 1 < length && arr[k] < arr[k + 1]) {
+				k++;
+			}
+			if (arr[k] > temp) {
+				arr[i] = arr[k];
+				i = k;
+			} else {
+				break;
+			}
+		}
+		arr[i] = temp;
+
+
+	}
+
+	//堆排序结束
+
 }

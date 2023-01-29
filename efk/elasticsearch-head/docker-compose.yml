@@ -1,9 +1,0 @@
-version: '3'
-services:
-  elasticsearch-head:
-    image: mobz/elasticsearch-head:5-alpine
-    container_name: elasticsearch-head
-    ports:
-      - "9100:9100"
-    restart: always
-    network_mode: "host"

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 /**
  * 审批开始节点
- * 启动节点只用于启动标记，表中的审批人，审批组，等线默认为空
+ * 启动节点只用于启动标记，表中的审批人，审批组，等默认为空
  * @author huangzhongliang
  * @email sunlightcs@gmail.com
  * @date 2022-06-15 16:05:06
@@ -41,6 +41,10 @@ public class ApproveNodeStartEntity extends ApproveNodeAbstract implements Seria
 	 * 审批人
 	 */
 	private Long approverId;
+	/**
+	 * 审批条件id
+	 */
+	private Long conditionId;
 	/**
 	 * 审批组（全组同意，或者任意一人同意）
 	 */

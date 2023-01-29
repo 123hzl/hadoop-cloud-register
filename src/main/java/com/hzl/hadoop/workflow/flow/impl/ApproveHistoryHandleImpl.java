@@ -41,21 +41,21 @@ public class ApproveHistoryHandleImpl implements ApproveHistoryHandle {
 
 
 	@Override
-	public void saveHistory(NodeType nodeType, ApproveHistoryEntity hostory) {
+	public void saveHistory(NodeType nodeType, ApproveHistoryEntity historyEntity) {
 
 		switch (nodeType) {
 			case START:
 
-				approveHistoryStartService.save(JsonUtils.cloneObject(hostory,ApproveHistoryStartEntity.class));
+				approveHistoryStartService.save(JsonUtils.cloneObject(historyEntity,ApproveHistoryStartEntity.class));
 				break;
 			case GATEWAY:
-				approveHistoryGatewayService.save(JsonUtils.cloneObject(hostory,ApproveHistoryGatewayEntity.class));
+				approveHistoryGatewayService.save(JsonUtils.cloneObject(historyEntity,ApproveHistoryGatewayEntity.class));
 				break;
 			case APPROVE:
-				approveHistoryApproverService.save(JsonUtils.cloneObject(hostory,ApproveHistoryApproverEntity.class));
+				approveHistoryApproverService.save(JsonUtils.cloneObject(historyEntity,ApproveHistoryApproverEntity.class));
 				break;
 			case END:
-				approveHistoryEndService.save(JsonUtils.cloneObject(hostory,ApproveHistoryEndEntity.class));
+				approveHistoryEndService.save(JsonUtils.cloneObject(historyEntity,ApproveHistoryEndEntity.class));
 				break;
 			default:
 				break;
@@ -72,6 +72,9 @@ public class ApproveHistoryHandleImpl implements ApproveHistoryHandle {
 		}else{
 			wrapper.eq("current_node_id",approveVO.getNodeId());
 			wrapper.eq("process_id",approveVO.getProcessId());
+			//查询待处理的节点，因为有驳回再提交的
+			wrapper.eq("node_status",approveVO.getNodeStatus());
+
 		}
 
 
@@ -80,11 +83,11 @@ public class ApproveHistoryHandleImpl implements ApproveHistoryHandle {
 		if(approveVO.getNodeType().equals(START.getValue())){
 			return approveHistoryStartService.list(wrapper);
 		}else if(approveVO.getNodeType().equals(GATEWAY.getValue())){
-			return approveHistoryStartService.list(wrapper);
+			return approveHistoryGatewayService.list(wrapper);
 		}else if(approveVO.getNodeType().equals(APPROVE.getValue())){
 			return approveHistoryStartService.list(wrapper);
 		}else if(approveVO.getNodeType().equals(END.getValue())){
-			return approveHistoryStartService.list(wrapper);
+			return approveHistoryEndService.list(wrapper);
 		}
 
 		return null;
@@ -98,12 +101,38 @@ public class ApproveHistoryHandleImpl implements ApproveHistoryHandle {
 		if(nodeType.equals(START.getValue())){
 			return approveHistoryStartService.update(wrapper);
 		}else if(nodeType.equals(GATEWAY.getValue())){
-			return approveHistoryStartService.update(wrapper);
+			return approveHistoryGatewayService.update(wrapper);
 		}else if(nodeType.equals(APPROVE.getValue())){
 			return approveHistoryStartService.update(wrapper);
 		}else if(nodeType.equals(END.getValue())){
-			return approveHistoryStartService.update(wrapper);
+			return approveHistoryEndService.update(wrapper);
 		}
 		return false;
+	}
+
+	@Override
+	public Boolean updateNodeStatus(NodeType nodeType, ApproveHistoryEntity historyEntity) {
+		Boolean result=false;
+		UpdateWrapper updateWrapper=new UpdateWrapper();
+		updateWrapper.set("node_status",historyEntity.getNodeStatus());
+		updateWrapper.eq("process_id",historyEntity.getProcessId());
+		updateWrapper.eq("current_node_id",historyEntity.getCurrentNodeId());
+		switch (nodeType) {
+			case START:
+				result=approveHistoryStartService.update(updateWrapper);
+				break;
+			case GATEWAY:
+				result=approveHistoryGatewayService.update(updateWrapper);
+				break;
+			case APPROVE:
+				result=approveHistoryApproverService.update(updateWrapper);
+				break;
+			case END:
+				result=approveHistoryEndService.update(updateWrapper);
+				break;
+			default:
+				break;
+		}
+		return result;
 	}
 }

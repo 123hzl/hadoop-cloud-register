@@ -8,7 +8,9 @@ package com.hzl.hadoop.design.single;
 public class SecurityLazySingle {
 
 	//static保证全局唯一
-	private static SecurityLazySingle lazySingle;
+	//对象加上了volatile关键字是为了保证变量的可见性，防止指令重排序
+	//第二个线程拿到的可能是半实列化的对象，所以要加volatile防止指令重排序
+	private volatile static SecurityLazySingle lazySingle;
 
 	//构造私有其他类无法通过new创建LazySingle对象
 	private SecurityLazySingle(){

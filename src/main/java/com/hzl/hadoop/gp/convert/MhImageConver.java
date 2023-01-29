@@ -25,10 +25,11 @@ import java.util.stream.Collectors;
 /**
  * description
  * http://m.alimanhua.com/manhua/2636/205238.html
- * 先爬列表，再爬文件
+ * 先爬列表，再爬文件，该项目作废
  *
  * @author hzl 2022/02/11 2:03 PM
  */
+@Deprecated
 @Slf4j
 public class MhImageConver {
 

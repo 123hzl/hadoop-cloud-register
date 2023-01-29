@@ -77,9 +77,9 @@ public class PdfUtilTest {
 		String water = "就我一个人";
 
 		try {
-			FileSystemResource tempInputStream = new FileSystemResource("/Users/hzl/Desktop/阿里技术开发手册嵩山版.pdf");
+			FileSystemResource tempInputStream = new FileSystemResource("/Users/hzl/Desktop/机考攻略.pdf");
 			//FileInputStream fileInputStream =new FileInputStream(new File("/Users/hzl/Desktop/pdf.pdf"));
-			outputStream = new FileOutputStream("/Users/hzl/Desktop/阿里技术开发手册嵩山版1.pdf");
+			outputStream = new FileOutputStream("/Users/hzl/Desktop/机考攻略1.pdf");
 			addPdfTextMark(tempInputStream.getInputStream(), tempOutputStream, water, 200, 200, url, content);
 			outputStream.write(tempOutputStream.toByteArray());
 			tempOutputStream.flush();
@@ -100,7 +100,7 @@ public class PdfUtilTest {
 	 */
 	@Test
 	public void removeWatermark() {
-		PdfUtil.removeWatermark("/Users/hzl/Desktop/阿里技术开发手册嵩山版1.pdf", "/Users/hzl/Desktop/阿里技术开发手册嵩山版2.pdf");
+		PdfUtil.removeWatermark("/Users/hzl/Desktop/机考攻略1.pdf", "/Users/hzl/Desktop/机考攻略2.pdf");
 	}
 
 	/**
@@ -207,7 +207,7 @@ public class PdfUtilTest {
 	 */
 	@Test
 	public void getPdfFileStr() throws IOException {
-		File source = new File("/Users/hzl/Desktop/SSCPS202009009.pdf");
+		File source = new File("/Users/hzl/Desktop/电子.pdf");
 		FileInputStream fileInputStream = new FileInputStream(source);
 
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -217,6 +217,7 @@ public class PdfUtilTest {
 			output.write(buffers, 0, n);
 		}
 		log.info(PdfUtil.getPdfFileStr(output.toByteArray()));
+		fileInputStream.close();
 		output.flush();
 		output.close();
 	}

@@ -10,4 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 public interface FillExcelService {
 
 	void estimateBill(HttpServletResponse response);
+
+	void estimateBillNew(HttpServletResponse response);
 }

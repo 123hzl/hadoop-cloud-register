@@ -25,7 +25,7 @@ public class LocalDateFormateTest {
 
 	@Test
 	public void localDateTimeFormate() {
-		log.info(LocalDateFormate.stringTolocalDateTime("2019-09-09 10:10:00").toString());
+		log.info(LocalDateFormate.longToLocalDateTime(1098979200000L).toString());
 	}
 
 	@Test

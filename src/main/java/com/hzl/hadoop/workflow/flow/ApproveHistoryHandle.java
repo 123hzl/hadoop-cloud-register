@@ -15,10 +15,12 @@ import java.util.List;
  */
 public interface ApproveHistoryHandle {
 
-	void saveHistory(NodeType nodeType, ApproveHistoryEntity hostory);
+	void saveHistory(NodeType nodeType, ApproveHistoryEntity historyEntity);
 
 	List<ApproveHistoryEntity> queryHistory(ApproveVO approveVO);
 
 	Boolean updateHistory(Long historyId, Integer approveStatus,Integer nodeType);
+
+	Boolean updateNodeStatus(NodeType nodeType,ApproveHistoryEntity historyEntity);
 
 }

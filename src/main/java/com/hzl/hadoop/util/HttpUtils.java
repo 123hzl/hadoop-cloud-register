@@ -31,7 +31,7 @@ import static org.springframework.http.MediaType.*;
 /**
  * description
  * http请求工具类
- *
+ * 无法处理http2.0协议，切没有连接池，需要换成okhttp3
  * @author hzl 2020/01/02 7:24 PM
  */
 @Slf4j
@@ -351,10 +351,10 @@ public class HttpUtils {
 	 * @param url         请求地址
 	 * @param param       body 参数
 	 * @param headerParam header 参数
-	 * @param charset   编码默认utf-8 参数
+	 * @param charset     编码默认utf-8 参数
 	 * @return 响应body
 	 */
-	public static String sendGet(String url,String charset, Map<String, ?> param,Map<String, String> headerParam) throws HttpResponseException {
+	public static String sendGet(String url, String charset, Map<String, ?> param, Map<String, String> headerParam) throws HttpResponseException {
 		log.info("========  开始发送GET请求 ========");
 		BufferedReader in = null;
 		StringBuilder result = new StringBuilder();

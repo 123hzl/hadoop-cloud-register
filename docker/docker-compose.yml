@@ -6,9 +6,8 @@ services:
     user: root
     ports:
         - "8888:8888"
-#    volumes:
-#        - ./target/hadoop.jar:~/
-#        - ./logs/:~/
-#    command: sh ~/start.sh
-#    restart: always
+    logging:
+      driver: "json-file"
+      options:
+          max-size: "50m"
     network_mode: "host"

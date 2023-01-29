@@ -2,6 +2,7 @@ package com.hzl.hadoop.util;
 
 import com.hzl.hadoop.constant.Status;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.BoundListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -36,6 +37,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisUtils{
 	@Autowired
+	@Qualifier("redisTemplate")
 	private RedisTemplate<String, Object> redisTemplateTemp;
 
 	private static RedisTemplate<String, Object> redisTemplate;
@@ -124,7 +126,7 @@ public class RedisUtils{
 	 * @param key 键
 	 * @return 值
 	 */
-	public static Object get(String key) {
+	public  static Object get(String key) {
 		return key == null ? null : redisTemplate.opsForValue().get(key);
 	}
 
@@ -532,7 +534,7 @@ public class RedisUtils{
 
 	/**
 	 * 将list放入缓存
-	 *
+	 * 传如的参数必须是List<Object> 不然redis中的list size只会是1，https://blog.csdn.net/qq719779232/article/details/126147002
 	 * @param key   键
 	 * @param value 值
 	 * @return

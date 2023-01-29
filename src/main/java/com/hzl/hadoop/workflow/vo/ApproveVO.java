@@ -55,6 +55,11 @@ public class ApproveVO {
 	private Integer nodeType;
 
 	/**
+	 * 节点状态
+	 */
+	private Integer nodeStatus;
+
+	/**
 	 * 流程id
 	 */
 	private Long processId;

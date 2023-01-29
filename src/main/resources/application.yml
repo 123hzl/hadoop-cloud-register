@@ -2,8 +2,8 @@
 server:
   port: 8888
 
-hadoop:
-  openMulti: true #是否开启多数据源
+#hadoop:
+#  openMulti: false #是否开启多数据源,不启用自己开发的多数据服务
 
 spring:
   application:
@@ -40,7 +40,7 @@ spring:
   cache:
     type: none #设置cache的类型可以是redis,none是禁用cache缓存
   redis:
-    host: tt
+    host: 124.220.148.40
     port: 6379
     # redis默认情况下有16个分片，这里配置具体使用的分片，默认为0
     database: 0
@@ -55,8 +55,28 @@ spring:
         max-idle: 8
         #连接池中最新空闲连接
         min-idle: 0
+    password: zhongnan_123
+    timeout: 10000ms
+    connect-timeout: 10000ms
+  redis1:
+    host: 172.17.0.13
+    port: 6379
+    # redis默认情况下有16个分片，这里配置具体使用的分片，默认为0
+    database: 4
+    #在 Spring Boot 2.x 以后底层不再使用 Jedis，而是换成了 Lettuce。
+    lettuce:
+      pool:
+        # 连接池最大连接数(使用负数表示没有限制),默认8
+        max-active: 8
+        #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+        #连接池中最大空闲连接
+        max-idle: 8
+        #连接池中最新空闲连接
+        min-idle: 0
     password:
     timeout: 10000ms
+    connect-timeout: 10000ms
 
   #mysql连接
   datasource:
@@ -121,7 +141,7 @@ spring:
     host: 11
     port: 5672
     # 集群地址，用逗号分隔
-    connection-timeout: 60000
+    connection-timeout: 60000ms
     password: 12333
     # 使用启用消息确认模式 true
     username: 3333

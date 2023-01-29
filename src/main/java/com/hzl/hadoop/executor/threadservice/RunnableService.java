@@ -28,7 +28,6 @@ public class RunnableService implements Runnable {
 		//业务逻辑
 		System.out.println("执行次数"+num +Thread.currentThread().getName());
 		if(num==3){
-			//用于测试submit后，Future不调用get无法捕获异常
 			throw new CommonException("异常");
 		}
 	}
