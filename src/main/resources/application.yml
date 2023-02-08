@@ -185,6 +185,7 @@ logging:
 
 pagehelper:
   helper-dialect: mysql
+  #设置成false如果查询为空，则返回空，不然返回第一页数据
   reasonable: true
   support-methods-arguments: true
   params: count=countSql

@@ -23,7 +23,7 @@
         <apache.poi>5.2.0</apache.poi>
         <poi-ooxml>5.2.0</poi-ooxml>
         <poi-scratchpad>5.2.0</poi-scratchpad>
-        <druid>1.1.22</druid>
+        <druid>1.2.15</druid>
         <easyexcel>3.0.5</easyexcel>
         <ant>1.10.12</ant>
         <commons-compress>1.21</commons-compress>
