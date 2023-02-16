@@ -26,9 +26,9 @@ public class ApplicationContextUtil implements ApplicationContextAware {
 
 	public static <T> T getBean(Class<T> clazz) {
 		if (applicationContext == null) {
-			log.info("applicationContext是空的");
+			log.debug("applicationContext是空的");
 		} else {
-			log.info("applicationContext不是空的");
+			log.debug("applicationContext不是空的");
 		}
 		return applicationContext.getBean(clazz);
 	}

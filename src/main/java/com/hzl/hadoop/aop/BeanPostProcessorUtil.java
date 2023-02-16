@@ -27,14 +27,14 @@ public class BeanPostProcessorUtil implements BeanPostProcessor {
 	@Nullable
 	@Override
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-		log.info("bean初始化前" + beanName);
+		log.debug("bean初始化前" + beanName);
 		return bean;
 	}
 
 	@Override
 	@Nullable
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-		log.info("bean初始化后" + beanName);
+		log.debug("bean初始化后" + beanName);
 		return bean;
 	}
 

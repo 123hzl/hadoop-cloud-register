@@ -18,6 +18,6 @@ public interface ApproveGroupService extends IService<ApproveGroupEntity> {
 
 	PageInfo queryPage(ApproveGroupEntity params, int start, int pageSize);
 
-	Boolean isAllApprove(Long processId,Long nodeId,Integer nodeType);
+	Boolean isAllApprove(Long processId,Long nodeId,Integer nodeType,Long historyId);
 }
 

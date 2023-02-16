@@ -43,7 +43,7 @@ public class ApproveGroupServiceImpl extends ServiceImpl<ApproveGroupMapper, App
 	}
 
 	@Override
-	public Boolean isAllApprove(Long processId, Long nodeId, Integer nodeType) {
+	public Boolean isAllApprove(Long processId, Long nodeId, Integer nodeType,Long historyId) {
 		NodeType nodeType1 = NodeType.match(nodeType);
 		//根据当前节点id和节点类型，查询节点上配置的审批组
 		NodeContainer nodeContainer = nodeHandle.queryNodeInfo(nodeType1, nodeId);
@@ -60,17 +60,22 @@ public class ApproveGroupServiceImpl extends ServiceImpl<ApproveGroupMapper, App
 				//全部同意的情况，如果节点审批人员已经全部同意则返回true，否则返回false
 				//根据节点类型，流程id，当前节点id
 
-				//todo 需要排除自身，因为无法读未提交，，，还有一个问题并非审批的问题，会出现俩人发现对方都未审批，认为流程没有结束
+				// 需要排除自身，因为无法读未提交，，，todo 还有一个问题并非审批的问题，会出现俩人发现对方都未审批，认为流程没有结束
 				List<ApproveHistoryEntity> approveHistoryEntityList = approveHistoryHandle.queryHistory(ApproveVO.builder()
 						.nodeId(nodeId)
 						.processId(processId)
 						.nodeStatus(NodeStatusEnum.WAIT.getValue())
 						.nodeType(nodeType)
 						.build());
-				for (ApproveHistoryEntity a : approveHistoryEntityList) {
-					if (ApproveActionConstant.WAIT.value().equals(a.getApproveAction()) || ApproveActionConstant.REJECT.value().equals(a.getApproveAction())) {
-						return false;
-					}
+
+				ApproveHistoryEntity approveHistoryEntity= approveHistoryEntityList.stream().filter(a->!historyId.equals(a.getId())&&
+						(ApproveActionConstant.WAIT.value().equals(a.getApproveAction())
+								|| ApproveActionConstant.REJECT.value().equals(a.getApproveAction()))).findFirst().get();
+
+				if(approveHistoryEntity!=null){
+					return false;
+				}else {
+					return true;
 				}
 			}
 		} else {

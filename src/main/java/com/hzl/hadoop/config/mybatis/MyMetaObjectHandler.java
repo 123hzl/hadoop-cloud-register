@@ -55,12 +55,13 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 			tenantId = customUserDetails.getTenantId();
 		}
 
-		this.strictInsertFill(metaObject, "updateTime", () -> LocalDateTime.now(), LocalDateTime.class);
+		this.strictUpdateFill(metaObject, "updateTime", () -> LocalDateTime.now(), LocalDateTime.class);
 
-		this.strictInsertFill(metaObject, "versionNum", Integer.class, (Integer) metaObject.getValue("versionNum") + 1);
+		this.strictUpdateFill(metaObject, "versionNum", Integer.class, (Integer) metaObject.getValue("versionNum") + 1);
 
-		this.strictInsertFill(metaObject, "updateBy", Long.class, userId);
+		this.strictUpdateFill(metaObject, "updateBy", Long.class, userId);
 
+		this.strictUpdateFill(metaObject, "tenantId", Long.class, tenantId);
 
 	}
 }

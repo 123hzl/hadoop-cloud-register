@@ -1,5 +1,6 @@
 package com.hzl.hadoop.workflow.flow;
 
+import com.hzl.hadoop.workflow.dto.ListenerDTO;
 import com.hzl.hadoop.workflow.entity.ApproveNodeAbstract;
 import com.hzl.hadoop.workflow.entity.ApproveNodeStartEntity;
 import com.hzl.hadoop.workflow.vo.NodeContainer;
@@ -14,9 +15,9 @@ import javax.script.ScriptException;
  */
 public interface ApproveHandle {
 
-	Boolean beforeApprove(Long processId,Long nodeId,Integer nodeType);
+	ListenerDTO beforeApprove(Long processId, Long nodeId, Integer nodeType);
 
-	Boolean approve(Long processId,Long nodeId, Integer nodeType) throws ScriptException;
+	Boolean approve(Long processId,Long nodeId, Integer nodeType,Long historyId) throws ScriptException;
 
 	Boolean afterApprove(Long processId,Long nodeId,Integer nodeType);
 

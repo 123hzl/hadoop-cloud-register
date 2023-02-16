@@ -42,6 +42,7 @@ public class GpMaxMinController {
 	/**
 	 * <p>
 	 * 最高价最低价波动图
+	 * todo 需要修复
 	 * </p>
 	 *
 	 * @author hzl 2020/01/08 12:41 PM

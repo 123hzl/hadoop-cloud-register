@@ -43,7 +43,7 @@ public class InitializingDestoryBeanUtil implements InitializingBean, Disposable
 	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		log.info("通过InitializingBean实现在bean初始化完成后执行");
+		log.debug("通过InitializingBean实现在bean初始化完成后执行");
 	}
 
 
@@ -57,7 +57,7 @@ public class InitializingDestoryBeanUtil implements InitializingBean, Disposable
 	 */
 	@Override
 	public void destroy() throws Exception {
-		log.info("通过实现DisposableBean,销毁bean");
+		log.debug("通过实现DisposableBean,销毁bean");
 	}
 
 
@@ -66,7 +66,7 @@ public class InitializingDestoryBeanUtil implements InitializingBean, Disposable
 	 */
 	@PostConstruct
 	public void init() {
-		log.info("通过@PostConstruct注解进行初始化，反射性能没有InitializingBean好");
+		log.debug("通过@PostConstruct注解进行初始化，反射性能没有InitializingBean好");
 	}
 
 	/**
@@ -74,6 +74,6 @@ public class InitializingDestoryBeanUtil implements InitializingBean, Disposable
 	 */
 	@PreDestroy
 	public void detory() {
-		log.info("通过注解@PreDestroy进行销毁，反射性能没有DisposableBean好");
+		log.debug("通过注解@PreDestroy进行销毁，反射性能没有DisposableBean好");
 	}
 }
