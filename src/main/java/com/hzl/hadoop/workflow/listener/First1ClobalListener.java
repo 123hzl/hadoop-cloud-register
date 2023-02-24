@@ -1,5 +1,7 @@
 package com.hzl.hadoop.workflow.listener;
 
+import com.hzl.hadoop.workflow.dto.ListenerDTO;
+
 /**
  * description
  *
@@ -8,8 +10,9 @@ package com.hzl.hadoop.workflow.listener;
 public class First1ClobalListener extends GlobalListener {
 
 	@Override
-	public void approveListener(Long processId) {
+	public ListenerDTO approveListener(Long processId) {
 
+		return null;
 	}
 
 	@Override

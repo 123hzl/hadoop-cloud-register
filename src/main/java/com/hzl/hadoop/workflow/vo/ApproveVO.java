@@ -1,9 +1,6 @@
 package com.hzl.hadoop.workflow.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -12,30 +9,13 @@ import java.util.List;
  *
  * @author hzl 2022/07/05 2:58 PM
  */
+@ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class ApproveVO {
 
-	/**
-	 * 审批人
-	 */
-	private Long approverId;
-
-
-
-	/**
-	 * 上一节点审批人数组
-	 */
-	private List<Long> lastApproverIds;
-
-
-
-	/**
-	 * 上一节点审批人数组
-	 */
-	private List<String> lastApproverNames;
 
 	/**
 	 * 节点id
@@ -51,6 +31,14 @@ public class ApproveVO {
 
 	/**
 	 * 节点类型
+	 * START(1,"开始"),
+
+	 GATEWAY(2,"网关"),
+
+	 APPROVE(3,"审批节点"),
+
+	 END(4,"结束");
+
 	 */
 	private Integer nodeType;
 
@@ -69,8 +57,4 @@ public class ApproveVO {
 	 */
 	private Integer approveAction;
 
-	/**
-	 * 流程编号
-	 */
-	private String flowNum;
 }

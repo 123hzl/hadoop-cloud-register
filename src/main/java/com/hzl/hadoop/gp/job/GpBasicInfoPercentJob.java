@@ -17,9 +17,10 @@ import java.util.List;
  * 参考：https://blog.csdn.net/czx2018/article/details/83501945
  * https://www.cnblogs.com/loong-hon/p/10143322.html
  * 获取扇形图数据，实时交易量数据
- *
+ * 废弃-除非走代理，不然会被限制访问
  * @author hzl 2020/11/03 2:14 PM
  */
+@Deprecated
 @Slf4j
 @Component
 public class GpBasicInfoPercentJob {

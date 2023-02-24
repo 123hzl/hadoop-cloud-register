@@ -5,6 +5,7 @@ import com.hzl.hadoop.exception.CommonException;
 import com.hzl.hadoop.workflow.constant.ApproveActionConstant;
 import com.hzl.hadoop.workflow.constant.NodeStatusEnum;
 import com.hzl.hadoop.workflow.constant.NodeType;
+import com.hzl.hadoop.workflow.dto.ListenerDTO;
 import com.hzl.hadoop.workflow.dto.NodeDTO;
 import com.hzl.hadoop.workflow.entity.ApproveConditionsEntity;
 import com.hzl.hadoop.workflow.entity.ApproveHistoryEntity;
@@ -57,49 +58,51 @@ public class ApproveHandleImpl implements ApproveHandle {
 	/**
 	 * 流程启动前执行
 	 *
-	 * @param null
 	 * @return
 	 * @author hzl 2022-06-16 1:22 PM
 	 */
 	@Override
-	public Boolean beforeApprove(Long processId, Long nodeId, Integer nodeType) {
+	public ListenerDTO beforeApprove(Long processId, Long nodeId, Integer nodeType) {
 
 		//执行当前节点的前置监听
 		NodeDTO nodeDTO = nodeHandle.queryNodeById(NodeType.match(nodeType), nodeId);
 
-		if (nodeDTO != null&&nodeDTO.getBeListenerId()!=null) {
-			listenerHandler.handle(processId, nodeDTO.getBeListenerId());
+		if (nodeDTO == null) {
+			throw new CommonException("审批流配置问题流程id" + processId + ",节点id" + nodeId + "节点类型" + nodeType);
+		} else if (nodeDTO.getBeListenerId() != null) {
+			return listenerHandler.handle(processId, nodeDTO.getBeListenerId());
+
+		} else {
+			return null;
 		}
 
-
-		return true;
 	}
 
 	@Override
-	public Boolean approve(Long processId, Long nodeId, Integer nodeType) throws ScriptException {
+	public Boolean approve(Long processId, Long nodeId, Integer nodeType,Long historyId) throws ScriptException {
 		//审批操作，
 		NodeType nodeTypeEnum=NodeType.match(nodeType);
 		//判断当前节点是否需要全部审批通过，如果需要全部审批完成后才执行后面的逻辑，也就是当前节点的审批组不为空，且为全部审批通过
 		//根据nodeId查询当前节点审批组信息。
-		if (!approveGroupService.isAllApprove(processId, nodeId, nodeType)) {
-			return true;
-		}else{
+		if (approveGroupService.isAllApprove(processId, nodeId, nodeType,historyId)) {
 			//如果当前节点审批完成，那么更新节点状态为结束
 			ApproveHistoryEntity historyEntity=new ApproveHistoryEntity();
 			historyEntity.setNodeStatus(NodeStatusEnum.END.getValue());
 			historyEntity.setProcessId(processId);
 			historyEntity.setCurrentNodeId(nodeId);
-			if(approveHistoryHandle.updateNodeStatus(nodeTypeEnum,historyEntity)){
+			if(!approveHistoryHandle.updateNodeStatus(nodeTypeEnum,historyEntity)){
 				throw new CommonException("审批失败请联系管理员");
 			}
+		}else{
+			return true;
 		}
 
-
+        //生成下一个节点的审批数据
 		//查询当前节点关联的所有节点
 		List<NodeDTO> nodeDTOS = approveNodeStartService.queryNode(nodeType, nodeId);
 
 		for(NodeDTO nodeEntity:nodeDTOS){
-			//0流程变量结合节点配置的审批条件进行判断是否触发审批，如果没有审批条件，直接流转给具体的审批人 todo 完善审批条件后再处理，现在默认通过，审批条件不能支持人员的配置
+			//0流程变量结合节点配置的审批条件进行判断是否触发审批，如果没有审批条件，直接流转给具体的审批人
 			//根据当前节点关联的节点配置的审批条件，判断是否预先生成审批人信息
 			ProcessVariableEntity processVariables = processVariableService.queryByProcessId(processId);
 

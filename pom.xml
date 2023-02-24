@@ -215,12 +215,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
-        <!--&lt;!&ndash; https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot-starter &ndash;&gt;-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-            <version>3.2.1</version>
-        </dependency>
+
 
         <!--<dependency>-->
             <!--<groupId>org.apache.commons</groupId>-->

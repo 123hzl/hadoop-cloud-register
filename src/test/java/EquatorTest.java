@@ -20,7 +20,7 @@ public class EquatorTest {
 		//对比变更信息
 		Equator equator = new GetterBaseEquator();
 		Pinyin pinyin=new Pinyin();
-		pinyin.setCh(true);
+		pinyin.setCh(false);
 		Pinyin pinyin1=new Pinyin();
 		pinyin1.setCh(true);
 		// 获取不同的属性

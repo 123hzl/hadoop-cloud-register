@@ -25,9 +25,9 @@ public class BeanFactoryUtil implements BeanFactoryAware {
 
 	public static <T> T getBean(Class<T> clazz) {
 		if (beanFactory == null) {
-			log.info("applicationContext是空的");
+			log.debug("applicationContext是空的");
 		} else {
-			log.info("applicationContext不是空的");
+			log.debug("applicationContext不是空的");
 		}
 		return BeanFactoryUtil.getBean(clazz);
 	}

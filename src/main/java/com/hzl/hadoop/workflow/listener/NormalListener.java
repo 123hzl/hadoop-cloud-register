@@ -1,8 +1,15 @@
 package com.hzl.hadoop.workflow.listener;
 
+import com.hzl.hadoop.exception.CommonException;
+import com.hzl.hadoop.workflow.dto.ListenerDTO;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * description ，监听一定要注入到spring中
  * 非全局监听
+ * 后置监听approveListener直接返回null，不要加逻辑
  * @author hzl 2022/06/24 1:30 PM
  */
 public abstract class NormalListener {
@@ -17,7 +24,7 @@ public abstract class NormalListener {
 	 * @return
 	 */
 
-	public abstract void approveListener(Long processId);
+	public abstract ListenerDTO approveListener(Long processId);
 
 	/**
 	 *
@@ -45,9 +52,13 @@ public abstract class NormalListener {
 	 * @return
 	 */
 
-	public void listener(Long processId){
-		this.approveListener(processId);
+	public ListenerDTO listener(Long processId){
+
+		ListenerDTO listenerDTO=this.approveListener(processId);
+		//业务监听不需要返回值
 		this.businessListener(processId);
-	};
+
+		return listenerDTO;
+	}
 
 }

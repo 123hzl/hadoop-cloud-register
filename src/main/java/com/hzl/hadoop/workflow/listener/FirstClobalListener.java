@@ -1,5 +1,6 @@
 package com.hzl.hadoop.workflow.listener;
 
+import com.hzl.hadoop.workflow.dto.ListenerDTO;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,8 +12,11 @@ import org.springframework.stereotype.Component;
 public class FirstClobalListener extends GlobalListener {
 
 	@Override
-	public void approveListener(Long processId) {
+	public ListenerDTO approveListener(Long processId) {
 		System.out.println("触发审批监听"+processId);
+		ListenerDTO listenerDTO=new ListenerDTO();
+		listenerDTO.next();
+		return listenerDTO;
 	}
 
 	@Override
