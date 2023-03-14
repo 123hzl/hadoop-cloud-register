@@ -16,8 +16,7 @@
         gz.gp_code,
         gz.number / 10000 AS number,
         DATE_FORMAT( gz.created_date, '%y-%m-%d' ) AS date,
-        gz.current_price,
-        ((( gz.turnover * 1000000 )/( gz.number )- gz.current_price )/ gz.current_price )* 10000 AS percent
+        gz.current_price
         FROM
         gp_zx gz
         WHERE
@@ -35,14 +34,12 @@
     </select>
     <select id="queryCurrentPercent" resultType="com.hzl.hadoop.gp.vo.VolumeVO">
         SELECT
-            gz.gp_name,
             gz.id,
             gz.turnover,
             gz.gp_code,
-            gz.number / 10000 AS number,
-            DATE_FORMAT( gz.created_date, '%y-%m-%d' ) AS date,
-            gz.current_price,
-            ((( gz.turnover * 1000000 )/( gz.number )- gz.current_price )/ gz.current_price )* 10000 AS percent
+            gz.number as number,
+            DATE_FORMAT(gz.created_date,'%y-%m-%d' ) as date,
+            gz.current_price
         FROM
             gp_zx gz
         WHERE
@@ -55,7 +52,7 @@
             price as current_price
         FROM
             gp_xl_percent
-        where symbol=#{gpCode}
+        where symbol=#{gpCode} and create_time &gt;CURRENT_DATE
 
         GROUP BY
             price
@@ -68,21 +65,21 @@
         sum( turnover ) AS turnover,
         avg( tt.current_price ) AS current_price
         FROM
-        ( SELECT sum( volume ) AS turnover, price AS current_price FROM gp_xl_percent where symbol=#{gpCode} GROUP BY price ) tt
+        ( SELECT sum( volume ) AS turnover, price AS current_price FROM gp_xl_percent where symbol=#{gpCode} and create_time &gt;CURRENT_DATE GROUP BY price ) tt
         WHERE
         tt.current_price &lt; #{currentPrice} UNION ALL
         SELECT
         turnover,
         tt.current_price
         FROM
-        ( SELECT sum( volume ) AS turnover, price AS current_price FROM gp_xl_percent  where symbol=#{gpCode} GROUP BY price ) tt
+        ( SELECT sum( volume ) AS turnover, price AS current_price FROM gp_xl_percent  where symbol=#{gpCode} and create_time &gt;CURRENT_DATE GROUP BY price ) tt
         WHERE
         tt.current_price = #{currentPrice} UNION ALL
         SELECT
         turnover,
         tt.current_price
         FROM
-        ( SELECT sum( volume ) AS turnover, price AS current_price FROM gp_xl_percent  where symbol=#{gpCode} GROUP BY price ) tt
+        ( SELECT sum( volume ) AS turnover, price AS current_price FROM gp_xl_percent  where symbol=#{gpCode} and create_time &gt;CURRENT_DATE GROUP BY price ) tt
         WHERE
         tt.current_price > #{currentPrice}
         order by

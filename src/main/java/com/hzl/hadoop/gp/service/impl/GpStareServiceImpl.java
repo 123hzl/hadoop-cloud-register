@@ -45,13 +45,20 @@ public class GpStareServiceImpl implements GpStareService {
 	@Autowired
 	GpXlPercentService gpXlPercentService;
 
+	/**
+	 * <p>
+	 * 限制提醒次数
+	 * </p>
+	 * 
+	 * @author hzl 2023/03/11 12:53 PM
+	 */
 	@Override
 	public Boolean notifyBuyAndSale(String gpCode) {
 
 		QueryWrapper<GpInfoEntity> queryWrapper = new QueryWrapper();
 		queryWrapper.eq("gp_code", gpCode);
 
-		GpInfoEntity gpInfoEntity = gpInfoService.getOne(queryWrapper,false);
+		GpInfoEntity gpInfoEntity = gpInfoService.getOne(queryWrapper, false);
 
 		if (gpInfoEntity == null) {
 			//如果股票信息表没有数据，直接返回
@@ -64,12 +71,12 @@ public class GpStareServiceImpl implements GpStareService {
 		}
 		//查询时时均价
 		VolumeVO gpVO = gpStareRepository.queryCurrentPercent(gpCode);
+		Double currentPercent = ((((gpVO.getTurnover().doubleValue() * 1000000) / gpVO.getNumber()) - gpVO.getCurrentPrice().doubleValue()) / (gpVO.getCurrentPrice().doubleValue())) * 10000;
 
 		//优化，新建股票表，是否开启通知字段
 
 		if (gpVO != null) {
 			Double big = new Double(0);
-			Double currentPercent = gpVO.getPercent();
 			//当前时间
 			String localDate = LocalDateFormate.localDateTimeToString(LocalDateTime.now(), "HH:mm");
 
@@ -79,11 +86,18 @@ public class GpStareServiceImpl implements GpStareService {
 				//查询三十天亏损的均价，
 				List<VolumeVO> gpVOList1 = gpStareRepository.getHistoryAverage(gpCode, true);
 
+				gpVOList1.forEach(a -> {
+
+							Double percent = ((((a.getTurnover().doubleValue() * 1000000) / a.getNumber()) - a.getCurrentPrice().doubleValue()) / (a.getCurrentPrice().doubleValue())) * 10000;
+							a.setPercent(percent);
+						}
+				);
+
 				if (gpVOList1 != null && gpVOList1.size() > 5) {
 					//求平均亏损
 					Double percentList = gpVOList1.stream().mapToDouble(VolumeVO::getPercent).average().getAsDouble();
 
-					/*if (currentPercent.compareTo(percentList) >= 0) {
+					if (currentPercent.compareTo(percentList) >= 0) {
 						//当前亏损率大于等于近一个月平均亏损
 						try {
 							mailService.sendHtmlMail(localDate + "股票:" + gpVO.getGpName() + "当前亏损率大于等于近一个月平均亏损--建议买入"
@@ -92,7 +106,7 @@ public class GpStareServiceImpl implements GpStareService {
 							e.printStackTrace();
 						}
 
-					}*/
+					}
 					if (currentPercent.compareTo(gpVOList1.get(2).getPercent()) >= 0) {
 						//当前亏损率大于等于排行低三的亏损
 						try {
@@ -118,6 +132,14 @@ public class GpStareServiceImpl implements GpStareService {
 			} else if (currentPercent.compareTo(big) < 0) {
 				//查询三十天盈利的均价
 				List<VolumeVO> gpVOList2 = gpStareRepository.getHistoryAverage(gpCode, false);
+
+				gpVOList2.forEach(a -> {
+
+							Double percent = ((((a.getTurnover().doubleValue() * 1000000) / a.getNumber()) - a.getCurrentPrice().doubleValue()) / (a.getCurrentPrice().doubleValue())) * 10000;
+							a.setPercent(percent);
+						}
+				);
+
 				if (gpVOList2 != null && gpVOList2.size() > 5) {
 					//建议卖入价
 					Map<String, BigDecimal> buyGuest = notifyBuePrice(gpCode);

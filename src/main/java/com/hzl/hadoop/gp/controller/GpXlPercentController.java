@@ -29,66 +29,16 @@ public class GpXlPercentController {
 	@Autowired
 	private GpXlPercentService gpXlPercentService;
 
-	/**
-	 * 列表
-	 */
-	@GetMapping("/list")
-	public ResponseEntity<PageInfo<GpXlPercentEntity>> list(GpXlPercentEntity params, @RequestParam int start, @RequestParam int pageSize) {
-		PageInfo<GpXlPercentEntity> page = gpXlPercentService.queryPage(params, start, pageSize);
-
-		return new ResponseEntity(page, HttpStatus.OK);
-	}
-
 
 	/**
 	 * 信息
 	 */
-	@GetMapping("/info/{id}")
-	public ResponseEntity<GpXlPercentEntity> info(@PathVariable("id") Long id) {
-		GpXlPercentEntity gpXlPercent = gpXlPercentService.getById(id);
-
-		return new ResponseEntity(gpXlPercent, HttpStatus.OK);
-	}
-
-	/**
-	 * 保存
-	 */
-	@PostMapping("/save")
-	public ResponseEntity save(@RequestBody GpXlPercentEntity gpXlPercent) {
-		gpXlPercentService.save(gpXlPercent);
-
-		return new ResponseEntity(HttpStatus.OK);
-	}
-
-	/**
-	 * 修改
-	 */
-	@PutMapping("/update")
-	public ResponseEntity update(@RequestBody GpXlPercentEntity gpXlPercent) {
-		gpXlPercentService.updateById(gpXlPercent);
-
-		return new ResponseEntity(HttpStatus.OK);
-	}
-
-	/**
-	 * 信息,作废
-	 */
-	@Deprecated
 	@GetMapping("/init/{gpcode}")
 	public ResponseEntity<Boolean> init(@PathVariable("gpcode") String gpcode) {
 
 		return new ResponseEntity(gpXlPercentService.init(gpcode), HttpStatus.OK);
 	}
 
-	/**
-	 * 删除
-	 */
-	@DeleteMapping("/delete")
-	public ResponseEntity delete(@RequestBody Long[] ids) {
-		gpXlPercentService.removeByIds(Arrays.asList(ids));
-
-		return new ResponseEntity(HttpStatus.NO_CONTENT);
-	}
 
 
 }

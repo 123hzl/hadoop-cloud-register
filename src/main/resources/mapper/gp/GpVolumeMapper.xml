@@ -13,14 +13,14 @@
             gp_zx gz
         WHERE
             gz.id IN (
-            select max( gz.id )
-             FROM gp_zx gz
+            select max( gc.id )
+             FROM gp_zx gc
              <where>
                  <if test="gpCode!=null and gpCode!=''">
-                     and gz.gp_code=#{gpCode}
+                     and gc.gp_code=#{gpCode}
                  </if>
              </where>
-            GROUP BY DATE_FORMAT( gz.created_date, '%Y-%m-%d' )
+            GROUP BY DATE_FORMAT( gc.created_date, '%Y-%m-%d' )
              )
         <if test="startDate!=null and endDate!=null">
             and gz.created_date BETWEEN #{startDate} and #{endDate}
@@ -116,4 +116,5 @@
         </where>
         order by gz.id asc
     </select>
+
 </mapper>

@@ -22,7 +22,7 @@ public class TestUtils {
 	public static void main(String args[]) {
 		Map<PaymentVO, BigDecimal> map = new LinkedHashMap<>();
 		PaymentVO paymentVO1 = new PaymentVO();
-		paymentVO1.setAmount(new BigDecimal(1));
+		paymentVO1.setAmount(new BigDecimal("1"));
 		paymentVO1.setId(1);
 
 		PaymentVO paymentVO2 = new PaymentVO();

@@ -72,7 +72,7 @@ public class GpRepositoryImpl implements GpRepository  {
 
 	@Override
 	public List<GpVO> selectMinPriceVolatility(String gpCode,LocalDate date) {
-		List<GpVO> gpVOS = new ArrayList<>();
+		List<GpVO> gpVOS;
 		if (GpUrlConstant.GP_CODE_YL.equals(gpCode)) {
 			gpVOS = JsonUtils.cloneObjectList((gpYlMapper.selectMinPriceVolatility(date)), GpVO.class);
 		} else if (GpUrlConstant.GP_CODE_ZX.equals(gpCode)) {

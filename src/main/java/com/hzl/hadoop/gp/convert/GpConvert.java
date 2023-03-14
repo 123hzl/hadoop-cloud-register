@@ -41,6 +41,7 @@ public class GpConvert {
 			headerParam.put("Sec-Fetch-Dest", "script");
 			headerParam.put("Cache-Control", "no-cache");
 			headerParam.put("Pragma", "no-cache");
+			headerParam.put("Connection","keep-alive");
 			headerParam.put("sec-ch-ua", "Not;A Brand\";v=\"99\", \"Google Chrome\";v=\"97\", \"Chromium\";v=\"97");
 			headerParam.put("sec-ch-ua-mobile", " ?0");
 			headerParam.put("sec-ch-ua-platform", "centOS");

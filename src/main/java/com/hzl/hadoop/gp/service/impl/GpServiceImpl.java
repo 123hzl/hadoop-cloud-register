@@ -50,9 +50,6 @@ public class GpServiceImpl implements GpService {
 			//伊利股票,利用对象克隆
 			gpRepository.insert(JsonUtils.cloneObject(gpVO, YlVO.class));
 
-		} else if (GpUrlConstant.GP_CODE_ZX.equals(code)) {
-			//中兴股票,利用对象克隆
-			gpRepository.insert(JsonUtils.cloneObject(gpVO, ZXVO.class));
 		} else {
 			gpRepository.insert(JsonUtils.cloneObject(gpVO, ZXVO.class));
 		}
@@ -107,17 +104,30 @@ public class GpServiceImpl implements GpService {
 
 	@Override
 	public List<PercentVO> gpPriceCount(String gpCode, BigDecimal currentPrice) {
+		//只查询当天的数据
 		List<VolumeVO> volumeVOS = currentPrice != null ? gpStareRepository.gpPriceCountByPrice(gpCode, currentPrice) : gpStareRepository.gpPriceCount(gpCode);
 
 		BigDecimal sumTurnover = volumeVOS.stream().map(a -> a.getTurnover()).reduce(BigDecimal.ZERO, BigDecimal::add);
 
 		List<PercentVO> percentVOS = volumeVOS.stream().map(a -> PercentVO.builder()
 				.type(String.valueOf(a.getCurrentPrice()))
-				.value((a.getTurnover().multiply(BigDecimal.valueOf(100))).divide(sumTurnover, 2, BigDecimal.ROUND_HALF_UP))
+				.value((a.getTurnover().multiply(new BigDecimal("100"))).divide(sumTurnover, 2, BigDecimal.ROUND_HALF_UP))
 				.build()).collect(Collectors.toList());
 
 		return percentVOS;
 	}
 
+	/**
+	 * <p>
+	 * 统计成交量，成交价差额变化
+	 * </p>
+	 * 
+	 * @author hzl 2023/03/06 1:19 PM
+	 */
+	public void initDifference(VolumeVO volumeVO){
 
+		//取当前最新的，
+		// 取上一条数据
+
+	}
 }

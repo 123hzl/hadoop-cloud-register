@@ -3,15 +3,45 @@
 <mapper namespace="com.hzl.hadoop.gp.mapper.GpZxMapper">
 
     <select id="selectMaxPriceVolatility" resultType="com.hzl.hadoop.gp.vo.ZXVO">
-        SELECT DISTINCT
-            ( gz.max_price ),
-            gz.current_price,
-            gz.init_price,
-            gz.yesterday_end_price,
-            gz.created_date
-        FROM
+        select
+        gz.max_price ,
+        gz.current_price,
+        gz.init_price,
+        gz.yesterday_end_price,
+        gz.created_date from gp_zx as gz where gz.id in (
+            SELECT
+            min(gz.id)
+            FROM
             gp_zx gz
-       <where>
+            <where>
+                <if test="date==null">
+                    and gz.created_date > CURRENT_DATE
+                </if>
+                <if test="date!=null">
+                    and gz.created_date BETWEEN #{date} and date_add(#{date},interval 16 HOUR)
+                </if>
+                <if test="gpCode!=null and gpCode!=''">
+                    and gz.gp_code=#{gpCode}
+                </if>
+            </where>
+            GROUP BY
+            gz.max_price
+        )
+
+    </select>
+    <select id="selectMinPriceVolatility" resultType="com.hzl.hadoop.gp.vo.ZXVO">
+        select  ( gz.min_pirce ),
+        gz.current_price,
+        gz.init_price,
+        gz.yesterday_end_price,
+        gz.created_date
+        from gp_zx gz where gz.id in(
+
+        SELECT DISTINCT
+        min(gz.id)
+        FROM
+        gp_zx gz
+        <where>
             <if test="date==null">
                 and gz.created_date > CURRENT_DATE
             </if>
@@ -21,32 +51,11 @@
             <if test="gpCode!=null and gpCode!=''">
                 and gz.gp_code=#{gpCode}
             </if>
-       </where>
-        GROUP BY
-            gz.max_price
-    </select>
-    <select id="selectMinPriceVolatility" resultType="com.hzl.hadoop.gp.vo.ZXVO">
-        SELECT DISTINCT
-            ( gz.min_pirce ),
-            gz.current_price,
-            gz.init_price,
-            gz.yesterday_end_price,
-            gz.created_date
-        FROM
-            gp_zx gz
-        <where>
-        <if test="date==null">
-            and gz.created_date > CURRENT_DATE
-        </if>
-        <if test="date!=null">
-            and gz.created_date BETWEEN #{date} and date_add(#{date},interval 16 HOUR)
-        </if>
-        <if test="gpCode!=null and gpCode!=''">
-            and gz.gp_code=#{gpCode}
-        </if>
         </where>
         GROUP BY
-            gz.min_pirce
+        gz.min_pirce
+        )
+
     </select>
     <select id="executeSql" resultType="java.util.LinkedHashMap">
         ${_parameter}

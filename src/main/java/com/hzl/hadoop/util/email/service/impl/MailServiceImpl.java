@@ -47,7 +47,7 @@ public class MailServiceImpl implements MailService {
 	 */
 	@Override
 	public Boolean sendSimpleMail(String subject, String text) {
-		String[] to=new String[]{"1620516418@qq.com","853804270@qq.com"};
+		String[] to=new String[]{"1620516418@qq.com"};
 
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 		//发件人邮箱
@@ -77,7 +77,7 @@ public class MailServiceImpl implements MailService {
 	 */
 	@Override
 	public Boolean sendHtmlMail(String subject, String text, Map<String, String> attachmentMap) throws MessagingException {
-		String[] to=new String[]{"1620516418@qq.com","853804270@qq.com"};
+		String[] to=new String[]{"1620516418@qq.com"};
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 		//是否发送的邮件是富文本（附件，图片，html等）
 		MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);

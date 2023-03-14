@@ -21,6 +21,7 @@ public class GpTest {
 	public void getYl() {
 		GpConvert gpConvert = new GpConvert();
 		Map<String, String> date = gpConvert.getGpInfo(GpUrlConstant.GP_BASE_URL.concat("sz000651"), null);
+		log.info("测试{}",date.toString());
 		log.info(JsonUtils.mapToJson(date).toJSONString());
 		//生成对象
 		GpVO gpVO = new GpVO();

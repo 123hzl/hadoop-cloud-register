@@ -33,11 +33,6 @@ public class GpXlPercentServiceImpl extends ServiceImpl<GpXlPercentMapper, GpXlP
 	@Override
 	public Boolean init(String gpcode) {
 
-//
-//		QueryWrapper queryWrapper = new QueryWrapper();
-//		queryWrapper.eq("symbol", gpcode);
-//		remove(queryWrapper);
-
 		for (int i = 1; ; i++) {
 			List<GpXlPercentEntity> gpXlPercentEntities = GpPercentConvert.parse(gpcode, String.valueOf(i));
 			if (CollectionUtils.isEmpty(gpXlPercentEntities)) {
