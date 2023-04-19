@@ -1,13 +1,10 @@
 package com.hzl.hadoop.gp.repository;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
 import com.hzl.hadoop.gp.vo.GpVO;
 import com.hzl.hadoop.gp.vo.VolumeVO;
-import com.hzl.hadoop.gp.vo.YlVO;
-import com.hzl.hadoop.gp.vo.ZXVO;
+import com.hzl.hadoop.gp.entity.YlVO;
+import com.hzl.hadoop.gp.entity.ZXVO;
 
 import java.time.LocalDate;
 import java.util.List;

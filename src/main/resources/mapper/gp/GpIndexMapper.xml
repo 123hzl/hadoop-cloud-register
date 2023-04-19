@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hzl.hadoop.gp.mapper.GpIndexMapper">
+
+
+    <select id="forecast" resultType="com.hzl.hadoop.gp.entity.GpIndexEntity">
+        select * from gp_index
+        <where>
+        <if test="dailyPercent==true">
+            and daily_percent&gt;0
+        </if>
+        <if test="daily1Percent==true">
+            and daily1_percent&gt;0
+        </if>
+        <if test="turnoverPercent==true">
+            and turnover_percent&gt;0
+        </if>
+        <if test="overPercent==true">
+            and over_percent&gt;0
+        </if>
+        <if test="dailyPercentSpeed==true">
+            and daily_percent_speed&gt;0
+        </if>
+        <if test="daily1PercentSpeed==true">
+            and daily1_percent_speed&gt;0
+        </if>
+        <if test="turnoverPercentSpeed==true">
+            and turnover_percent_speed&gt;0
+        </if>
+        <if test="overPercentSpeed==true">
+            and over_percent_speed&gt;0
+        </if>
+
+
+        <if test="dailyPercent==false">
+            and daily_percent&lt;=0
+        </if>
+        <if test="daily1Percent==false">
+            and daily1_percent&lt;=0
+        </if>
+        <if test="turnoverPercent==false">
+            and turnover_percent&lt;=0
+        </if>
+        <if test="overPercent==false">
+            and over_percent&lt;=0
+        </if>
+        <if test="dailyPercentSpeed==false">
+            and daily_percent_speed&lt;=0
+        </if>
+        <if test="daily1PercentSpeed==false">
+            and daily1_percent_speed&lt;=0
+        </if>
+        <if test="turnoverPercentSpeed==false">
+            and turnover_percent_speed&lt;=0
+        </if>
+        <if test="overPercentSpeed==false">
+            and over_percent_speed&lt;=0
+        </if>
+        </where>
+    </select>
+</mapper>

@@ -37,7 +37,9 @@ public class GpBasicInfoPercentJob {
 		if (CollectionUtils.isNotEmpty(list)) {
 			list.forEach(gpInfoEntity -> {
 				//初始化扇形数据，获取交易明细
-				gpXlPercentService.init(gpInfoEntity.getGpCode());
+				if (gpInfoEntity.getIsCreep()) {
+					gpXlPercentService.init(gpInfoEntity.getGpCode());
+				}
 
 			});
 
@@ -56,7 +58,8 @@ public class GpBasicInfoPercentJob {
 	 */
 	@Scheduled(cron = "0 1 15 ? * MON-FRI")
 	public Boolean getPercent4() {
-		return creep();
+		//creep();
+		return true;
 
 	}
 

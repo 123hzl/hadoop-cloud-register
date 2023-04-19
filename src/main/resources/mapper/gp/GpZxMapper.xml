@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hzl.hadoop.gp.mapper.GpZxMapper">
 
-    <select id="selectMaxPriceVolatility" resultType="com.hzl.hadoop.gp.vo.ZXVO">
+    <select id="selectMaxPriceVolatility" resultType="com.hzl.hadoop.gp.entity.ZXVO">
         select
         gz.max_price ,
         gz.current_price,
@@ -29,7 +29,7 @@
         )
 
     </select>
-    <select id="selectMinPriceVolatility" resultType="com.hzl.hadoop.gp.vo.ZXVO">
+    <select id="selectMinPriceVolatility" resultType="com.hzl.hadoop.gp.entity.ZXVO">
         select  ( gz.min_pirce ),
         gz.current_price,
         gz.init_price,

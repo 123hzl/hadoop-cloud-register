@@ -27,7 +27,7 @@ public class VolumeVO {
 	//成交额
 	private BigDecimal turnover;
 	//成交量
-	private Long number;
+	private BigDecimal number;
 	//收盘价
 	private BigDecimal currentPrice;
 
@@ -41,4 +41,7 @@ public class VolumeVO {
 	private Boolean isSureDate;
 
 	private Double percent;
+
+	private Boolean isNormalDate;
+
 }

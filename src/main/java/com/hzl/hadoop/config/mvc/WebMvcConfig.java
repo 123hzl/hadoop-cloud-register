@@ -108,7 +108,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 				//字符类型字段如果为null,输出为"",而非null
 				SerializerFeature.WriteNullStringAsEmpty,
 				//Boolean字段如果为null,输出为falseJ,而非null
-				SerializerFeature.WriteNullBooleanAsFalse,
+				//SerializerFeature.WriteNullBooleanAsFalse,
 				//消除对同一对象循环引用的问题，默认为false（如果不配置有可能会进入死循环）
 				SerializerFeature.DisableCircularReferenceDetect,
 				//是否输出值为null的字段,默认为false。设置后为null的字段会输出

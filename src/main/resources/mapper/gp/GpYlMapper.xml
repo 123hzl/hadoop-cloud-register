@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hzl.hadoop.gp.mapper.GpYlMapper">
 
-    <select id="selectMaxPriceVolatility" resultType="com.hzl.hadoop.gp.vo.YlVO">
+    <select id="selectMaxPriceVolatility" resultType="com.hzl.hadoop.gp.entity.YlVO">
         SELECT DISTINCT
             ( gz.max_price ) AS max_price,
             gz.current_price,
@@ -22,7 +22,7 @@
         GROUP BY
             gz.max_price
     </select>
-    <select id="selectMinPriceVolatility" resultType="com.hzl.hadoop.gp.vo.YlVO">
+    <select id="selectMinPriceVolatility" resultType="com.hzl.hadoop.gp.entity.YlVO">
         SELECT DISTINCT
             ( gz.min_pirce ),
             gz.current_price,

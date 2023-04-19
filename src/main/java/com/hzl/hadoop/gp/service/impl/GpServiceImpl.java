@@ -1,15 +1,21 @@
 package com.hzl.hadoop.gp.service.impl;
 
+import com.hzl.hadoop.gp.constant.GpNumberConstant;
 import com.hzl.hadoop.gp.constant.GpUrlConstant;
 import com.hzl.hadoop.gp.convert.GpConvert;
+import com.hzl.hadoop.gp.entity.YlVO;
+import com.hzl.hadoop.gp.entity.ZXVO;
 import com.hzl.hadoop.gp.repository.GpRepository;
 import com.hzl.hadoop.gp.repository.GpStareRepository;
 import com.hzl.hadoop.gp.service.GpService;
+import com.hzl.hadoop.gp.utils.FormulaUtils;
 import com.hzl.hadoop.gp.vo.*;
 import com.hzl.hadoop.util.JsonUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -21,6 +27,7 @@ import java.util.stream.Collectors;
  *
  * @author hzl 2020/10/31 5:09 PM
  */
+@Slf4j
 @Service
 public class GpServiceImpl implements GpService {
 
@@ -64,11 +71,23 @@ public class GpServiceImpl implements GpService {
 		List<VolumeVO> volumeVOS;
 		if (volumeVO.getIsSureDate() != null && volumeVO.getIsSureDate()) {
 			volumeVOS = gpRepository.queryVolumeByDate(volumeVO);
-			List<EndPriceVO> endPrice = volumeVOS.stream().map(a -> EndPriceVO.builder().series("收盘价/元").x(a.getDate()).y(a.getCurrentPrice().doubleValue()).build()).collect(Collectors.toList());
-			//List<EndPriceVO> number = volumeVOS.stream().map(a -> EndPriceVO.builder().series("成交额/万手").x(a.getDate()).y(Double.valueOf(a.getNumber() / 10000)).build()).collect(Collectors.toList());
-			//List<EndPriceVO> turnover = volumeVOS.stream().map(a -> EndPriceVO.builder().series("成交额/亿元").x(a.getDate()).y(a.getTurnover().doubleValue()).build()).collect(Collectors.toList());
-			List<EndPriceVO> forecast = volumeVOS.stream().map(a -> EndPriceVO.builder().series("当日均价/元").x(a.getDate()).y(((a.getTurnover().doubleValue() * 1000000) / a.getNumber())).build()).collect(Collectors.toList());
-			List<EndPriceVO> forecastPercent = volumeVOS.stream().map(a -> EndPriceVO.builder().series("(当日均价-收盘价格)/收盘价格(万分之一)").x(a.getDate()).y(((((a.getTurnover().doubleValue() * 1000000) / a.getNumber()) - a.getCurrentPrice().doubleValue()) / (a.getCurrentPrice().doubleValue())) * 10000).build()).collect(Collectors.toList());
+			List<EndPriceVO> endPrice = volumeVOS.stream().map(a -> EndPriceVO.builder().series("收盘价/元").x(a.getDate()).y(a.getCurrentPrice()).build()).collect(Collectors.toList());
+			List<EndPriceVO> forecast = volumeVOS.stream().map(a -> EndPriceVO.builder().series("当日均价/元").x(a.getDate()).y(FormulaUtils.avg(a.getTurnover(),a.getNumber())).build()).collect(Collectors.toList());
+			List<EndPriceVO> forecastPercent = volumeVOS.stream().map(a ->
+			{
+				//当日均价
+				BigDecimal avg= FormulaUtils.avg(a.getTurnover(),a.getNumber());
+				return EndPriceVO.builder().series("(当日均价-收盘价格)/收盘价格(万分之一)").x(a.getDate())
+						.y((avg.subtract(a.getCurrentPrice()).multiply(GpNumberConstant.tenThousand)).divide(a.getCurrentPrice(),5, RoundingMode.FLOOR)).build();
+			}).collect(Collectors.toList());
+			List<EndPriceVO> forecastPercent1 = volumeVOS.stream().map(a -> {
+				//当日均价
+				BigDecimal avg= FormulaUtils.avg(a.getTurnover(),a.getNumber());
+				return EndPriceVO.builder().series("(收盘价格-当日均价)/当日均价(万分之一)").x(a.getDate())
+						.y((a.getCurrentPrice().subtract(avg).multiply(GpNumberConstant.tenThousand)).divide(avg,5, RoundingMode.FLOOR))
+						.build();
+			}).collect(Collectors.toList());
+
 
 			List<EndPriceVO> all = new ArrayList<>();
 			all.addAll(endPrice);
@@ -77,24 +96,76 @@ public class GpServiceImpl implements GpService {
 //			all.addAll(turnover);
 			all.addAll(forecast);
 			all.addAll(forecastPercent);
+			all.addAll(forecastPercent1);
 //			all.sort(Comparator.comparing(EndPriceVO::getX));
 			MaxMinHtmlVO maxMinHtmlVO = MaxMinHtmlVO.builder().data(JsonUtils.objectToString(all)).build();
 			return maxMinHtmlVO;
 		} else {
 			volumeVOS = gpRepository.queryVolume(volumeVO);
-			List<EndPriceVO> endPrice = volumeVOS.stream().map(a -> EndPriceVO.builder().series("收盘价/元").x(a.getDate()).y(a.getCurrentPrice().doubleValue()).build()).collect(Collectors.toList());
-			List<EndPriceVO> number = volumeVOS.stream().map(a -> EndPriceVO.builder().series("成交额/万手").x(a.getDate()).y(Double.valueOf(a.getNumber()/10000.00)).build()).collect(Collectors.toList());
-			List<EndPriceVO> turnover = volumeVOS.stream().map(a -> EndPriceVO.builder().series("成交额/亿元").x(a.getDate()).y(a.getTurnover().doubleValue()).build()).collect(Collectors.toList());
-			List<EndPriceVO> forecast = volumeVOS.stream().map(a -> EndPriceVO.builder().series("当日均价/元").x(a.getDate()).y(((a.getTurnover().doubleValue() * 1000000) / a.getNumber())).build()).collect(Collectors.toList());
-			List<EndPriceVO> forecastPercent = volumeVOS.stream().map(a -> EndPriceVO.builder().series("(当日均价-收盘价格)/收盘价格(万分之一)").x(a.getDate()).y(((((a.getTurnover().doubleValue() * 1000000) / a.getNumber()) - a.getCurrentPrice().doubleValue()) / (a.getCurrentPrice().doubleValue())) * 10000).build()).collect(Collectors.toList());
+			List<EndPriceVO> endPrice = volumeVOS.stream().map(a -> EndPriceVO.builder().series("收盘价/元").x(a.getDate()).y(a.getCurrentPrice()).build()).collect(Collectors.toList());
+			List<EndPriceVO> number = volumeVOS.stream().map(a -> EndPriceVO.builder().series("成交额/万手").x(a.getDate()).y(a.getNumber().divide(GpNumberConstant.tenThousand,5, RoundingMode.FLOOR)).build()).collect(Collectors.toList());
+			List<EndPriceVO> turnover = volumeVOS.stream().map(a -> EndPriceVO.builder().series("成交额/亿元").x(a.getDate()).y(a.getTurnover()).build()).collect(Collectors.toList());
+			List<EndPriceVO> forecast = volumeVOS.stream().map(a -> EndPriceVO.builder().series("当日均价/元").x(a.getDate()).y(FormulaUtils.avg(a.getTurnover(),a.getNumber())).build()).collect(Collectors.toList());
+			List<EndPriceVO> forecastPercent = volumeVOS.stream().map(a ->
+			{
+				//当日均价
+				BigDecimal avg= FormulaUtils.avg(a.getTurnover(),a.getNumber());
+				return EndPriceVO.builder().series("(当日均价-收盘价格)/收盘价格(万分之一)").x(a.getDate())
+						.y((avg.subtract(a.getCurrentPrice()).multiply(GpNumberConstant.tenThousand)).divide(a.getCurrentPrice(),5, RoundingMode.FLOOR)).build();
+			}).collect(Collectors.toList());
+			List<EndPriceVO> forecastPercent1 = volumeVOS.stream().map(a -> {
+				//当日均价
+				BigDecimal avg= FormulaUtils.avg(a.getTurnover(),a.getNumber());
+				return EndPriceVO.builder().series("(收盘价格-当日均价)/当日均价(万分之一)").x(a.getDate())
+						.y((a.getCurrentPrice().subtract(avg).multiply(GpNumberConstant.tenThousand)).divide(avg,5, RoundingMode.FLOOR))
+						.build();
+			}).collect(Collectors.toList());
+
+			List<EndPriceVO> forecastPercent2=new ArrayList<>();
+			List<EndPriceVO> forecastPercent3=new ArrayList<>();
+			List<EndPriceVO> forecastPercent4=new ArrayList<>();
+
+			for(int i=1;i<volumeVOS.size();i++){
+
+				//当天数据
+				VolumeVO a=volumeVOS.get(i);
+				//昨天数据
+				VolumeVO b=volumeVOS.get(i-1);
+				//当日均价
+				BigDecimal avg= FormulaUtils.avg(a.getTurnover(),a.getNumber());
+				//昨日均价
+				BigDecimal avgYesterDay= FormulaUtils.avg(b.getTurnover(),b.getNumber());
+
+				forecastPercent2.add(EndPriceVO.builder().series("(今日均价-昨日均价)/昨日均价(万分之一)").x(a.getDate())
+						.y((avg.subtract(avgYesterDay).multiply(GpNumberConstant.tenThousand)).divide(avgYesterDay,5, RoundingMode.FLOOR))
+						.build());
+
+				forecastPercent3.add(EndPriceVO.builder().series("(今日成交量-昨日成交量)/昨日成交量(百分之一)").x(a.getDate())
+						.y((a.getNumber().subtract(b.getNumber()).multiply(GpNumberConstant.oneHundred)).divide(b.getNumber(),5, RoundingMode.FLOOR))
+						.build());
+
+				forecastPercent4.add(EndPriceVO.builder().series("(今日收盘价-昨日收盘价)/昨日收盘价(万分之一)").x(a.getDate())
+						.y((a.getCurrentPrice().subtract(b.getCurrentPrice()).multiply(GpNumberConstant.tenThousand)).divide(b.getCurrentPrice(),5, RoundingMode.FLOOR))
+						.build());
+			}
+
 
 			List<EndPriceVO> all = new ArrayList<>();
 			all.addAll(endPrice);
 			all.addAll(number);
 			all.addAll(turnover);
 			all.addAll(forecast);
-			all.addAll(forecastPercent);
+			//all.addAll(forecastPercent);
+			all.addAll(forecastPercent1);
+			all.addAll(forecastPercent2);
+			all.addAll(forecastPercent3);
+			all.addAll(forecastPercent4);
+
 			all.sort(Comparator.comparing(EndPriceVO::getX));
+
+			log.info(JsonUtils.objectToString(all));
+
+
 			MaxMinHtmlVO maxMinHtmlVO = MaxMinHtmlVO.builder().data(JsonUtils.objectToString(all)).build();
 			return maxMinHtmlVO;
 		}

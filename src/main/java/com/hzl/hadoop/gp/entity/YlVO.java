@@ -1,4 +1,4 @@
-package com.hzl.hadoop.gp.vo;
+package com.hzl.hadoop.gp.entity;
 
 import lombok.*;
 
@@ -38,7 +38,7 @@ public class YlVO {
 	//成交额
 	private BigDecimal turnover;
 	//成交数
-	private Long number;
+	private BigDecimal number;
 	//创建时间
 	private LocalDateTime createdDate;
 	//昨日收盘价

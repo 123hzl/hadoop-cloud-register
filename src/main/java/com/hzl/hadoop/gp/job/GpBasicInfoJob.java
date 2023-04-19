@@ -36,14 +36,14 @@ public class GpBasicInfoJob {
 	@Autowired
 	private XinLangNews xinLangNews;
 
-	@Autowired
-	private GpStareService gpStareService;
 
 	@Autowired
 	private GpInfoService gpInfoService;
 
 	@Autowired
 	private GpXlPercentService gpXlPercentService;
+	@Autowired
+	private GpIndexService gpIndexService;
 
 	/**
 	 * 设置定时器的线程池
@@ -70,9 +70,8 @@ public class GpBasicInfoJob {
 					gpService.insert(gpInfoEntity.getGpCode());
 				}
 				//是否买入卖出通知
-				if (gpInfoEntity.getIsNotify()){
+				if (gpInfoEntity.getIsNotify()) {
 					log.info("定时器买入卖出提醒----------------------------------------------------" + Thread.currentThread());
-					gpStareService.notifyBuyAndSale(gpInfoEntity.getGpCode());
 				}
 
 			});
@@ -94,6 +93,7 @@ public class GpBasicInfoJob {
 	public Boolean getBasicInfoYl() {
 		return creep();
 	}
+
 
 	@Scheduled(cron = "0/20 0/1 10 ? * MON-FRI")
 	public Boolean getBasicInfoYl1() {
@@ -120,13 +120,29 @@ public class GpBasicInfoJob {
 	}
 
 	/**
+	 * <p>
+	 * 初始化量化数据
+	 * </p>
+	 * 
+	 * @author hzl 2023/04/12 5:30 PM
+	 */
+	@Scheduled(cron = "0 5 15 ? * MON-FRI")
+	public Boolean initDate() {
+		gpIndexService.initDate(GpCodeEnum.sz000651.getCode());
+		gpIndexService.initIndexSpeed(GpCodeEnum.sz000651.getCode());
+		return true;
+	}
+	
+
+
+	/**
 	 * 半小时执行一次，用于获取个股新闻数据，暂时只爬去新浪网
 	 *
-	 * @author hzl 2021-12-15 12:40 PM
 	 * @return
-	 * */
+	 * @author hzl 2021-12-15 12:40 PM
+	 */
 	@Scheduled(cron = "0 0/50 * * * ?")
-	public void getTodayNews(){
+	public void getTodayNews() {
 		List<GpInfoEntity> list = gpInfoService.list();
 		if (CollectionUtils.isNotEmpty(list)) {
 			list.forEach(gpInfoEntity -> {

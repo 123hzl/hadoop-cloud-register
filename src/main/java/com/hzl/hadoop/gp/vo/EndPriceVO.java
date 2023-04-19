@@ -25,7 +25,7 @@ public class EndPriceVO {
 	private String x;
 
 	//价格
-	private Double y;
+	private BigDecimal y;
 
 	@Override
 	public boolean equals(Object o) {

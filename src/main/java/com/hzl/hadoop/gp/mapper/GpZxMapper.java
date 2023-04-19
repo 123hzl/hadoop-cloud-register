@@ -2,19 +2,15 @@ package com.hzl.hadoop.gp.mapper;
 
 import com.hzl.hadoop.config.mybatis.BaseMapperUtil;
 import com.hzl.hadoop.gp.vo.GpVO;
-import com.hzl.hadoop.gp.vo.YlVO;
-import com.hzl.hadoop.gp.vo.ZXVO;
-import org.apache.commons.collections4.map.LinkedMap;
+import com.hzl.hadoop.gp.entity.YlVO;
+import com.hzl.hadoop.gp.entity.ZXVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectProvider;
 
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * description

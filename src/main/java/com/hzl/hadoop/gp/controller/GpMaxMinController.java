@@ -7,6 +7,7 @@ import com.hzl.hadoop.gp.vo.MaxMinHtmlVO;
 import com.hzl.hadoop.gp.vo.PercentVO;
 import com.hzl.hadoop.gp.vo.VolumeVO;
 import com.hzl.hadoop.util.JsonUtils;
+import com.hzl.hadoop.gp.service.GpIndexService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,11 +33,13 @@ public class GpMaxMinController {
 	private GpService gpService;
 	private GpNoticeService gpNoticeService;
 	private GpXlPercentService gpXlPercentService;
+	private GpIndexService gpIndexService;
 
-	public GpMaxMinController(GpService gpService, GpNoticeService gpNoticeService, GpXlPercentService gpXlPercentService) {
+	public GpMaxMinController(GpService gpService, GpNoticeService gpNoticeService, GpXlPercentService gpXlPercentService,GpIndexService gpIndexService) {
 		this.gpService = gpService;
 		this.gpNoticeService = gpNoticeService;
 		this.gpXlPercentService = gpXlPercentService;
+		this.gpIndexService=gpIndexService;
 	}
 
 	/**
@@ -64,11 +67,16 @@ public class GpMaxMinController {
 	@GetMapping(value = "/gp/yl/query/volume/{code}")
 	public String queryVolume(@PathVariable String code, VolumeVO volumeVO, Model model) {
 		volumeVO.setGpCode(code);
+		volumeVO.setIsNormalDate(false);
 		MaxMinHtmlVO maxMinHtmlVO = gpService.queryVolume(volumeVO);
 		model.addAttribute(maxMinHtmlVO);
 
 		return "endPrice";
 	}
+
+
+
+
 
 	/**
 	 * <p>

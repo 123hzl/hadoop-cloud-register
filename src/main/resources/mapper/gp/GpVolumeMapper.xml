@@ -6,8 +6,15 @@
             gz.id,
             gz.turnover,
             gz.gp_code,
+            gz.gp_name,
             gz.number as number,
-            DATE_FORMAT(gz.created_date,'%y-%m-%d' ) as date,
+
+            <if test="isNormalDate!=null and isNormalDate==true">
+                DATE_FORMAT(gz.created_date,'%Y-%m-%d' ) as date,
+            </if>
+            <if test="isNormalDate==null or isNormalDate==false">
+                DATE_FORMAT(gz.created_date,'%y-%m-%d' ) as date,
+            </if>
             gz.current_price
         FROM
             gp_zx gz

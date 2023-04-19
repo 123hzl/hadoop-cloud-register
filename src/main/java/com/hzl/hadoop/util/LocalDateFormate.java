@@ -64,6 +64,16 @@ public class LocalDateFormate {
 
 	}
 
+	public static LocalDate stringTolocalDate(String localDate) {
+		if (StringUtils.hasLength(localDate)) {
+			LocalDate localDateTimeConvert = LocalDate.parse(localDate, FORMATTER);
+			return localDateTimeConvert;
+		} else {
+			return null;
+		}
+
+	}
+
 	/**
 	 * <p>
 	 * 将字符串的LocalDateTime类型日期，转换成LocalDateTime类型

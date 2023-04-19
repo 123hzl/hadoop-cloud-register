@@ -1,6 +1,5 @@
 package com.hzl.hadoop.gp.repository.impl;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hzl.hadoop.exception.CommonException;
@@ -11,8 +10,8 @@ import com.hzl.hadoop.gp.mapper.GpZxMapper;
 import com.hzl.hadoop.gp.repository.GpRepository;
 import com.hzl.hadoop.gp.vo.GpVO;
 import com.hzl.hadoop.gp.vo.VolumeVO;
-import com.hzl.hadoop.gp.vo.YlVO;
-import com.hzl.hadoop.gp.vo.ZXVO;
+import com.hzl.hadoop.gp.entity.YlVO;
+import com.hzl.hadoop.gp.entity.ZXVO;
 import com.hzl.hadoop.util.JsonUtils;
 import org.springframework.stereotype.Component;
 
