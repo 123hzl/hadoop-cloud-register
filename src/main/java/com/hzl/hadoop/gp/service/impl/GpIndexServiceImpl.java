@@ -62,6 +62,12 @@ public class GpIndexServiceImpl extends ServiceImpl<GpIndexMapper, GpIndexEntity
 			BigDecimal turnoverPercent = (a.getNumber().subtract(b.getNumber()).multiply(GpNumberConstant.oneHundred)).divide(b.getNumber(), 5, RoundingMode.FLOOR);
 			//(今日收盘价-昨日收盘价)/昨日收盘价
 			BigDecimal overPercent = (a.getCurrentPrice().subtract(b.getCurrentPrice()).multiply(GpNumberConstant.oneHundred)).divide(b.getCurrentPrice(), 5, RoundingMode.FLOOR);
+
+			/**
+			 * (今日收盘价-昨日均价)/昨日均价
+			 */
+			BigDecimal overPercent1 = (a.getCurrentPrice().subtract(avgYesterDay).multiply(GpNumberConstant.oneHundred)).divide(avgYesterDay, 5, RoundingMode.FLOOR);
+
 			//当日买盘，卖盘占比 todo
 			GpIndexEntity gpIndexEntity = GpIndexEntity.builder()
 					.priceDate(LocalDateFormate.stringTolocalDate(a.getDate()))
@@ -72,6 +78,7 @@ public class GpIndexServiceImpl extends ServiceImpl<GpIndexMapper, GpIndexEntity
 					.daily1Percent(daily1Percent)
 					.turnoverPercent(turnoverPercent)
 					.overPercent(overPercent)
+					.overPercent1(overPercent1)
 					.build();
 			QueryWrapper queryWrapper = new QueryWrapper();
 			queryWrapper.eq("price_date", gpIndexEntity.getPriceDate());
@@ -106,6 +113,7 @@ public class GpIndexServiceImpl extends ServiceImpl<GpIndexMapper, GpIndexEntity
 			BigDecimal daily1PercentSpeed = GpNumberConstant.oneHundred;
 			BigDecimal turnoverPercentSpeed = GpNumberConstant.oneHundred;
 			BigDecimal overPercentSpeed = GpNumberConstant.oneHundred;
+			BigDecimal overPercentSpeed1 = GpNumberConstant.oneHundred;
 
 			if (b.getDailyPercent().compareTo(BigDecimal.ZERO) != 0) {
 				dailyPercentSpeed = ((a.getDailyPercent().subtract(b.getDailyPercent()))
@@ -128,12 +136,18 @@ public class GpIndexServiceImpl extends ServiceImpl<GpIndexMapper, GpIndexEntity
 						.multiply(GpNumberConstant.oneHundred))
 						.divide(b.getOverPercent().abs(), 5, RoundingMode.FLOOR);
 			}
+			if (b.getOverPercent1().compareTo(BigDecimal.ZERO) != 0) {
+				overPercentSpeed1 = ((a.getOverPercent1().subtract(b.getOverPercent1()))
+						.multiply(GpNumberConstant.oneHundred))
+						.divide(b.getOverPercent1().abs(), 5, RoundingMode.FLOOR);
+			}
 
 			//当日买盘，卖盘占比 todo
 			a.setDailyPercentSpeed(dailyPercentSpeed);
 			a.setDaily1PercentSpeed(daily1PercentSpeed);
 			a.setTurnoverPercentSpeed(turnoverPercentSpeed);
 			a.setOverPercentSpeed(overPercentSpeed);
+			a.setOverPercentSpeed1(overPercentSpeed1);
 			mapper.updateById(a);
 
 		}
@@ -167,7 +181,7 @@ public class GpIndexServiceImpl extends ServiceImpl<GpIndexMapper, GpIndexEntity
 	}
 
 	@Override
-	public GpIndexResultVO forecast(String gpCode, LocalDate time) {
+	public GpIndexResultVO forecast(String gpCode, LocalDate time,String factors) {
 
 		QueryWrapper queryWrapper = new QueryWrapper();
 		queryWrapper.eq("gp_code", gpCode);
@@ -176,14 +190,21 @@ public class GpIndexServiceImpl extends ServiceImpl<GpIndexMapper, GpIndexEntity
 
 		GpIndexVO gpIndexVO = new GpIndexVO(gpIndexEntities);
 		Stack<Integer> stack = new Stack<Integer>();
-		stack.add(-2);
-		stack.add(-3);
-		stack.add(-4);
+		if(org.apache.commons.lang3.StringUtils.isNotBlank(factors)){
+			String[] factorss=factors.split(",");
+			for(String s:factorss){
+				stack.add(Integer.valueOf(s));
+			}
+		}else {
+			stack.add(-2);
+			stack.add(-3);
+			stack.add(-4);
+			stack.add(-5);
+		}
 
 
 		GpIndexVO gpIndexVO1=gpIndexVO.ggg(gpIndexEntities,stack);
 
-		log.info("ccccc{}",gpIndexVO1);
 		return forecast1(gpCode,gpIndexVO1,time);
 	}
 
@@ -209,7 +230,6 @@ public class GpIndexServiceImpl extends ServiceImpl<GpIndexMapper, GpIndexEntity
 
 		});
 		hashMap1.putAll(hashMap);
-		log.info("结果{}",hashMap);
 
 	}
 
@@ -226,7 +246,6 @@ public class GpIndexServiceImpl extends ServiceImpl<GpIndexMapper, GpIndexEntity
 			return a.getPriceDate().plusDays(1);
 		}).collect(Collectors.toList());
 
-		log.info("时间{}", dates.toString());
 		//查询第二天的数据
 		if (CollectionUtils.isNotEmpty(dates)) {
 			QueryWrapper queryWrapper1 = new QueryWrapper();

@@ -7,6 +7,9 @@ import org.junit.Test;
 import org.springframework.core.io.FileSystemResource;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -266,5 +269,15 @@ public class PdfUtilTest {
 		dmp.diff_cleanupSemantic(diff);
 		System.out.println(diff);
 
+	}
+	@Test
+	public void readTest(){
+		Path path = Paths.get("/Users/hzl/Desktop/hadoopcloud/hadoop-cloud-register/gp.txt");
+		try {
+			List<String>  lines = Files.readAllLines(path);
+			System.out.println(lines.size());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

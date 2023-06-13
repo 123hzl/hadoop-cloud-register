@@ -1,7 +1,9 @@
 package com.hzl.hadoop.gp.service;
 
 import com.hzl.hadoop.gp.vo.*;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -35,4 +37,13 @@ public interface GpService {
 	 * @author hzl 2022/01/20 11:23 AM
 	 */
 	List<PercentVO> gpPriceCount(String gpCode,BigDecimal currentPrice);
+
+	/**
+	 * <p>
+	 * 从百度股票同步历史
+	 * </p>
+	 * 
+	 * @author hzl 2023/04/27 12:52 PM
+	 */
+	void history();
 }

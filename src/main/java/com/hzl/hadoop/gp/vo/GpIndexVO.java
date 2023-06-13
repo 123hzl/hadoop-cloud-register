@@ -57,6 +57,11 @@ public class GpIndexVO {
 	 */
 	private Boolean overPercentSpeed;
 
+	/**
+	 * (今日收盘价-昨日均价)/昨日均价
+	 */
+	private Boolean overPercentSpeed1;
+
 	public GpIndexVO(GpIndexEntity gpIndexEntity) {
 		if (gpIndexEntity.getDailyPercent() == null) {
 			dailyPercent = null;
@@ -125,6 +130,13 @@ public class GpIndexVO {
 			overPercentSpeed = false;
 		}
 
+		if (gpIndexEntity.getOverPercentSpeed1() == null) {
+			overPercentSpeed1 = null;
+		} else if (gpIndexEntity.getOverPercentSpeed1().compareTo(BigDecimal.ZERO) > 0) {
+			overPercentSpeed1 = true;
+		} else {
+			overPercentSpeed1 = false;
+		}
 
 	}
 
@@ -134,10 +146,12 @@ public class GpIndexVO {
 		shu.add(2);
 		shu.add(3);
 		shu.add(4);
+		shu.add(5);
 		shu.add(-1);
 		shu.add(-2);
 		shu.add(-3);
 		shu.add(-4);
+		shu.add(-5);
 		for (Integer s : stack) {
 			shu.remove(s);
 		}
@@ -155,6 +169,9 @@ public class GpIndexVO {
 			if (a == 4) {
 				gpIndexEntity.setOverPercent(null);
 			}
+			if (a == 5) {
+				gpIndexEntity.setOverPercent1(null);
+			}
 			if (a == -1) {
 				gpIndexEntity.setDailyPercentSpeed(null);
 			}
@@ -166,6 +183,9 @@ public class GpIndexVO {
 			}
 			if (a == -4) {
 				gpIndexEntity.setOverPercentSpeed(null);
+			}
+			if (a == -5) {
+				gpIndexEntity.setOverPercentSpeed1(null);
 			}
 
 		});

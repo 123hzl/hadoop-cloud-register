@@ -71,6 +71,12 @@ public class GpIndexEntity extends BaseEntity implements Serializable {
 	 */
 	private BigDecimal overPercent;
 
+
+	/**
+	 * (今日收盘价-昨日均价)/昨日均价
+	 */
+	private BigDecimal overPercent1;
+
 	/**
 	 * (收盘价格-当日均价)/当日均价增速
 	 */
@@ -87,6 +93,11 @@ public class GpIndexEntity extends BaseEntity implements Serializable {
 	 * (今日收盘价-昨日收盘价)/昨日收盘价增速
 	 */
 	private BigDecimal overPercentSpeed;
+
+	/**
+	 * (今日收盘价-昨日均价)/昨日均价
+	 */
+	private BigDecimal overPercentSpeed1;
 	/**
 	 /**
 	 * 租户id

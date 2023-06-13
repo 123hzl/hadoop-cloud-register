@@ -31,6 +31,9 @@
         <if test="overPercentSpeed==true">
             and over_percent_speed&gt;0
         </if>
+        <if test="overPercentSpeed1==true">
+            and over_percent_speed1&gt;0
+        </if>
 
 
         <if test="dailyPercent==false">
@@ -56,6 +59,9 @@
         </if>
         <if test="overPercentSpeed==false">
             and over_percent_speed&lt;=0
+        </if>
+        <if test="overPercentSpeed1==false">
+            and over_percent_speed1&lt;=0
         </if>
         </where>
     </select>

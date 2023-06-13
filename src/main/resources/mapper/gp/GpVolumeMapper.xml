@@ -33,6 +33,7 @@
             and gz.created_date BETWEEN #{startDate} and #{endDate}
         </if>
 
+        order by date asc
 
     </select>
     <select id="queryVolumeYl" resultType="com.hzl.hadoop.gp.vo.VolumeVO">

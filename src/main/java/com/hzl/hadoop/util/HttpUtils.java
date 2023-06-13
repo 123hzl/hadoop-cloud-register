@@ -324,6 +324,7 @@ public class HttpUtils {
 			log.info("======== 返回信息 ======== ：" + result);
 
 		} catch (Exception var18) {
+			log.info(var18.getMessage());
 			throw new HttpResponseException(
 					Optional.ofNullable(status).orElse(HttpStatus.INTERNAL_SERVER_ERROR.value()), result,
 					"请求失败");
@@ -440,6 +441,11 @@ public class HttpUtils {
 					sb.append(count == 0 ? "" : "&").append(key).append(equals).append(encodeUrl(tempValue.toString()));
 					count++;
 				}
+				if (tempValue instanceof Boolean) {
+					sb.append(count == 0 ? "" : "&").append(key).append(equals).append(encodeUrl(String.valueOf(tempValue)));
+					count++;
+				}
+
 				// 数组类型参数
 				if (tempValue instanceof List) {
 					List conditions = (List) tempValue;
@@ -453,7 +459,7 @@ public class HttpUtils {
 				}
 			}
 		}
-		System.out.println(sb.toString());
+		log.info("请求地址{}",sb.toString());
 		return sb.toString();
 	}
 

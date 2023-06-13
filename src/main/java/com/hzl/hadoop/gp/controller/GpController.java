@@ -112,18 +112,33 @@ public class GpController {
 	 */
 	@GetMapping(value = "/gp/yl/index/forcastAll/{code}/{date}")
 	public GpIndexResultVO forcastAll(@PathVariable String code, @PathVariable LocalDate date) {
-		int shu[] = {1,2,3,4,-1,-2,-3,-4};
-		for(int i=1;i<=8;i++){
-			gpIndexService.f(shu,i,0,0);
-
-		}
+//		int shu[] = {1,2,3,4,5,-1,-2,-3,-4,-5};
+//		for(int i=1;i<=10;i++){
+//			gpIndexService.f(shu,i,0,0);
+//
+//		}
+		int shu[] = {-2,-3,-4,-5};
+		gpIndexService.f(shu,4,0,0);
 		mailService.sendSimpleMail("预测","最终结果"+ GpIndexServiceImpl.hashMap1.toString());
 		return null;
 	}
 
 	@GetMapping(value = "/gp/yl/index/forcast/{code}/{date}")
-	public GpIndexResultVO forcast(@PathVariable String code, @PathVariable LocalDate date) {
+	public GpIndexResultVO forcast(@PathVariable String code, @PathVariable LocalDate date,@RequestParam(required = false) String factors) {
 
-		return gpIndexService.forecast(code,date);
+		return gpIndexService.forecast(code,date,factors);
+	}
+
+	/**
+	 * <p>
+	 * 从百度股票同步历史数据
+	 * </p>
+	 *
+	 * @author hzl 2023/04/27 11:55 AM
+	 */
+	@GetMapping(value = "/gp/yl/history")
+	public void history() {
+
+		gpService.history();
 	}
 }

@@ -11,11 +11,16 @@ import com.hzl.hadoop.gp.service.GpService;
 import com.hzl.hadoop.gp.utils.FormulaUtils;
 import com.hzl.hadoop.gp.vo.*;
 import com.hzl.hadoop.util.JsonUtils;
+import com.hzl.hadoop.util.LocalDateFormate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -110,7 +115,7 @@ public class GpServiceImpl implements GpService {
 			{
 				//当日均价
 				BigDecimal avg= FormulaUtils.avg(a.getTurnover(),a.getNumber());
-				return EndPriceVO.builder().series("(当日均价-收盘价格)/收盘价格(万分之一)").x(a.getDate())
+				return EndPriceVO.builder().series("(当日均价-收盘价格)/收盘价格(万分之一)今日实收").x(a.getDate())
 						.y((avg.subtract(a.getCurrentPrice()).multiply(GpNumberConstant.tenThousand)).divide(a.getCurrentPrice(),5, RoundingMode.FLOOR)).build();
 			}).collect(Collectors.toList());
 			List<EndPriceVO> forecastPercent1 = volumeVOS.stream().map(a -> {
@@ -124,6 +129,8 @@ public class GpServiceImpl implements GpService {
 			List<EndPriceVO> forecastPercent2=new ArrayList<>();
 			List<EndPriceVO> forecastPercent3=new ArrayList<>();
 			List<EndPriceVO> forecastPercent4=new ArrayList<>();
+			List<EndPriceVO> forecastPercent5=new ArrayList<>();
+
 
 			for(int i=1;i<volumeVOS.size();i++){
 
@@ -136,7 +143,7 @@ public class GpServiceImpl implements GpService {
 				//昨日均价
 				BigDecimal avgYesterDay= FormulaUtils.avg(b.getTurnover(),b.getNumber());
 
-				forecastPercent2.add(EndPriceVO.builder().series("(今日均价-昨日均价)/昨日均价(万分之一)").x(a.getDate())
+				forecastPercent2.add(EndPriceVO.builder().series("(今日均价-昨日均价)/昨日均价(万分之一)成本").x(a.getDate())
 						.y((avg.subtract(avgYesterDay).multiply(GpNumberConstant.tenThousand)).divide(avgYesterDay,5, RoundingMode.FLOOR))
 						.build());
 
@@ -146,6 +153,10 @@ public class GpServiceImpl implements GpService {
 
 				forecastPercent4.add(EndPriceVO.builder().series("(今日收盘价-昨日收盘价)/昨日收盘价(万分之一)").x(a.getDate())
 						.y((a.getCurrentPrice().subtract(b.getCurrentPrice()).multiply(GpNumberConstant.tenThousand)).divide(b.getCurrentPrice(),5, RoundingMode.FLOOR))
+						.build());
+
+				forecastPercent5.add(EndPriceVO.builder().series("(今日收盘价-昨日均价)/昨日均价(万分之一)").x(a.getDate())
+						.y((a.getCurrentPrice().subtract(avgYesterDay).multiply(GpNumberConstant.tenThousand)).divide(avgYesterDay,5, RoundingMode.FLOOR))
 						.build());
 			}
 
@@ -160,6 +171,7 @@ public class GpServiceImpl implements GpService {
 			all.addAll(forecastPercent2);
 			all.addAll(forecastPercent3);
 			all.addAll(forecastPercent4);
+			all.addAll(forecastPercent5);
 
 			all.sort(Comparator.comparing(EndPriceVO::getX));
 
@@ -188,6 +200,44 @@ public class GpServiceImpl implements GpService {
 		return percentVOS;
 	}
 
+	@Override
+	public void history() {
+
+
+
+		Path path = Paths.get("gp.txt");
+		try {
+			List<String>  lines = Files.readAllLines(path);
+			System.out.println(lines.size());
+			String history=lines.get(0);
+			String[] splitHistory=history.split(";");
+			for(String split:splitHistory){
+				String[] detail=split.split(",");
+				ZXVO zxvo=new ZXVO();
+				zxvo.setGpCode("sz000651");
+				zxvo.setGpName("格力电器");
+				zxvo.setInitPrice(new BigDecimal(detail[2]));
+				zxvo.setYesterdayEndPrice(new BigDecimal(detail[11]));
+				zxvo.setCurrentPrice(new BigDecimal(detail[3]));
+				zxvo.setMaxPrice(new BigDecimal(detail[5]));
+				zxvo.setMinPirce(new BigDecimal(detail[6]));
+				zxvo.setTurnover(new BigDecimal(detail[7]).divide(GpNumberConstant.oneHundredMillion,15, RoundingMode.FLOOR));
+				zxvo.setNumber(new BigDecimal(detail[4]).divide(GpNumberConstant.oneHundred,2,RoundingMode.FLOOR));
+				zxvo.setBiddingPrice(new BigDecimal("0"));
+				zxvo.setAuction(new BigDecimal("0"));
+				zxvo.setCreatedDate(LocalDateFormate.stringTolocalDateTime(detail[1].concat(" 15:00:00")));
+				gpRepository.insert(zxvo);
+				log.info("股票{}",zxvo);
+
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
+	}
+
 	/**
 	 * <p>
 	 * 统计成交量，成交价差额变化
@@ -196,6 +246,7 @@ public class GpServiceImpl implements GpService {
 	 * @author hzl 2023/03/06 1:19 PM
 	 */
 	public void initDifference(VolumeVO volumeVO){
+
 
 		//取当前最新的，
 		// 取上一条数据

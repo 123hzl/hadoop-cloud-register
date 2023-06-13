@@ -28,7 +28,7 @@ public interface GpIndexService extends IService<GpIndexEntity> {
 	 * 
 	 * @author hzl 2023/04/12 12:41 PM
 	 */
-	GpIndexResultVO forecast(String gpCode, LocalDate time);
+	GpIndexResultVO forecast(String gpCode, LocalDate time,String factors);
 
 	void f(int[] shu, int targ, int has, int cur);
 }
