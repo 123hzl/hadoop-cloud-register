@@ -23,6 +23,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -40,8 +42,15 @@ public class GpIndexServiceImpl extends ServiceImpl<GpIndexMapper, GpIndexEntity
 
 	@Override
 	public void initDate(String gpCode) {
-		List<VolumeVO> volumeVOS = gpRepository.queryVolume(VolumeVO.builder().gpCode(gpCode).isNormalDate(true).build());
+		LocalDate now=LocalDate.now();
+		LocalDate maxDay=now.plusDays(1);
+		LocalDate minDay=now.plusDays(-5);
 
+		List<VolumeVO> volumeVOS = gpRepository.queryVolume(VolumeVO.builder()
+				.gpCode(gpCode)
+				.startDate(minDay)
+				.endDate(maxDay)
+				.isNormalDate(true).build());
 
 		for (int i = 1; i < volumeVOS.size(); i++) {
 
@@ -89,8 +98,7 @@ public class GpIndexServiceImpl extends ServiceImpl<GpIndexMapper, GpIndexEntity
 			} else {
 				gpIndexEntity.setId(isExist.getId());
 				gpIndexEntity.setVersionNum(isExist.getVersionNum());
-				log.info("擦拭{}", gpIndexEntity.toString());
-				log.info("擦拭1{}", mapper.toString());
+
 				mapper.updateById(gpIndexEntity);
 			}
 
@@ -100,8 +108,16 @@ public class GpIndexServiceImpl extends ServiceImpl<GpIndexMapper, GpIndexEntity
 
 	@Override
 	public void initIndexSpeed(String code) {
+		LocalDate now=LocalDate.now();
+		LocalDate maxDay=now.plusDays(1);
+		LocalDate minDay=now.plusDays(-5);
+
+
 		QueryWrapper queryWrapper = new QueryWrapper();
 		queryWrapper.eq("gp_code", code);
+		queryWrapper.gt("price_date",minDay);
+		queryWrapper.lt("price_date",maxDay);
+		queryWrapper.orderByAsc("price_date");
 		List<GpIndexEntity> gpIndexEntities = mapper.selectList(queryWrapper);
 
 		for (int i = 1; i < gpIndexEntities.size(); i++) {

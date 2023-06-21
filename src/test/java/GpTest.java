@@ -37,4 +37,7 @@ public class GpTest {
 		Map<String, String> date = gpConvert.getGpInfo(GpUrlConstant.MD_URL, null);
 		log.info(JsonUtils.mapToJson(date).toJSONString());
 	}
+
+	//
+
 }

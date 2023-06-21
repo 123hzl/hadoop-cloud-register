@@ -30,7 +30,7 @@
             GROUP BY DATE_FORMAT( gc.created_date, '%Y-%m-%d' )
              )
         <if test="startDate!=null and endDate!=null">
-            and gz.created_date BETWEEN #{startDate} and #{endDate}
+            and gz.created_date &gt;= #{startDate} and  gz.created_date &lt;=#{endDate}
         </if>
 
         order by date asc
