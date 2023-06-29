@@ -30,10 +30,8 @@ public class IPUtil {
 	}
 
 	/**
-	* 获取ip
-	*
-	*
-	*/
+	 * 获取ip
+	 */
 	public static String getIpAddress(HttpServletRequest request) {
 		String ip = request.getHeader("x-forwarded-for");
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
@@ -66,8 +64,4 @@ public class IPUtil {
 		return object.getString("addr");
 	}
 
-
-	/*public static void main(String[] args) {
-		System.err.println(getCityInfo("27.211.186.196"));
-	}*/
 }

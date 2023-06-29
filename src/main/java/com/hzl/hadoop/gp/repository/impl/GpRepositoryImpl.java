@@ -105,6 +105,16 @@ public class GpRepositoryImpl implements GpRepository  {
 	}
 
 	@Override
+	public List<VolumeVO> queryHightToLow(VolumeVO volumeVO) {
+		return gpVolumeMapper.queryHightToLow(volumeVO);
+	}
+
+	@Override
+	public List<VolumeVO> queryLowToHight(VolumeVO volumeVO) {
+		return gpVolumeMapper.queryLowToHight(volumeVO);
+	}
+
+	@Override
 	public List<VolumeVO> queryVolumeByDate(VolumeVO volumeVO) {
 		if (GpUrlConstant.GP_CODE_YL.equals(volumeVO.getGpCode())) {
 			return gpVolumeMapper.queryVolumeByDateYl(volumeVO);

@@ -280,4 +280,21 @@ public class PdfUtilTest {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * <p>
+	 * 获取pdf文字内容测试
+	 * </p>
+	 *
+	 * @author hzl 2020/01/10 2:43 PM
+	 */
+	@Test
+	public void getPdfFileStrTest() throws IOException {
+		File source = new File("/Users/hzl/Desktop/26124825iyzb.pdf");
+		String sourceText = getPdfFileStrP(source);
+
+		System.out.println(sourceText);
+
+	}
+
 }

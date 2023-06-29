@@ -75,7 +75,21 @@ public class GpMaxMinController {
 	}
 
 
-
+	/**
+	 * <p>
+	 * 获取收盘成交金额和成交价波动情况
+	 * </p>
+	 *
+	 * @author hzl 2020/01/08 12:41 PM
+	 */
+	@GetMapping(value = "/gp/yl/query/volume/turning/{code}")
+	public String queryVolumeTurning(@PathVariable String code, VolumeVO volumeVO, Model model) {
+		volumeVO.setGpCode(code);
+		volumeVO.setIsNormalDate(false);
+		MaxMinHtmlVO maxMinHtmlVO = gpService.queryVolumeTurningPoint(volumeVO);
+		model.addAttribute(maxMinHtmlVO);
+		return "endPrice";
+	}
 
 
 	/**

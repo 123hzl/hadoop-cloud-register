@@ -51,6 +51,12 @@ public interface GpRepository  {
 	 */
 	List<VolumeVO> queryVolume(VolumeVO volumeVO);
 
+	List<VolumeVO> queryHightToLow(VolumeVO volumeVO);
+
+
+	List<VolumeVO> queryLowToHight(VolumeVO volumeVO);
+
+
 	/**
 	 * 当日成交价波动
 	 *

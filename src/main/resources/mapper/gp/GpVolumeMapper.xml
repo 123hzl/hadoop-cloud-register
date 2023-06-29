@@ -124,5 +124,34 @@
         </where>
         order by gz.id asc
     </select>
+    <select id="queryHightToLow" resultType="com.hzl.hadoop.gp.vo.VolumeVO">
+        SELECT
+            DATE_FORMAT(price_date,'%y-%m-%d') AS date,
+            end_price AS currentPrice
+        FROM
+            gp_index
+        where daily1_percent&gt;1 and over_percent&gt;1
+        <if test="startDate!=null and endDate!=null">
+            and price_date &gt;= #{startDate} and  price_date &lt;=#{endDate}
+        </if>
+        ORDER BY
+            price_date asc
+    </select>
+    <select id="queryLowToHight" resultType="com.hzl.hadoop.gp.vo.VolumeVO">
+        SELECT
+          DATE_FORMAT(price_date,'%y-%m-%d') AS date,
+          end_price AS currentPrice
+        FROM
+        gp_index
+        WHERE
+        daily1_percent &lt; 0
+        AND over_percent &lt;  0
+        AND over_percent1 &lt;  0
+        <if test="startDate!=null and endDate!=null">
+            and price_date &gt;= #{startDate} and  price_date &lt;=#{endDate}
+        </if>
+        ORDER BY
+        price_date asc
+    </select>
 
 </mapper>

@@ -29,6 +29,15 @@ public interface GpService {
 	 */
 	MaxMinHtmlVO queryVolume(VolumeVO volumeVO);
 
+
+	/**
+	 * 收盘价和转折点预测情况
+	 *
+	 * @return
+	 * @author hzl 2020-11-04 9:45 AM
+	 */
+	MaxMinHtmlVO queryVolumeTurningPoint(VolumeVO volumeVO);
+
 	/**
 	 * <p>
 	 * 各价格买入量占比

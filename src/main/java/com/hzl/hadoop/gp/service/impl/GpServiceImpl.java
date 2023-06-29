@@ -77,19 +77,19 @@ public class GpServiceImpl implements GpService {
 		if (volumeVO.getIsSureDate() != null && volumeVO.getIsSureDate()) {
 			volumeVOS = gpRepository.queryVolumeByDate(volumeVO);
 			List<EndPriceVO> endPrice = volumeVOS.stream().map(a -> EndPriceVO.builder().series("收盘价/元").x(a.getDate()).y(a.getCurrentPrice()).build()).collect(Collectors.toList());
-			List<EndPriceVO> forecast = volumeVOS.stream().map(a -> EndPriceVO.builder().series("当日均价/元").x(a.getDate()).y(FormulaUtils.avg(a.getTurnover(),a.getNumber())).build()).collect(Collectors.toList());
+			List<EndPriceVO> forecast = volumeVOS.stream().map(a -> EndPriceVO.builder().series("当日均价/元").x(a.getDate()).y(FormulaUtils.avg(a.getTurnover(), a.getNumber())).build()).collect(Collectors.toList());
 			List<EndPriceVO> forecastPercent = volumeVOS.stream().map(a ->
 			{
 				//当日均价
-				BigDecimal avg= FormulaUtils.avg(a.getTurnover(),a.getNumber());
+				BigDecimal avg = FormulaUtils.avg(a.getTurnover(), a.getNumber());
 				return EndPriceVO.builder().series("(当日均价-收盘价格)/收盘价格(万分之一)").x(a.getDate())
-						.y((avg.subtract(a.getCurrentPrice()).multiply(GpNumberConstant.tenThousand)).divide(a.getCurrentPrice(),5, RoundingMode.FLOOR)).build();
+						.y((avg.subtract(a.getCurrentPrice()).multiply(GpNumberConstant.tenThousand)).divide(a.getCurrentPrice(), 5, RoundingMode.FLOOR)).build();
 			}).collect(Collectors.toList());
 			List<EndPriceVO> forecastPercent1 = volumeVOS.stream().map(a -> {
 				//当日均价
-				BigDecimal avg= FormulaUtils.avg(a.getTurnover(),a.getNumber());
+				BigDecimal avg = FormulaUtils.avg(a.getTurnover(), a.getNumber());
 				return EndPriceVO.builder().series("(收盘价格-当日均价)/当日均价(万分之一)").x(a.getDate())
-						.y((a.getCurrentPrice().subtract(avg).multiply(GpNumberConstant.tenThousand)).divide(avg,5, RoundingMode.FLOOR))
+						.y((a.getCurrentPrice().subtract(avg).multiply(GpNumberConstant.tenThousand)).divide(avg, 5, RoundingMode.FLOOR))
 						.build();
 			}).collect(Collectors.toList());
 
@@ -108,55 +108,55 @@ public class GpServiceImpl implements GpService {
 		} else {
 			volumeVOS = gpRepository.queryVolume(volumeVO);
 			List<EndPriceVO> endPrice = volumeVOS.stream().map(a -> EndPriceVO.builder().series("收盘价/元").x(a.getDate()).y(a.getCurrentPrice()).build()).collect(Collectors.toList());
-			List<EndPriceVO> number = volumeVOS.stream().map(a -> EndPriceVO.builder().series("成交额/万手").x(a.getDate()).y(a.getNumber().divide(GpNumberConstant.tenThousand,5, RoundingMode.FLOOR)).build()).collect(Collectors.toList());
+			List<EndPriceVO> number = volumeVOS.stream().map(a -> EndPriceVO.builder().series("成交额/万手").x(a.getDate()).y(a.getNumber().divide(GpNumberConstant.tenThousand, 5, RoundingMode.FLOOR)).build()).collect(Collectors.toList());
 			List<EndPriceVO> turnover = volumeVOS.stream().map(a -> EndPriceVO.builder().series("成交额/亿元").x(a.getDate()).y(a.getTurnover()).build()).collect(Collectors.toList());
-			List<EndPriceVO> forecast = volumeVOS.stream().map(a -> EndPriceVO.builder().series("当日均价/元").x(a.getDate()).y(FormulaUtils.avg(a.getTurnover(),a.getNumber())).build()).collect(Collectors.toList());
+			List<EndPriceVO> forecast = volumeVOS.stream().map(a -> EndPriceVO.builder().series("当日均价/元").x(a.getDate()).y(FormulaUtils.avg(a.getTurnover(), a.getNumber())).build()).collect(Collectors.toList());
 			List<EndPriceVO> forecastPercent = volumeVOS.stream().map(a ->
 			{
 				//当日均价
-				BigDecimal avg= FormulaUtils.avg(a.getTurnover(),a.getNumber());
+				BigDecimal avg = FormulaUtils.avg(a.getTurnover(), a.getNumber());
 				return EndPriceVO.builder().series("(当日均价-收盘价格)/收盘价格(万分之一)今日实收").x(a.getDate())
-						.y((avg.subtract(a.getCurrentPrice()).multiply(GpNumberConstant.tenThousand)).divide(a.getCurrentPrice(),5, RoundingMode.FLOOR)).build();
+						.y((avg.subtract(a.getCurrentPrice()).multiply(GpNumberConstant.tenThousand)).divide(a.getCurrentPrice(), 5, RoundingMode.FLOOR)).build();
 			}).collect(Collectors.toList());
 			List<EndPriceVO> forecastPercent1 = volumeVOS.stream().map(a -> {
 				//当日均价
-				BigDecimal avg= FormulaUtils.avg(a.getTurnover(),a.getNumber());
+				BigDecimal avg = FormulaUtils.avg(a.getTurnover(), a.getNumber());
 				return EndPriceVO.builder().series("(收盘价格-当日均价)/当日均价(万分之一)").x(a.getDate())
-						.y((a.getCurrentPrice().subtract(avg).multiply(GpNumberConstant.tenThousand)).divide(avg,5, RoundingMode.FLOOR))
+						.y((a.getCurrentPrice().subtract(avg).multiply(GpNumberConstant.tenThousand)).divide(avg, 5, RoundingMode.FLOOR))
 						.build();
 			}).collect(Collectors.toList());
 
-			List<EndPriceVO> forecastPercent2=new ArrayList<>();
-			List<EndPriceVO> forecastPercent3=new ArrayList<>();
-			List<EndPriceVO> forecastPercent4=new ArrayList<>();
-			List<EndPriceVO> forecastPercent5=new ArrayList<>();
+			List<EndPriceVO> forecastPercent2 = new ArrayList<>();
+			List<EndPriceVO> forecastPercent3 = new ArrayList<>();
+			List<EndPriceVO> forecastPercent4 = new ArrayList<>();
+			List<EndPriceVO> forecastPercent5 = new ArrayList<>();
 
 
-			for(int i=1;i<volumeVOS.size();i++){
+			for (int i = 1; i < volumeVOS.size(); i++) {
 
 				//当天数据
-				VolumeVO a=volumeVOS.get(i);
+				VolumeVO a = volumeVOS.get(i);
 				//昨天数据
-				VolumeVO b=volumeVOS.get(i-1);
+				VolumeVO b = volumeVOS.get(i - 1);
 				//当日均价
-				BigDecimal avg= FormulaUtils.avg(a.getTurnover(),a.getNumber());
+				BigDecimal avg = FormulaUtils.avg(a.getTurnover(), a.getNumber());
 				//昨日均价
-				BigDecimal avgYesterDay= FormulaUtils.avg(b.getTurnover(),b.getNumber());
+				BigDecimal avgYesterDay = FormulaUtils.avg(b.getTurnover(), b.getNumber());
 
 				forecastPercent2.add(EndPriceVO.builder().series("(今日均价-昨日均价)/昨日均价(万分之一)成本").x(a.getDate())
-						.y((avg.subtract(avgYesterDay).multiply(GpNumberConstant.tenThousand)).divide(avgYesterDay,5, RoundingMode.FLOOR))
+						.y((avg.subtract(avgYesterDay).multiply(GpNumberConstant.tenThousand)).divide(avgYesterDay, 5, RoundingMode.FLOOR))
 						.build());
 
 				forecastPercent3.add(EndPriceVO.builder().series("(今日成交量-昨日成交量)/昨日成交量(百分之一)").x(a.getDate())
-						.y((a.getNumber().subtract(b.getNumber()).multiply(GpNumberConstant.oneHundred)).divide(b.getNumber(),5, RoundingMode.FLOOR))
+						.y((a.getNumber().subtract(b.getNumber()).multiply(GpNumberConstant.oneHundred)).divide(b.getNumber(), 5, RoundingMode.FLOOR))
 						.build());
 
 				forecastPercent4.add(EndPriceVO.builder().series("(今日收盘价-昨日收盘价)/昨日收盘价(万分之一)").x(a.getDate())
-						.y((a.getCurrentPrice().subtract(b.getCurrentPrice()).multiply(GpNumberConstant.tenThousand)).divide(b.getCurrentPrice(),5, RoundingMode.FLOOR))
+						.y((a.getCurrentPrice().subtract(b.getCurrentPrice()).multiply(GpNumberConstant.tenThousand)).divide(b.getCurrentPrice(), 5, RoundingMode.FLOOR))
 						.build());
 
 				forecastPercent5.add(EndPriceVO.builder().series("(今日收盘价-昨日均价)/昨日均价(万分之一)").x(a.getDate())
-						.y((a.getCurrentPrice().subtract(avgYesterDay).multiply(GpNumberConstant.tenThousand)).divide(avgYesterDay,5, RoundingMode.FLOOR))
+						.y((a.getCurrentPrice().subtract(avgYesterDay).multiply(GpNumberConstant.tenThousand)).divide(avgYesterDay, 5, RoundingMode.FLOOR))
 						.build());
 			}
 
@@ -186,6 +186,36 @@ public class GpServiceImpl implements GpService {
 	}
 
 	@Override
+	public MaxMinHtmlVO queryVolumeTurningPoint(VolumeVO volumeVO) {
+		List<VolumeVO> volumeVOS;
+		List<VolumeVO> volumeLowToHight;
+		List<VolumeVO> volumeHighToLow;
+		volumeVOS = gpRepository.queryVolume(volumeVO);
+
+		volumeLowToHight= gpRepository.queryLowToHight(volumeVO);
+
+		volumeHighToLow= gpRepository.queryHightToLow(volumeVO);
+
+		List<EndPriceVO> endPrice = volumeVOS.stream().map(a -> EndPriceVO.builder().series("收盘价/元").x(a.getDate()).y(a.getCurrentPrice()).build()).collect(Collectors.toList());
+		List<EndPriceVO> lowToHight = volumeLowToHight.stream().map(a -> EndPriceVO.builder().series("由低转高").x(a.getDate()).y(a.getCurrentPrice()).build()).collect(Collectors.toList());
+		List<EndPriceVO> highToLow = volumeHighToLow.stream().map(a -> EndPriceVO.builder().series("由高转低").x(a.getDate()).y(a.getCurrentPrice()).build()).collect(Collectors.toList());
+
+
+		List<EndPriceVO> all = new ArrayList<>();
+		all.addAll(endPrice);
+		all.addAll(lowToHight);
+		all.addAll(highToLow);
+
+		all.sort(Comparator.comparing(EndPriceVO::getX));
+
+		log.info(JsonUtils.objectToString(all));
+
+		MaxMinHtmlVO maxMinHtmlVO = MaxMinHtmlVO.builder().data(JsonUtils.objectToString(all)).build();
+		return maxMinHtmlVO;
+
+	}
+
+	@Override
 	public List<PercentVO> gpPriceCount(String gpCode, BigDecimal currentPrice) {
 		//只查询当天的数据
 		List<VolumeVO> volumeVOS = currentPrice != null ? gpStareRepository.gpPriceCountByPrice(gpCode, currentPrice) : gpStareRepository.gpPriceCount(gpCode);
@@ -204,16 +234,15 @@ public class GpServiceImpl implements GpService {
 	public void history() {
 
 
-
 		Path path = Paths.get("gp.txt");
 		try {
-			List<String>  lines = Files.readAllLines(path);
+			List<String> lines = Files.readAllLines(path);
 			System.out.println(lines.size());
-			String history=lines.get(0);
-			String[] splitHistory=history.split(";");
-			for(String split:splitHistory){
-				String[] detail=split.split(",");
-				ZXVO zxvo=new ZXVO();
+			String history = lines.get(0);
+			String[] splitHistory = history.split(";");
+			for (String split : splitHistory) {
+				String[] detail = split.split(",");
+				ZXVO zxvo = new ZXVO();
 				zxvo.setGpCode("sz000651");
 				zxvo.setGpName("格力电器");
 				zxvo.setInitPrice(new BigDecimal(detail[2]));
@@ -221,13 +250,13 @@ public class GpServiceImpl implements GpService {
 				zxvo.setCurrentPrice(new BigDecimal(detail[3]));
 				zxvo.setMaxPrice(new BigDecimal(detail[5]));
 				zxvo.setMinPirce(new BigDecimal(detail[6]));
-				zxvo.setTurnover(new BigDecimal(detail[7]).divide(GpNumberConstant.oneHundredMillion,15, RoundingMode.FLOOR));
-				zxvo.setNumber(new BigDecimal(detail[4]).divide(GpNumberConstant.oneHundred,2,RoundingMode.FLOOR));
+				zxvo.setTurnover(new BigDecimal(detail[7]).divide(GpNumberConstant.oneHundredMillion, 15, RoundingMode.FLOOR));
+				zxvo.setNumber(new BigDecimal(detail[4]).divide(GpNumberConstant.oneHundred, 2, RoundingMode.FLOOR));
 				zxvo.setBiddingPrice(new BigDecimal("0"));
 				zxvo.setAuction(new BigDecimal("0"));
 				zxvo.setCreatedDate(LocalDateFormate.stringTolocalDateTime(detail[1].concat(" 15:00:00")));
 				gpRepository.insert(zxvo);
-				log.info("股票{}",zxvo);
+				log.info("股票{}", zxvo);
 
 			}
 
@@ -242,10 +271,10 @@ public class GpServiceImpl implements GpService {
 	 * <p>
 	 * 统计成交量，成交价差额变化
 	 * </p>
-	 * 
+	 *
 	 * @author hzl 2023/03/06 1:19 PM
 	 */
-	public void initDifference(VolumeVO volumeVO){
+	public void initDifference(VolumeVO volumeVO) {
 
 
 		//取当前最新的，
