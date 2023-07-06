@@ -55,6 +55,10 @@ public class GpIndexEntity extends BaseEntity implements Serializable {
 	 */
 	private BigDecimal endPrice;
 	/**
+	 * 当日均价
+	 */
+	private BigDecimal avgPrice;
+	/**
 	 * (收盘价格-当日均价)/当日均价
 	 */
 	private BigDecimal dailyPercent;

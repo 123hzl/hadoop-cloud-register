@@ -83,6 +83,7 @@ public class GpIndexServiceImpl extends ServiceImpl<GpIndexMapper, GpIndexEntity
 					.gpCode(gpCode)
 					.gpName(a.getGpName())
 					.endPrice(a.getCurrentPrice())
+					.avgPrice(avg)
 					.dailyPercent(dailyPercent)
 					.daily1Percent(daily1Percent)
 					.turnoverPercent(turnoverPercent)
