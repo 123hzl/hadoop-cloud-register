@@ -134,6 +134,7 @@
         <if test="startDate!=null and endDate!=null">
             and price_date &gt;= #{startDate} and  price_date &lt;=#{endDate}
         </if>
+        and gp_code=#{gpCode}
         ORDER BY
             price_date asc
     </select>
@@ -150,6 +151,7 @@
         <if test="startDate!=null and endDate!=null">
             and price_date &gt;= #{startDate} and  price_date &lt;=#{endDate}
         </if>
+        and gp_code=#{gpCode}
         ORDER BY
         price_date asc
     </select>

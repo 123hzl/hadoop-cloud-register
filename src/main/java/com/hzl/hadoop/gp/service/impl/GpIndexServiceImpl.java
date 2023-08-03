@@ -44,7 +44,7 @@ public class GpIndexServiceImpl extends ServiceImpl<GpIndexMapper, GpIndexEntity
 	public void initDate(String gpCode) {
 		LocalDate now=LocalDate.now();
 		LocalDate maxDay=now.plusDays(1);
-		LocalDate minDay=now.plusDays(-5);
+		LocalDate minDay=now.plusDays(-2000);
 
 		List<VolumeVO> volumeVOS = gpRepository.queryVolume(VolumeVO.builder()
 				.gpCode(gpCode)
@@ -58,15 +58,75 @@ public class GpIndexServiceImpl extends ServiceImpl<GpIndexMapper, GpIndexEntity
 			VolumeVO a = volumeVOS.get(i);
 			//昨天数据
 			VolumeVO b = volumeVOS.get(i - 1);
+
+			//2天前
+			if(i>=2){
+				VolumeVO b2 = volumeVOS.get(i - 2);
+			}
+			//4天前
+			if(i>=4){
+				VolumeVO b4 = volumeVOS.get(i - 4);
+			}
+
+			//6天前
+			if(i>=6){
+				VolumeVO b6 = volumeVOS.get(i - 6);
+			}
+
+
+
 			//当日均价
 			BigDecimal avg = FormulaUtils.avg(a.getTurnover(), a.getNumber());
 			//昨日均价
 			BigDecimal avgYesterDay = FormulaUtils.avg(b.getTurnover(), b.getNumber());
 
+
+
 			//(收盘价格-当日均价)/当日均价
 			BigDecimal dailyPercent = (a.getCurrentPrice().subtract(avg).multiply(GpNumberConstant.oneHundred)).divide(avg, 5, RoundingMode.FLOOR);
 			//(今日均价-昨日均价)/昨日均价
 			BigDecimal daily1Percent = (avg.subtract(avgYesterDay).multiply(GpNumberConstant.oneHundred)).divide(avgYesterDay, 5, RoundingMode.FLOOR);
+			//2天前
+			BigDecimal daily2Percent=BigDecimal.ZERO;
+			BigDecimal over2Percent=BigDecimal.ZERO;
+			BigDecimal overPercent2=BigDecimal.ZERO;
+
+			if(i>=2){
+				VolumeVO b2 = volumeVOS.get(i - 2);
+				BigDecimal avgYesterDay2 = FormulaUtils.avg(b2.getTurnover(), b2.getNumber());
+				daily2Percent = (avg.subtract(avgYesterDay2).multiply(GpNumberConstant.oneHundred)).divide(avgYesterDay2, 5, RoundingMode.FLOOR);
+				over2Percent = (a.getCurrentPrice().subtract(b2.getCurrentPrice()).multiply(GpNumberConstant.oneHundred)).divide(b2.getCurrentPrice(), 5, RoundingMode.FLOOR);
+				overPercent2 = (a.getCurrentPrice().subtract(avgYesterDay2).multiply(GpNumberConstant.oneHundred)).divide(avgYesterDay2, 5, RoundingMode.FLOOR);
+
+			}
+			//4天前
+			BigDecimal daily4Percent=BigDecimal.ZERO;
+			BigDecimal over4Percent=BigDecimal.ZERO;
+			BigDecimal overPercent4=BigDecimal.ZERO;
+
+			if(i>=4){
+				VolumeVO b2 = volumeVOS.get(i - 4);
+				BigDecimal avgYesterDay2 = FormulaUtils.avg(b2.getTurnover(), b2.getNumber());
+				daily4Percent = (avg.subtract(avgYesterDay2).multiply(GpNumberConstant.oneHundred)).divide(avgYesterDay2, 5, RoundingMode.FLOOR);
+				over4Percent = (a.getCurrentPrice().subtract(b2.getCurrentPrice()).multiply(GpNumberConstant.oneHundred)).divide(b2.getCurrentPrice(), 5, RoundingMode.FLOOR);
+				overPercent4 = (a.getCurrentPrice().subtract(avgYesterDay2).multiply(GpNumberConstant.oneHundred)).divide(avgYesterDay2, 5, RoundingMode.FLOOR);
+
+			}
+			//6天前
+			BigDecimal daily6Percent=BigDecimal.ZERO;
+			BigDecimal over6Percent=BigDecimal.ZERO;
+			BigDecimal overPercent6=BigDecimal.ZERO;
+			if(i>=6){
+				VolumeVO b2 = volumeVOS.get(i - 6);
+				BigDecimal avgYesterDay2 = FormulaUtils.avg(b2.getTurnover(), b2.getNumber());
+				daily6Percent = (avg.subtract(avgYesterDay2).multiply(GpNumberConstant.oneHundred)).divide(avgYesterDay2, 5, RoundingMode.FLOOR);
+
+				over6Percent = (a.getCurrentPrice().subtract(b2.getCurrentPrice()).multiply(GpNumberConstant.oneHundred)).divide(b2.getCurrentPrice(), 5, RoundingMode.FLOOR);
+				overPercent6 = (a.getCurrentPrice().subtract(avgYesterDay2).multiply(GpNumberConstant.oneHundred)).divide(avgYesterDay2, 5, RoundingMode.FLOOR);
+
+			}
+
+
 			//(今日成交量-昨日成交量)/昨日成交量
 			BigDecimal turnoverPercent = (a.getNumber().subtract(b.getNumber()).multiply(GpNumberConstant.oneHundred)).divide(b.getNumber(), 5, RoundingMode.FLOOR);
 			//(今日收盘价-昨日收盘价)/昨日收盘价
@@ -86,9 +146,18 @@ public class GpIndexServiceImpl extends ServiceImpl<GpIndexMapper, GpIndexEntity
 					.avgPrice(avg)
 					.dailyPercent(dailyPercent)
 					.daily1Percent(daily1Percent)
+					.daily2Percent(daily2Percent)
+					.daily4Percent(daily4Percent)
+					.daily6Percent(daily6Percent)
 					.turnoverPercent(turnoverPercent)
 					.overPercent(overPercent)
+					.over2Percent(over2Percent)
+					.over4Percent(over4Percent)
+					.over6Percent(over6Percent)
 					.overPercent1(overPercent1)
+					.overPercent2(overPercent2)
+					.overPercent4(overPercent4)
+					.overPercent6(overPercent6)
 					.build();
 			QueryWrapper queryWrapper = new QueryWrapper();
 			queryWrapper.eq("price_date", gpIndexEntity.getPriceDate());

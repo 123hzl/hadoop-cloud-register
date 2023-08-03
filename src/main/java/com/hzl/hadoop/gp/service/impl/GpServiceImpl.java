@@ -243,8 +243,8 @@ public class GpServiceImpl implements GpService {
 			for (String split : splitHistory) {
 				String[] detail = split.split(",");
 				ZXVO zxvo = new ZXVO();
-				zxvo.setGpCode("sz000651");
-				zxvo.setGpName("格力电器");
+				zxvo.setGpCode("sz000961");
+				zxvo.setGpName("中南建设");
 				zxvo.setInitPrice(new BigDecimal(detail[2]));
 				zxvo.setYesterdayEndPrice(new BigDecimal(detail[11]));
 				zxvo.setCurrentPrice(new BigDecimal(detail[3]));

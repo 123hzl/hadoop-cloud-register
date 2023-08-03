@@ -24,4 +24,10 @@ public class IamgeController {
 
 		return "index"+page;
 	}
+
+	public static void main(String args[]){
+		long start=1689045493991L;
+		long end=1689045494692L;
+		System.out.println(end-start);
+	}
 }

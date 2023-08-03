@@ -66,6 +66,9 @@ public class GpIndexEntity extends BaseEntity implements Serializable {
 	 * (今日均价-昨日均价)/昨日均价
 	 */
 	private BigDecimal daily1Percent;
+	private BigDecimal daily2Percent;
+	private BigDecimal daily4Percent;
+	private BigDecimal daily6Percent;
 	/**
 	 * (今日成交量-昨日成交量)/昨日成交量
 	 */
@@ -75,11 +78,24 @@ public class GpIndexEntity extends BaseEntity implements Serializable {
 	 */
 	private BigDecimal overPercent;
 
+	private BigDecimal over2Percent;
+
+	private BigDecimal over4Percent;
+
+	private BigDecimal over6Percent;
+
 
 	/**
 	 * (今日收盘价-昨日均价)/昨日均价
 	 */
 	private BigDecimal overPercent1;
+
+	private BigDecimal overPercent2;
+
+	private BigDecimal overPercent4;
+
+	private BigDecimal overPercent6;
+
 
 	/**
 	 * (收盘价格-当日均价)/当日均价增速
@@ -89,6 +105,12 @@ public class GpIndexEntity extends BaseEntity implements Serializable {
 	 * (今日均价-昨日均价)/昨日均价增速
 	 */
 	private BigDecimal daily1PercentSpeed;
+
+//	private BigDecimal daily2PercentSpeed;
+//
+//	private BigDecimal daily4PercentSpeed;
+//
+//	private BigDecimal daily6PercentSpeed;
 	/**
 	 * (今日成交量-昨日成交量)/昨日成交量增速
 	 */

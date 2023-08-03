@@ -6,6 +6,7 @@ import com.hzl.hadoop.app.service.MybatisService;
 import com.hzl.hadoop.app.service.RedisService;
 import com.hzl.hadoop.app.vo.PaymentVO;
 import com.hzl.hadoop.executor.SingleExecutor;
+import com.hzl.hadoop.interfacemanager.annotation.Permission;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @RestController
+@Permission
 public class MvcJsonController {
 	@Autowired
 	MybatisService mybatisService;
