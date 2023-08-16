@@ -1,0 +1,16 @@
+version: '3'
+services:
+  kafka:
+    image: registry.cn-hangzhou.aliyuncs.com/hzl-hadoop/hzl:kafka3.2.0
+    hostname: kafka
+    ports:
+      - "9092:9092"
+﻿   command:
+      - sh
+      - -c
+      - "/opt/kafka/bin/kafka-server-start.sh config/server.properties \
+             --override zookeeper.connect=zookeeper-0:2181 \
+             --override log.dirs=/opt/kafka/data/logs \
+             --override broker.id=0"
+    volumes:
+      - ./kafka-data:/opt/kafka/data
