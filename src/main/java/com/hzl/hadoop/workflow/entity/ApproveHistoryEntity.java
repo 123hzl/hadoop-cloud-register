@@ -1,7 +1,10 @@
 package com.hzl.hadoop.workflow.entity;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.hzl.hadoop.config.mybatis.BaseEntity;
+import com.hzl.hadoop.util.JsonUtils;
+import com.hzl.hadoop.workflow.constant.NodeType;
 import lombok.Data;
 
 /**
@@ -38,4 +41,19 @@ public class ApproveHistoryEntity extends BaseEntity {
 	 */
 	private Integer nodeStatus;
 
+	public Object cloneObject(NodeType nodeType){
+		switch (nodeType) {
+			case START:
+				return  JsonUtils.cloneObject(this,ApproveHistoryStartEntity.class);
+			case GATEWAY:
+				return  JsonUtils.cloneObject(this,ApproveHistoryGatewayEntity.class);
+			case APPROVE:
+				return  JsonUtils.cloneObject(this,ApproveHistoryApproverEntity.class);
+			case END:
+				return  JsonUtils.cloneObject(this,ApproveHistoryEndEntity.class);
+			default:
+				break;
+		}
+		return null;
+	}
 }

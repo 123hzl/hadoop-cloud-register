@@ -27,28 +27,14 @@ public class BeanPostProcessorUtil implements BeanPostProcessor {
 	@Nullable
 	@Override
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-		log.debug("bean初始化前" + beanName);
+		//log.debug("bean初始化前" + beanName);
 		return bean;
 	}
 
 	@Override
 	@Nullable
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-		log.debug("bean初始化后" + beanName);
+		//log.debug("bean初始化后" + beanName);
 		return bean;
-	}
-
-
-	private static int getMonth(Date date) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		int month = cal.get(Calendar.MONTH)+1;
-		return month;
-	}
-
-	public static void main(String args[]){
-
-		Date date=new Date();
-		System.out.println(getMonth(date));
 	}
 }

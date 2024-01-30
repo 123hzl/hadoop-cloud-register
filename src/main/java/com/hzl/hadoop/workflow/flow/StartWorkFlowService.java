@@ -115,7 +115,7 @@ public class StartWorkFlowService {
 		}else if(listenerDTO.getStatus()==3) {
 			throw new CommonException("审批失败,原因".concat(listenerDTO.getContent()));
 		}else {
-			throw new CommonException("监听返回状态有问题"+approveVO.toString());
+			throw new CommonException("监听返回状态有问题"+approveVO);
 		}
 		//1根据审批历史id和节点类型查询对应的流程审批历史数据，将状态从审批状态从待审批，更新为审批同意
 		//不需要了List<ApproveHistoryEntity> approveHistoryEntityList=approveHistoryHandle.queryHistory(approveVO);

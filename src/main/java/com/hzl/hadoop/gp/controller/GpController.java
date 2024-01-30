@@ -91,43 +91,6 @@ public class GpController {
 		gpIndexService.initIndexSpeed(code);
 	}
 
-	/**
-	 * <p>
-	 * 量化数据分析成功率
-	 * </p>
-	 *
-	 * @author hzl 2020/01/08 12:41 PM
-	 */
-	@GetMapping(value = "/gp/yl/index/analyse/{code}")
-	public void initIndexAnalyse(@PathVariable String code) {
-		gpIndexService.initIndexAnalyse(code);
-	}
-
-	/**
-	 * <p>
-	 * 量化数据分析成功率
-	 * </p>
-	 *
-	 * @author hzl 2020/01/08 12:41 PM
-	 */
-	@GetMapping(value = "/gp/yl/index/forcastAll/{code}/{date}")
-	public GpIndexResultVO forcastAll(@PathVariable String code, @PathVariable LocalDate date) {
-//		int shu[] = {1,2,3,4,5,-1,-2,-3,-4,-5};
-//		for(int i=1;i<=10;i++){
-//			gpIndexService.f(shu,i,0,0);
-//
-//		}
-		int shu[] = {-2,-3,-4,-5};
-		gpIndexService.f(shu,4,0,0);
-		mailService.sendSimpleMail("预测","最终结果"+ GpIndexServiceImpl.hashMap1.toString());
-		return null;
-	}
-
-	@GetMapping(value = "/gp/yl/index/forcast/{code}/{date}")
-	public GpIndexResultVO forcast(@PathVariable String code, @PathVariable LocalDate date,@RequestParam(required = false) String factors) {
-
-		return gpIndexService.forecast(code,date,factors);
-	}
 
 	/**
 	 * <p>

@@ -175,8 +175,8 @@ public class UserLogAspect {
 		String url = request.getRequestURI();
 		//获取访问人的ip
 		String ip = IPUtil.getIpAddress(request);
-		String city = IPUtil.getCityInfo(ip);
-		//String city="";
+		//String city = IPUtil.getCityInfo(ip);
+		String city="";
 
 		//用户日志记录,后期换成异步不影响请求性能
 		RequestLogsEntity requestLogsEntity = RequestLogsEntity.builder()

@@ -80,20 +80,6 @@ public class GpBasicInfoJob {
 		return true;
 	}
 
-	public Boolean initIndex() {
-		List<GpInfoEntity> list = gpInfoService.list();
-		if (CollectionUtils.isNotEmpty(list)) {
-			list.forEach(gpInfoEntity -> {
-				//是否爬取
-				if (gpInfoEntity.getIsCreep()) {
-					gpIndexService.initDate(gpInfoEntity.getGpCode());
-					gpIndexService.initIndexSpeed(gpInfoEntity.getGpCode());
-				}
-			});
-		}
-		return true;
-	}
-
 	/**
 	 * fixedDelay 上传方法执行完成后开始计算
 	 * 30秒执行一次@Scheduled(fixedDelay = 30 * 1000)
@@ -132,42 +118,6 @@ public class GpBasicInfoJob {
 
 	}
 
-	/**
-	 * <p>
-	 * 初始化量化数据
-	 * </p>
-	 *
-	 * @author hzl 2023/04/12 5:30 PM
-	 */
-	@Scheduled(cron = "0 5 15 ? * MON-FRI")
-	public Boolean initDate() {
-		return initIndex();
-	}
-
-
-	/**
-	 * <p>
-	 * 初始化量化数据
-	 * </p>
-	 *
-	 * @author hzl 2023/04/12 5:30 PM
-	 */
-	@Scheduled(cron = "0 20 14 ? * MON-FRI")
-	public Boolean initDate2() {
-		return initIndex();
-	}
-
-	/**
-	 * <p>
-	 * 初始化量化数据
-	 * </p>
-	 *
-	 * @author hzl 2023/04/12 5:30 PM
-	 */
-	@Scheduled(cron = "0 55 14 ? * MON-FRI")
-	public Boolean initDateBefore() {
-		return initIndex();
-	}
 
 
 	/**

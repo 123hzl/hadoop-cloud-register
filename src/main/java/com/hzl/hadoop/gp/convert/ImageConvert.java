@@ -95,6 +95,7 @@ public class ImageConvert {
 	 * @author hzl 2021/12/16 1:07 PM
 	 */
 	public static boolean parseImage(String image){
+		log.info("原始数据{}",image);
 		//将字符串转换成jsonObject
 		JSONObject jsonObject=JSONObject.parseObject(image);
 		JSONObject data= jsonObject.getJSONObject("data");
@@ -148,7 +149,7 @@ public class ImageConvert {
 		param.put("uid",uid);
 		param.put("feature","0");
 
-		for(int i=1;;i++){
+		for(int i=3;;i++){
 			param.put("page", String.valueOf(i));
 
 			String result=httpGet(param,imageUrl);
@@ -204,13 +205,13 @@ public class ImageConvert {
 	public static void main(String args[]){
 //		String result=httpGet("1590681790","0");
 //		parseImage(result);
-		//getImageInfos("1590681790");
+		getImageInfos("1590681790");
 //		List<XlwebImagesVO>  list=getImageInfosAll("5079248899");
 //		list.forEach(a->{
 //			System.out.println(a.convert());
 //		});
-		//log.info(list.toString());
-		//getCookie();
+//		log.info(list.toString());
+//		getCookie();
 
 	}
 }

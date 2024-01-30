@@ -8,10 +8,7 @@ import com.hzl.hadoop.workflow.constant.NodeType;
 import com.hzl.hadoop.workflow.dto.ApproveHistoryDTO;
 import com.hzl.hadoop.workflow.entity.*;
 import com.hzl.hadoop.workflow.flow.ApproveHistoryHandle;
-import com.hzl.hadoop.workflow.service.ApproveHistoryApproverService;
-import com.hzl.hadoop.workflow.service.ApproveHistoryEndService;
-import com.hzl.hadoop.workflow.service.ApproveHistoryGatewayService;
-import com.hzl.hadoop.workflow.service.ApproveHistoryStartService;
+import com.hzl.hadoop.workflow.service.*;
 import com.hzl.hadoop.workflow.vo.ApproveHistory;
 import com.hzl.hadoop.workflow.vo.ApproveVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +27,10 @@ import static com.hzl.hadoop.workflow.constant.NodeType.*;
 public class ApproveHistoryHandleImpl implements ApproveHistoryHandle {
 
 	@Autowired
+	GetService getService;
+
+
+	@Autowired
 	ApproveHistoryStartService approveHistoryStartService;
 
 	@Autowired
@@ -43,7 +44,8 @@ public class ApproveHistoryHandleImpl implements ApproveHistoryHandle {
 	@Override
 	public void saveHistory(NodeType nodeType, ApproveHistoryEntity historyEntity) {
 
-		switch (nodeType) {
+		getService.getApproveHistoryService(nodeType).save(JsonUtils.cloneObject(historyEntity,ApproveHistoryStartEntity.class));
+		/*switch (nodeType) {
 			case START:
 
 				approveHistoryStartService.save(JsonUtils.cloneObject(historyEntity,ApproveHistoryStartEntity.class));
@@ -59,7 +61,7 @@ public class ApproveHistoryHandleImpl implements ApproveHistoryHandle {
 				break;
 			default:
 				break;
-		}
+		}*/
 
 	}
 
