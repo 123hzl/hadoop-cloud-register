@@ -123,12 +123,12 @@ public class InterfaceRegisterCommandRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		//插入前先删除所有
+	/*临时注视	//插入前先删除所有
 		QueryWrapper<InterfaceManageEntity> queryWrapper = new QueryWrapper<>();
 		queryWrapper.eq("service_name", appName);
 		interfaceManageService.remove(queryWrapper);
 		//log.info("测试获取url2" + this.getUrl().toString());
 		//插入数据库，后面可以换成消息中间件，发送给指定服务插入
-		interfaceManageService.saveBatch(this.getUrl());
+		interfaceManageService.saveBatch(this.getUrl());*/
 	}
 }

@@ -2,6 +2,7 @@ package com.hzl.hadoop.gp.service.impl;
 
 import com.hzl.hadoop.gp.service.GpTradingService;
 import com.hzl.hadoop.gp.vo.Buying;
+import com.hzl.hadoop.gp.vo.Selling;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
@@ -57,6 +58,7 @@ public class GpTradingServiceImpl implements GpTradingService {
 	//卖出的时候，等量卖出，或者数量由少变多
 	//买入的时候，等量买入，或者数量由少变多
 	//最小单位100股买入卖出，倍数买入卖出
+	//卖出一定要高于买入价格，也就是要找一条低于买入价格的股票抵扣买入成本
 	@Override
 	public void trading() {
 		//目标利润
@@ -101,13 +103,36 @@ public class GpTradingServiceImpl implements GpTradingService {
 		//当前价低基于开盘是涨，还是跌
 
 
+	}
+
+	public void trade(){
+		//买入记录
+		List<Buying> buyingList = new ArrayList<>();
+		//当前可卖
+		List<Buying> todayCanSelling = new ArrayList<>();
+
+		//上涨预测未来价格
+		List<BigDecimal> futurePrice = new ArrayList<>();
+
+		//卖出记录
+		List<Selling> sellingList = new ArrayList<>();
+
+
+		//今日可卖
+		BigDecimal todaySellingNumber = new BigDecimal("1500");
+
+
 
 	}
 
 
 	public static void main(String[] args) {
 		GpTradingServiceImpl trading = new GpTradingServiceImpl();
-		trading.calculateProfit(new BigDecimal("30.98"), new BigDecimal("1500"), new BigDecimal("31"), new BigDecimal("1500"));
-		trading.trading();
+		BigDecimal p1= trading.calculateProfit(new BigDecimal("30.85"), new BigDecimal("900"), new BigDecimal("30.98"), new BigDecimal("900"));
+		BigDecimal p2= trading.calculateProfit(new BigDecimal("30.84"), new BigDecimal("400"), new BigDecimal("30.9"), new BigDecimal("400"));
+		BigDecimal p3= trading.calculateProfit(new BigDecimal("31.03"), new BigDecimal("700"), new BigDecimal("30.9"), new BigDecimal("700"));
+
+		log.info(p1.add(p2).add(p3).toString());
+		//trading.trading();
 	}
 }

@@ -210,7 +210,7 @@ public class PdfUtilTest {
 	 */
 	@Test
 	public void getPdfFileStr() throws IOException {
-		File source = new File("/Users/hzl/Desktop/电子.pdf");
+		File source = new File("/Users/hzl/Downloads/response.pdf");
 		FileInputStream fileInputStream = new FileInputStream(source);
 
 		ByteArrayOutputStream output = new ByteArrayOutputStream();

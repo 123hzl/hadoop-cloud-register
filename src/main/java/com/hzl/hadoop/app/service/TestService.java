@@ -8,4 +8,6 @@ package com.hzl.hadoop.app.service;
 public interface TestService {
 
 	int update(int i);
+
+	void robCar();
 }
