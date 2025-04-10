@@ -21,7 +21,7 @@
         <httpclient>5.2-alpha1</httpclient>
         <freemarker>2.2.2.RELEASE</freemarker>
         <apache.poi>5.2.0</apache.poi>
-        <poi-ooxml>5.2.0</poi-ooxml>
+        <poi-ooxml>5.4.0</poi-ooxml>
         <poi-scratchpad>5.2.0</poi-scratchpad>
         <druid>1.2.15</druid>
         <easyexcel>3.0.5</easyexcel>
